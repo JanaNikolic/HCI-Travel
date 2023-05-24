@@ -9,9 +9,20 @@
 
   <ItemGroup>
     <Folder Include="Core\" />
-    <Folder Include="Fonts\" />
     <Folder Include="Images\" />
-    <Folder Include="MVVM\" />
+    <Folder Include="MVVM\Model\" />
+    <Folder Include="MVVM\ViewModel\" />
   </ItemGroup>
+    <ItemGroup>
+	    <Resource Include="Fonts\Poppins-Bold.ttf" />
+	    <Resource Include="Fonts\Poppins-ExtraBold.ttf" />
+	    <Resource Include="Fonts\Poppins-Medium.ttf" />
+	    <Resource Include="Fonts\Poppins-Regular.ttf" />
+	    <Resource Include="Fonts\Poppins-SemiBold.ttf" />
+	    <Resource Include="Images\key-icon.png" />
+	    <Resource Include="Images\user-icon.png" />
+		<Resource Include="Images\login.png" />
+	    <Resource Include="Images\logo.png" />
+    </ItemGroup>
 
 </Project>
