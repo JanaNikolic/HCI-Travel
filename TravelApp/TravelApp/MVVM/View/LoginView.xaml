@@ -8,22 +8,23 @@
     Title="Prijava"
     WindowStartupLocation="CenterScreen"
     Background="#F0F0F0"
-        Icon="../../Images/logo.png">
-    
+    Icon="../../Images/logo.png"
+    WindowState="Maximized" >
 
-    <Grid>
+    <ScrollViewer>
+        <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition MinHeight="200" MaxHeight="500"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Image Source="../../Images/login.png" Stretch="UniformToFill" HorizontalAlignment="Center" />
+            <Image Grid.Row="0" Source="../../Images/login.png" Stretch="UniformToFill" HorizontalAlignment="Center" />
 
-        <ScrollViewer Grid.Row="1">
+        
             <StackPanel Width="300"
-                    
+                    Grid.Row="1"
                     Orientation="Vertical"
-                    Margin="0,0,0,0">
+                    Margin="0,0,0,25">
 
                 <TextBlock Text="Korisničko ime"
                         Foreground="#1F1F1F"
@@ -32,20 +33,21 @@
                         FontFamily="../../Fonts/#Poppins"                             
                         Margin="0,25,0,0"/>
 
-                <Border BorderThickness="1" BorderBrush="Black" CornerRadius="5">
 
-                    <TextBox x:Name="txtUser"
+                    <TextBox Template="{DynamicResource TextBoxInput}" x:Name="txtUser"
                         FontSize="20"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                            
                         Foreground="#1F1F1F"
                         CaretBrush="#1F1F1F"
-                        Height="36"
+                        Height="40"
+                        BorderThickness="2"
+                        BorderBrush="Black"
                         VerticalContentAlignment="Center"
-                        Margin="0,0,0,0"
-                        Padding="5,0,0,0">
+                        Margin="2,2,2,2"
+                        Padding="5,2,2,2">
                     </TextBox>
-                </Border>
+
 
                 <TextBlock Text="Lozinka"
                         Foreground="#1F1F1F"
@@ -54,19 +56,21 @@
                         FontFamily="../../Fonts/#Poppins"                             
                         Margin="0,15,0,0"/>
 
-                <Border BorderThickness="1" BorderBrush="Black" CornerRadius="5">
-                    <PasswordBox x:Name="txtPass"
+
+                <PasswordBox x:Name="txtPass" Template="{DynamicResource PasswordBoxInput}"
                         FontSize="20"
                         FontWeight="Medium"
-                        FontFamily="../../Fonts/#Poppins"                            
+                        FontFamily="../../Fonts/#Poppins"
                         Foreground="#1F1F1F"
                         CaretBrush="#1F1F1F"
-                        Height="36"
+                        BorderThickness="2"
+                        BorderBrush="Black"
+                        Height="40"
                         VerticalContentAlignment="Center"
                         Margin="0,0,0,0"
                         Padding="5,0,0,0">
                     </PasswordBox>
-                </Border>
+                
                 <Button x:Name="btnLogin"                          
                     BorderThickness="5"
                     Content="Prijavi se"
@@ -109,7 +113,7 @@
                 </Button>
 
             </StackPanel>
-        </ScrollViewer>
+        
     </Grid>
-
+    </ScrollViewer>
 </Window>
