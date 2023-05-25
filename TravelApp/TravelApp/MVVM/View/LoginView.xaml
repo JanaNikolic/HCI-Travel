@@ -82,23 +82,6 @@
                     Margin="0,25,0,0"
                     Click="btnLogin_Click">
 
-                    <!--<Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="#1F1F1F"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="#1F1F1F"/>
-                            -->
-                    <!--<Setter Property="Background" Value="#F1F1F1"/>-->
-                    <!--
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#F1F1F1"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>-->
-
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border Height="44"
