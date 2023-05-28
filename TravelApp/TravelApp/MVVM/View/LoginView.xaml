@@ -1,0 +1,102 @@
+﻿<Window x:Class="TravelApp.MVVM.View.LoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:TravelApp.MVVM.View"
+    mc:Ignorable="d"
+    Title="Prijava"
+    WindowStartupLocation="CenterScreen"
+    Background="#F0F0F0"
+    Icon="../../Images/logo.png"
+    WindowState="Maximized" >
+
+    <ScrollViewer>
+        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="200" MaxHeight="500"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+            <Image Grid.Row="0" Source="../../Images/login.png" Stretch="UniformToFill" HorizontalAlignment="Center" />
+
+        
+            <StackPanel Width="300"
+                    Grid.Row="1"
+                    Orientation="Vertical"
+                    Margin="0,0,0,25">
+
+                <TextBlock Text="Korisničko ime"
+                        Foreground="#1F1F1F"
+                        FontSize="20"
+                        FontWeight="Medium"
+                        FontFamily="../../Fonts/#Poppins"                             
+                        Margin="0,25,0,0"/>
+
+
+                    <TextBox Template="{DynamicResource TextBoxInput}" x:Name="txtUser"
+                        FontSize="20"
+                        FontWeight="Medium"
+                        FontFamily="../../Fonts/#Poppins"                            
+                        Foreground="#1F1F1F"
+                        CaretBrush="#1F1F1F"
+                        Height="40"
+                        BorderThickness="2"
+                        BorderBrush="Black"
+                        VerticalContentAlignment="Center"
+                        Margin="2,2,2,2"
+                        Padding="5,2,2,2">
+                    </TextBox>
+
+
+                <TextBlock Text="Lozinka"
+                        Foreground="#1F1F1F"
+                        FontSize="20"
+                        FontWeight="Medium"
+                        FontFamily="../../Fonts/#Poppins"                             
+                        Margin="0,15,0,0"/>
+
+
+                <PasswordBox x:Name="txtPass" Template="{DynamicResource PasswordBoxInput}"
+                        FontSize="20"
+                        FontWeight="Medium"
+                        FontFamily="../../Fonts/#Poppins"
+                        Foreground="#1F1F1F"
+                        CaretBrush="#1F1F1F"
+                        BorderThickness="2"
+                        BorderBrush="Black"
+                        Height="40"
+                        VerticalContentAlignment="Center"
+                        Margin="0,0,0,0"
+                        Padding="5,0,0,0">
+                    </PasswordBox>
+                
+                <Button x:Name="btnLogin"                          
+                    BorderThickness="5"
+                    Content="Prijavi se"
+                    Background="#1F1F1F"
+                    Foreground="#F1F1F1"
+                    FontSize="20"
+                    FontFamily="../../Fonts/#Poppins"
+                    Cursor="Hand"                           
+                    Margin="0,25,0,0"
+                    Click="btnLogin_Click">
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Height="44"
+                                CornerRadius="5"
+                                BorderBrush="#1F1F1F"
+                                Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </StackPanel>
+        
+    </Grid>
+    </ScrollViewer>
+</Window>
