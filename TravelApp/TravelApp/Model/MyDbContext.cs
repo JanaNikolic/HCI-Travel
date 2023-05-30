@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TravelApp.Model
 {
-    class MyDbContext :DbContext
+    public class MyDbContext :DbContext
     {
         public DbSet<Restoran> Restaurants { get; set; }
         public DbSet<Atrakcija> Attractions { get; set; }
