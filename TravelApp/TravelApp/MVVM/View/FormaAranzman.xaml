@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelApp.MVVM.View"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-        x:Class="TravelApp.MVVM.View.Window1"
+        x:Class="TravelApp.MVVM.View.FormaAranzman"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="#F0F0F0"
@@ -38,6 +38,7 @@
                         FontFamily="../../Fonts/#Poppins"                             
                         Margin="0,10,0,0"/>
                 <TextBox Template="{DynamicResource TextBoxInput}" x:Name="nazivAranzmana"
+                        Text="{Binding Naziv, Mode=TwoWay}"
                         FontSize="20"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                            
@@ -56,6 +57,7 @@
                         Margin="0,10,0,0"/>
                 <TextBox Template="{DynamicResource TextBoxInput}" x:Name="opisAranzmana"
                         FontSize="20"
+                        Text="{Binding Opis, Mode=TwoWay}"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                            
                         Foreground="#1F1F1F"
@@ -95,19 +97,24 @@
                         Margin="0,10,0,0"
                            Grid.Row="0"
                            />
-                    <TextBox Template="{DynamicResource TextBoxInput}" x:Name="datumPolaska"
-                        FontSize="18"
-                        FontWeight="Medium"
-                        FontFamily="../../Fonts/#Poppins"                            
-                        Foreground="#1F1F1F"
-                        CaretBrush="#1F1F1F"
+                    <Border 
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        CornerRadius="10"
                         BorderThickness="2"
                         BorderBrush="Black"
-                        VerticalContentAlignment="Center"
-                        Margin="2,2,12,2"
+                        Background="White"
+                        Margin="2,2,12,2">
+                        <DatePicker x:Name="datumPolaska" 
+                        FontSize="18"
+                        SelectedDate="{Binding DatumPolaska, Mode=TwoWay}"
+                        FontWeight="Medium"
+                        FontFamily="../../Fonts/#Poppins"   
+                        VerticalContentAlignment="Center"                         
+                        Foreground="#1F1F1F"
                         Padding="4,4,4,4"
-                        Grid.Row="1"
-                         AcceptsReturn="True" TextWrapping="Wrap" Height="40"/>
+                        Height="40"/>
+                    </Border>
 
                     <Label Content="DATUM POVRATKA" 
                         Foreground="#1F1F1F"
@@ -118,20 +125,24 @@
                            Grid.Row="0"
                            Grid.Column="1"
                            />
-                    <TextBox Template="{DynamicResource TextBoxInput}" x:Name="datumPovratka"
-                        FontSize="18"
-                        FontWeight="Medium"
-                        FontFamily="../../Fonts/#Poppins"                            
-                        Foreground="#1F1F1F"
-                        CaretBrush="#1F1F1F"
-                        BorderThickness="2"
-                        BorderBrush="Black"
-                        VerticalContentAlignment="Center"
-                        Margin="12,2,2,2"
-                        Padding="4,4,4,4"
+                    <Border 
                         Grid.Row="1"
                         Grid.Column="1"
-                         AcceptsReturn="True" TextWrapping="Wrap" Height="40"/>
+                        CornerRadius="10"
+                        BorderThickness="2"
+                        BorderBrush="Black"
+                        Background="White"
+                        Margin="12,2,2,2">
+                    <DatePicker x:Name="datumPovratka" 
+                        FontSize="18"
+                        SelectedDate="{Binding DatumPovratka, Mode=TwoWay}"
+                        FontWeight="Medium"
+                        FontFamily="../../Fonts/#Poppins"   
+                        VerticalContentAlignment="Center"                         
+                        Foreground="#1F1F1F"
+                        Padding="4,4,4,4"
+                        Height="40"/>
+                    </Border>
 
                     <Label Content="MESTO POLASKA" 
                         Foreground="#1F1F1F"
@@ -142,7 +153,8 @@
                            Grid.Row="2"
                            />
                     <TextBox Template="{DynamicResource TextBoxInput}" x:Name="mestoPolaska"
-                        FontSize="18"
+                        FontSize="18"                        
+                        Text="{Binding MestoPolaska, Mode=TwoWay}"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                            
                         Foreground="#1F1F1F"
@@ -155,7 +167,7 @@
                         Grid.Row="3"
                          AcceptsReturn="True" TextWrapping="Wrap" Height="40"/>
 
-                    <Label Content="MESTO POVRATKA" 
+                    <Label Content="DESTINACIJA" 
                         Foreground="#1F1F1F"
                         FontSize="20"
                         FontWeight="Medium"
@@ -166,6 +178,7 @@
                            />
                     <TextBox Template="{DynamicResource TextBoxInput}" x:Name="mestoPovratka"
                         FontSize="18"
+                        Text="{Binding Destinacija, Mode=TwoWay}"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                            
                         Foreground="#1F1F1F"
@@ -188,7 +201,7 @@
                            Grid.Row="4"
                            Grid.Column="0"
                            />
-                    <ListView Grid.Column="0" Grid.Row="5" ItemsSource="{Binding IzabraneAtrakcije}" AllowDrop="True" DragEnter="ListView_DragEnter" Drop="ListView_Drop"
+                    <ListView Grid.Column="0" Grid.Row="5" ItemsSource="{Binding IzabraneAtrakcije}" AllowDrop="True" DragEnter="ListView_DragEnter" Drop="DodajAtrakciju" PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="Atrakcija_MouseMove"
                               Template="{DynamicResource ListInput}"
                         Margin="2,2,12,2"
                         Padding="4,4,4,4">
@@ -216,7 +229,7 @@
                             <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Margin="8 0 0 0"/>
                         </StackPanel>
                     </Button>
-                    <ListView Grid.Column="1" Grid.Row="5" ItemsSource="{Binding SveAtrakcije}" PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove"
+                    <ListView Grid.Column="1" Grid.Row="5" ItemsSource="{Binding SveAtrakcije}" AllowDrop="True" DragEnter="ListView_DragEnter" Drop="IzbaciAtrakciju" PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="Atrakcija_MouseMove"
                               Template="{DynamicResource ListInput}"
                         Margin="12,2,2,2"
                         Padding="4,4,4,4">
@@ -239,7 +252,7 @@
                         Grid.Row="6"
                         Grid.Column="0"
                         />
-                    <ListView Grid.Column="0" Grid.Row="7" ItemsSource="{Binding IzabraniRestorani}" 
+                    <ListView Grid.Column="0" Grid.Row="7" ItemsSource="{Binding IzabraniRestorani}" AllowDrop="True" DragEnter="ListView_DragEnter" Drop="DodajRestoran" PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="Restoran_MouseMove"
                               Template="{DynamicResource ListInput}"
                         Margin="2,2,12,2"
                         Padding="4,4,4,4">
@@ -266,7 +279,7 @@
                             <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Margin="8 0 0 0"/>
                         </StackPanel>
                     </Button>
-                    <ListView Grid.Column="1" Grid.Row="7" ItemsSource="{Binding SviRestorani}" 
+                    <ListView Grid.Column="1" Grid.Row="7" ItemsSource="{Binding SviRestorani}" AllowDrop="True" DragEnter="ListView_DragEnter" Drop="IzbaciRestoran" PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="Restoran_MouseMove"
                               Template="{DynamicResource ListInput}"
                         Margin="12,2,2,2"
                         Padding="4,4,4,4">
@@ -289,7 +302,7 @@
                         Grid.Row="8"
                         Grid.Column="0"
                         />
-                    <ListView Grid.Column="0" Grid.Row="9" ItemsSource="{Binding IzabraniSmestaji}" 
+                    <ListView Grid.Column="0" Grid.Row="9" ItemsSource="{Binding IzabraniSmestaji}" AllowDrop="True" DragEnter="ListView_DragEnter" Drop="DodajSmestaj" PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="Smestaj_MouseMove"
                               Template="{DynamicResource ListInput}"
                         Margin="2,2,12,2"
                         Padding="4,4,4,4">
@@ -316,7 +329,7 @@
                             <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Margin="8 0 0 0"/>
                         </StackPanel>
                     </Button>
-                    <ListView Grid.Column="1" Grid.Row="9" ItemsSource="{Binding SviSmestaji}" 
+                    <ListView Grid.Column="1" Grid.Row="9" ItemsSource="{Binding SviSmestaji}" AllowDrop="True" DragEnter="ListView_DragEnter" Drop="IzbaciSmestaj" PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="Smestaj_MouseMove"
                               Template="{DynamicResource ListInput}"
                         Margin="12,2,2,2"
                         Padding="4,4,4,4">
@@ -338,8 +351,9 @@
                         Grid.Row="10"
                         Grid.Column="0"
                         />
-                    <TextBox Template="{DynamicResource TextBoxInput}" x:Name="Cena"
+                    <TextBox Template="{DynamicResource TextBoxInput}"
                         FontSize="20"
+                        Text="{Binding Cena, Mode=TwoWay}"
                         FontWeight="Medium"
                         Grid.Row="11"
                         Grid.Column="0"
