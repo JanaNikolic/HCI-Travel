@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using TravelApp.Model;
 
 namespace TravelApp.MVVM.View
@@ -20,7 +24,7 @@ namespace TravelApp.MVVM.View
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class FormaAranzman : Window
+    public partial class FormaAranzman : Window, INotifyPropertyChanged
     {
         Point startPoint = new Point();
 
@@ -38,7 +42,23 @@ namespace TravelApp.MVVM.View
 
         public Double Cena { get; set; }
 
-        public string Naziv { get; set; }
+        private string _naziv;
+        public string Naziv
+        {
+            get { return _naziv; }
+            set
+            {
+                _naziv = value;
+                OnPropertyChanged(nameof(Naziv));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public string Opis { get; set; }
 
@@ -50,10 +70,12 @@ namespace TravelApp.MVVM.View
 
         public DateTime DatumPovratka { get; set; } = DateTime.Now;
 
+        public string Slika { get; set; }
+
         public FormaAranzman()
         {
             InitializeComponent();
-            this.DataContext = this;
+            DataContext = this;
 
             SveAtrakcije = new ObservableCollection<Atrakcija>();
             SviSmestaji = new ObservableCollection<Smestaj>();
@@ -62,26 +84,7 @@ namespace TravelApp.MVVM.View
             IzabraniSmestaji = new ObservableCollection<Smestaj>();
             IzabraniRestorani = new ObservableCollection<Restoran>();
 
-            using (var dbContext = new MyDbContext())
-            {
-                var listaAtrakcija = dbContext.Attractions.ToList();
-                foreach(var atrakcija in listaAtrakcija)
-                {
-                    SveAtrakcije.Add(atrakcija);
-                }
-
-                var listaSmestaja = dbContext.Hotels.ToList();
-                foreach (var smestaj in listaSmestaja)
-                {
-                    SviSmestaji.Add(smestaj);
-                }
-
-                var listaRestorana = dbContext.Restaurants.ToList();
-                foreach (var restoran in listaRestorana)
-                {
-                    SviRestorani.Add(restoran);
-                }
-            }
+            loadLists();
         }
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
@@ -92,15 +95,9 @@ namespace TravelApp.MVVM.View
             if (openFileDialog.ShowDialog() == true)
             {
                 string selectedImagePath = openFileDialog.FileName;
+                Slika = selectedImagePath;
                 SelectedImage.Source = new BitmapImage(new Uri(selectedImagePath));
             }
-        }
-
-
-
-        private void SubmitButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Perform further processing with the selected picture
         }
 
         private void ListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -279,7 +276,91 @@ namespace TravelApp.MVVM.View
                 }
             }
         }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Aranzman aranzman = new Aranzman(Naziv, Opis, DatumPolaska, DatumPovratka, MestoPolaska, Destinacija, Cena, Slika, IzabraniRestorani.ToList(), IzabraneAtrakcije.ToList(), IzabraniSmestaji.ToList());
+                using (var dbContext = new MyDbContext())
+                {
+                    dbContext.Arrangements.Add(aranzman);
+                    dbContext.SaveChanges();
+                }
 
+                string messageBoxText = "Do you want to save changes?";
+                string caption = "Word Processor";
+                MessageBoxButton button = MessageBoxButton.YesNoCancel;
+                MessageBoxImage icon = MessageBoxImage.Warning;
+                MessageBoxResult result;
+
+                result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+                
+                if(result == MessageBoxResult.Yes)
+                {
+                    Naziv="";
+                    this.Opis = "";
+                    this.MestoPolaska = "";
+                    this.Destinacija = "";
+                    this.Cena = 0;
+                    this.Slika = "";
+                    IzabraniRestorani.Clear();
+                    IzabraneAtrakcije.Clear();
+                    IzabraniSmestaji.Clear();
+                    this.DatumPolaska = DateTime.Now;
+                    this.DatumPovratka = DateTime.Now;
+
+                    loadLists();
+                }
+            } catch (Exception ex) { }
+        }
+
+
+        public void loadLists()
+        {
+            using (var dbContext = new MyDbContext())
+            {
+                var listaAtrakcija = dbContext.Attractions.ToList();
+                foreach (var atrakcija in listaAtrakcija)
+                {
+                    SveAtrakcije.Add(atrakcija);
+                }
+
+                var listaSmestaja = dbContext.Hotels.ToList();
+                foreach (var smestaj in listaSmestaja)
+                {
+                    SviSmestaji.Add(smestaj);
+                }
+
+                var listaRestorana = dbContext.Restaurants.ToList();
+                foreach (var restoran in listaRestorana)
+                {
+                    SviRestorani.Add(restoran);
+                }
+            }
+        }
+
+        public void inhabitDatabase()
+        {
+            using (var dbContext = new MyDbContext())
+            {
+                dbContext.Attractions.Add(new Atrakcija("Naziv1", "Opis", "adresa"));
+                dbContext.Attractions.Add(new Atrakcija("Naziv2", "Opis", "adresa"));
+                dbContext.Attractions.Add(new Atrakcija("Naziv3", "Opis", "adresa"));
+                dbContext.Attractions.Add(new Atrakcija("Naziv4", "Opis", "adresa"));
+                dbContext.Attractions.Add(new Atrakcija("Naziv5", "Opis", "adresa"));
+                dbContext.Attractions.Add(new Atrakcija("Naziv6", "Opis", "adresa"));
+
+                dbContext.Restaurants.Add(new Restoran("Naziv1", "adresa", FoodType.Meksicka));
+                dbContext.Restaurants.Add(new Restoran("Naziv2", "adresa", FoodType.Italijanska));
+                dbContext.Restaurants.Add(new Restoran("Naziv3", "adresa", FoodType.Domaca));
+                dbContext.Restaurants.Add(new Restoran("Naziv4", "adresa", FoodType.Meksicka));
+
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", Stars.three));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", Stars.three));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", Stars.four));
+                dbContext.SaveChanges();
+            }
+        }
     }
 
 }
