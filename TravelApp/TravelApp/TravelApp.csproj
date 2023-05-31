@@ -13,6 +13,12 @@
     <Folder Include="MVVM\Model\" />
     <Folder Include="MVVM\ViewModel\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="MaterialDesignThemes.Wpf" Version="1.0.1" />
+    <PackageReference Include="Syncfusion.Shared.WPF" Version="21.2.6" />
+  </ItemGroup>
     <ItemGroup>
 	    <Resource Include="Fonts\Poppins-Bold.ttf" />
 	    <Resource Include="Fonts\Poppins-ExtraBold.ttf" />
