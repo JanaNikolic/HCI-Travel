@@ -19,10 +19,11 @@
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="436.29"/>
+                <RowDefinition Height="915.71"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Column="0" Grid.Row="0" Margin="50 0 50 0">
+            <StackPanel Grid.Column="0" Grid.Row="0" Margin="50,0,50,0" Grid.RowSpan="2">
                 <Image x:Name="SelectedImage" Height="200" Margin="10" Source="C:\fax\hci\HCI-Travel\TravelApp\TravelApp\Images\placeholder-image.png"/>
                 <Button Content="DODAJ SLIKU" 
                         Template="{DynamicResource AddButton}"
@@ -133,7 +134,7 @@
                         BorderBrush="DarkSlateGray"
                         Background="White"
                         Margin="12,2,2,2">
-                    <DatePicker x:Name="datumPovratka" 
+                        <DatePicker x:Name="datumPovratka" 
                         FontSize="18"
                         SelectedDate="{Binding DatumPovratka, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         FontWeight="Medium"
@@ -216,14 +217,15 @@
                     </ListView>
 
                     <Button 
-                            Template="{DynamicResource AddButton}"
-                            HorizontalAlignment="Right"
+                        Click="OpenAtractionForm_Click"
+                        Template="{DynamicResource AddButton}"
+                        HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                            Grid.Column="1"
-                            Margin="0 10 2 0 "
-                            Grid.Row="4"
-                            Height="25"
-                            Width="135">
+                        Grid.Column="1"
+                        Margin="0 10 2 0 "
+                        Grid.Row="4"
+                        Height="25"
+                        Width="135">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <TextBlock Grid.Column="1" Text="NOVA ATRAKCIJA" FontWeight="Medium" VerticalAlignment="Center" />
                             <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Margin="8 0 0 0"/>
@@ -265,15 +267,15 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <Button 
-                            Template="{DynamicResource AddButton}"
-                            HorizontalAlignment="Right"
+                    <Button Click="OpenRestoranForm_Click"
+                        Template="{DynamicResource AddButton}"
+                        HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                            Grid.Column="1"
-                            Margin="0 10 2 0 "
-                            Grid.Row="6"
-                            Height="25"
-                            Width="135">
+                        Grid.Column="1"
+                        Margin="0 10 2 0 "
+                        Grid.Row="6"
+                        Height="25"
+                        Width="135">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <TextBlock Grid.Column="1" Text="NOV RESTORAN" FontWeight="Medium" VerticalAlignment="Center" />
                             <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Margin="8 0 0 0"/>
@@ -315,15 +317,15 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <Button 
-                            Template="{DynamicResource AddButton}"
-                            HorizontalAlignment="Right"
+                    <Button Click="OpenHotelForm_Click"
+                        Template="{DynamicResource AddButton}"
+                        HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                            Grid.Column="1"
-                            Margin="0 10 2 0 "
-                            Grid.Row="8"
-                            Height="25"
-                            Width="135">
+                        Grid.Column="1"
+                        Margin="0 10 2 0 "
+                        Grid.Row="8"
+                        Height="25"
+                        Width="135">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <TextBlock Grid.Column="1" Text="NOV SMESTAJ" FontWeight="Medium" VerticalAlignment="Center" />
                             <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Margin="8 0 0 0"/>
@@ -369,7 +371,7 @@
                          AcceptsReturn="True" TextWrapping="Wrap" />
                 </Grid>
             </StackPanel>
-            <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="0" FlowDirection="RightToLeft">
+            <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="0" FlowDirection="RightToLeft" Grid.RowSpan="2">
                 <TextBlock  Height="600" Width="200" Background="AliceBlue" VerticalAlignment="Top"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Content="SACUVAJ" Width="120" Height="40" Margin="15"
@@ -386,7 +388,7 @@
                             FontWeight="Medium"
                             Cursor="Hand"
                         Foreground="White"
-                            Margin="15">
+                            Margin="15" Click="Button_Click_1">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border Height="40"

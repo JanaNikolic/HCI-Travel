@@ -40,7 +40,15 @@ namespace TravelApp.MVVM.View
 
         public ObservableCollection<Smestaj> IzabraniSmestaji { get; set; }
 
-        public Double Cena { get; set; }
+        private double _cena { get; set; }
+        public double Cena {
+            get { return _cena; }
+            set
+            {
+                _cena = value;
+                OnPropertyChanged(nameof(Cena));
+            }
+        }
 
         private string _naziv;
         public string Naziv
@@ -53,14 +61,15 @@ namespace TravelApp.MVVM.View
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        private string _opis { get; set; }
+        public string Opis {
+            get { return _opis; }
+            set
+            {
+                _opis = value;
+                OnPropertyChanged(nameof(Opis));
+            }
         }
-
-        public string Opis { get; set; }
 
         public string MestoPolaska { get; set; }
 
@@ -72,11 +81,17 @@ namespace TravelApp.MVVM.View
 
         public string Slika { get; set; }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public FormaAranzman()
         {
             InitializeComponent();
             DataContext = this;
-
             SveAtrakcije = new ObservableCollection<Atrakcija>();
             SviSmestaji = new ObservableCollection<Smestaj>();
             SviRestorani = new ObservableCollection<Restoran>();
@@ -287,10 +302,10 @@ namespace TravelApp.MVVM.View
                     dbContext.SaveChanges();
                 }
 
-                string messageBoxText = "Do you want to save changes?";
-                string caption = "Word Processor";
-                MessageBoxButton button = MessageBoxButton.YesNoCancel;
-                MessageBoxImage icon = MessageBoxImage.Warning;
+                string messageBoxText = "Nov aranžman je uspešno sačuvan. Da li zelite da nastavite?";
+                string caption = "Čuvanje";
+                MessageBoxButton button = MessageBoxButton.YesNo;
+                MessageBoxImage icon = MessageBoxImage.Information;
                 MessageBoxResult result;
 
                 result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
@@ -302,7 +317,8 @@ namespace TravelApp.MVVM.View
                     this.MestoPolaska = "";
                     this.Destinacija = "";
                     this.Cena = 0;
-                    this.Slika = "";
+                    Slika = "C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png";
+                    SelectedImage.Source = new BitmapImage(new Uri(Slika));
                     IzabraniRestorani.Clear();
                     IzabraneAtrakcije.Clear();
                     IzabraniSmestaji.Clear();
@@ -311,12 +327,23 @@ namespace TravelApp.MVVM.View
 
                     loadLists();
                 }
-            } catch (Exception ex) { }
+            } catch (Exception ex) {
+                string messageBoxText = "Došlo je do greške prilikom sačuvanja aranžmana. Pokušajte ponovo.";
+                string caption = "Čuvanje";
+                MessageBoxButton button = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.Warning;
+                MessageBoxResult result;
+
+                result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            }
         }
 
 
         public void loadLists()
         {
+            SveAtrakcije.Clear();
+            SviRestorani.Clear();
+            SviSmestaji.Clear();
             using (var dbContext = new MyDbContext())
             {
                 var listaAtrakcija = dbContext.Attractions.ToList();
@@ -355,10 +382,52 @@ namespace TravelApp.MVVM.View
                 dbContext.Restaurants.Add(new Restoran("Naziv3", "adresa", FoodType.Domaca));
                 dbContext.Restaurants.Add(new Restoran("Naziv4", "adresa", FoodType.Meksicka));
 
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", Stars.three));
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", Stars.three));
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", Stars.four));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 2));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 3));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 4));
                 dbContext.SaveChanges();
+            }
+        }
+
+        public void OpenAtractionForm_Click(object sender, RoutedEventArgs e)
+        {
+            var w = new FormaAtrakcija();
+            w.Closed += Forma_Closed;
+            w.ShowDialog();
+        }
+
+        public void OpenRestoranForm_Click(object sender, RoutedEventArgs e)
+        {
+            var w = new FormaRestoran();
+            w.Closed += Forma_Closed;
+            w.ShowDialog();
+        }
+
+        private void Forma_Closed(object sender, EventArgs e)
+        {
+            loadLists();
+        }
+
+        public void OpenHotelForm_Click(object sender, RoutedEventArgs e)
+        {
+            var w = new FormaSmestaj();
+            w.Closed += Forma_Closed;
+            w.ShowDialog();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+            string messageBoxText = "Jeste li sigurni da želite odustati? Svi podaci koji nisu sačuvani će se izgubiti.";
+            string caption = "Odustajanje od novog aranžmana";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            MessageBoxResult result;
+
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            if (result == MessageBoxResult.Yes)
+            {
+                this.Close();
             }
         }
     }

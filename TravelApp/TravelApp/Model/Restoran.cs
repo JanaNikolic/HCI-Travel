@@ -22,13 +22,4 @@ namespace TravelApp.Model
             FoodType = foodType;
         }
     }
-
-    public enum FoodType
-    {
-        Italijanska,
-        Meksicka,
-        Kineska,
-        Rostilj,
-        Domaca
-    }
 }
