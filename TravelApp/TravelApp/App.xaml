@@ -9,7 +9,7 @@
         <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#3ea8c2"/>
         <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#3ea8c2"/>
         <ControlTemplate x:Key="TextBoxInput" TargetType="{x:Type TextBoxBase}">
-            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="DarkSlateGray" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" CornerRadius="5">
+            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="DarkSlateGray" BorderThickness="2" SnapsToDevicePixels="True" CornerRadius="5">
                 <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
             </Border>
             <ControlTemplate.Triggers>
@@ -21,6 +21,11 @@
                 </Trigger>
                 <Trigger Property="IsKeyboardFocused" Value="true">
                     <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                    <Setter Property="Tag" Value="True" />
+                </Trigger>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="red" />
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -69,9 +74,12 @@
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="true">
                     <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+                    <Setter Property="Foreground" Value="{StaticResource TextBox.MouseOver.Border}"/>
+
                 </Trigger>
                 <Trigger Property="IsKeyboardFocused" Value="true">
                     <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                    <Setter Property="Foreground" Value="{StaticResource TextBox.MouseOver.Border}"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>

@@ -19,7 +19,7 @@ namespace TravelApp.MVVM.View
     /// <summary>
     /// Interaction logic for FormaRestoran.xaml
     /// </summary>
-    public partial class FormaRestoran : Window, INotifyPropertyChanged
+    public partial class FormaRestoran : Window, INotifyPropertyChanged, IDataErrorInfo
     {
 
         private string _adresa { get; set; }
@@ -33,6 +33,17 @@ namespace TravelApp.MVVM.View
             }
         }
 
+        private string _adresaError { get; set; }
+        public string AdresaError
+        {
+            get { return _adresaError; }
+            set
+            {
+                _adresaError = value;
+                OnPropertyChanged(nameof(AdresaError));
+            }
+        }
+
         private string _naziv;
         public string Naziv
         {
@@ -41,6 +52,17 @@ namespace TravelApp.MVVM.View
             {
                 _naziv = value;
                 OnPropertyChanged(nameof(Naziv));
+            }
+        }
+
+        private string _nazivError { get; set; }
+        public string NazivError
+        {
+            get { return _nazivError; }
+            set
+            {
+                _nazivError = value;
+                OnPropertyChanged(nameof(NazivError));
             }
         }
 
@@ -61,10 +83,61 @@ namespace TravelApp.MVVM.View
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private bool _hasNoErrors;
+        public bool HasNoErrors
+        {
+            get { return _hasNoErrors; }
+            set
+            {
+                _hasNoErrors = value;
+                OnPropertyChanged(nameof(HasNoErrors));
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == "Naziv" && string.IsNullOrEmpty(Naziv))
+                {
+                    HasNoErrors = false;
+                    NazivError = "Mora da postoji naziv.";
+                    return "Mora da postoji naziv.";
+                }
+                if (columnName == "Naziv" && !string.IsNullOrEmpty(Naziv))
+                {
+                    NazivError = "";
+                    return null;
+                }
+                if (columnName == "Adresa" && string.IsNullOrEmpty(Adresa))
+                {
+                    HasNoErrors = false;
+                    AdresaError = "Mora da postoji opis";
+                    return "Mora da postoji opis";
+                }
+                if (columnName == "Adresa" && !string.IsNullOrEmpty(Adresa))
+                {
+                    AdresaError = "";
+                    return null;
+                }
+                if (!string.IsNullOrEmpty(Naziv) && !string.IsNullOrEmpty(Adresa))
+                {
+                    HasNoErrors = true;
+                    return null;
+                }
+                return null;
+            }
+        }
+        public string Error
+        {
+            get { return null; }
+        }
         public FormaRestoran()
         {
             InitializeComponent();
             DataContext = this;
+            HasNoErrors = false;
         }
 
         private void Button_Click_Submit(object sender, RoutedEventArgs e)

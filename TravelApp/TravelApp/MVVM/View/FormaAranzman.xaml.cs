@@ -24,7 +24,7 @@ namespace TravelApp.MVVM.View
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class FormaAranzman : Window, INotifyPropertyChanged
+    public partial class FormaAranzman : Window, INotifyPropertyChanged, IDataErrorInfo
     {
         Point startPoint = new Point();
 
@@ -71,9 +71,58 @@ namespace TravelApp.MVVM.View
             }
         }
 
-        public string MestoPolaska { get; set; }
+        private string _nazivError { get; set; }
+        public string NazivError
+        {
+            get { return _nazivError; }
+            set
+            {
+                _nazivError = value;
+                OnPropertyChanged(nameof(NazivError));
+            }
+        }
 
-        public string Destinacija { get; set; }
+        private string _cenaError { get; set; }
+        public string CenaError
+        {
+            get { return _cenaError; }
+            set
+            {
+                _cenaError = value;
+                OnPropertyChanged(nameof(CenaError));
+            }
+        }
+
+        private string _opisError { get; set; }
+        public string OpisError
+        {
+            get { return _opisError; }
+            set
+            {
+                _opisError = value;
+                OnPropertyChanged(nameof(OpisError));
+            }
+        }
+        private string _mestoPolaska { get; set; }
+        public string MestoPolaska { 
+            get { return _mestoPolaska; }
+            set
+            {
+                _mestoPolaska = value;
+                OnPropertyChanged(nameof(MestoPolaska));
+            }
+        }
+
+        private string _destinacija { get; set; }
+        public string Destinacija
+        {
+            get { return _destinacija; }
+            set
+            {
+                _destinacija = value;
+                OnPropertyChanged(nameof(Destinacija));
+            }
+        }
 
         public DateTime DatumPolaska { get; set; } = DateTime.Now;
 
@@ -88,17 +137,99 @@ namespace TravelApp.MVVM.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private bool _hasNoErrors;
+        public bool HasNoErrors
+        {
+            get { return _hasNoErrors; }
+            set
+            {
+                _hasNoErrors = value;
+                OnPropertyChanged(nameof(HasNoErrors));
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == "Naziv" && string.IsNullOrEmpty(Naziv))
+                {
+                    HasNoErrors = false;
+                    NazivError = "Mora da postoji naziv.";
+                    return "Mora da postoji naziv.";
+                } else
+                {
+                    NazivError = "";
+                }
+                if (columnName == "Opis" && string.IsNullOrEmpty(Opis))
+                {
+                    HasNoErrors = false;
+                    OpisError = "Mora da postoji opis.";
+                    return "Mora da postoji opis";
+                } else
+                {
+                    OpisError = "";
+                }
+                if (columnName == "MestoPolaska" && string.IsNullOrEmpty(MestoPolaska))
+                {
+                    HasNoErrors = false;
+                    return "Mora da postoji Mesto Polaska.";
+                } 
+                if (columnName == "Destinacija" && string.IsNullOrEmpty(Destinacija))
+                {
+                    HasNoErrors = false;
+                    return "Mora da postoji destinacija.";
+                }
+                if (columnName == "Cena" && double.IsNegative(Cena) || Cena == default(double))
+                {
+                    HasNoErrors = false;
+                    CenaError = "Cena mora da bude pozitivan broj.";
+                    return "Cena mora da bude pozitivan broj.";
+                } else
+                {
+                    CenaError = "";
+                }
+                if (columnName == "DatumPolaska" && DatumPolaska < DateTime.Now)
+                {
+                    HasNoErrors = false;
+                    return "Datum polaska ne sme biti u proslosti.";
+                }
+                if (columnName == "Datumpovratka" && DatumPovratka < DateTime.Now)
+                {
+                    HasNoErrors = false;
+                    return "Datum povratka ne sme biti u proslosti.";
+                }
+                if (columnName == "DatumPolaska" && DatumPovratka < DatumPolaska)
+                {
+                    HasNoErrors = false;
+                    return "Datum polaska ne sme biti posle datuma povratka.";
+                }
+                if (!string.IsNullOrEmpty(Naziv) && !string.IsNullOrEmpty(Opis) && Cena > 0
+                    && !string.IsNullOrEmpty(MestoPolaska) && !string.IsNullOrEmpty(Destinacija) && DatumPovratka > DatumPolaska)
+                {
+                    HasNoErrors = true;
+                }
+                return null;
+            }
+        }
+
+        public string Error
+        {
+            get { return null; }
+        }
+
         public FormaAranzman()
         {
             InitializeComponent();
             DataContext = this;
+            HasNoErrors = false;
             SveAtrakcije = new ObservableCollection<Atrakcija>();
             SviSmestaji = new ObservableCollection<Smestaj>();
             SviRestorani = new ObservableCollection<Restoran>();
             IzabraneAtrakcije = new ObservableCollection<Atrakcija>();
             IzabraniSmestaji = new ObservableCollection<Smestaj>();
             IzabraniRestorani = new ObservableCollection<Restoran>();
-
+            HasNoErrors = false;
             loadLists();
         }
 
@@ -317,8 +448,8 @@ namespace TravelApp.MVVM.View
                     this.MestoPolaska = "";
                     this.Destinacija = "";
                     this.Cena = 0;
-                    Slika = "C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png";
-                    SelectedImage.Source = new BitmapImage(new Uri(Slika));
+                    Slika = "";
+                    SelectedImage.Source = new BitmapImage(new Uri("C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png"));
                     IzabraniRestorani.Clear();
                     IzabraneAtrakcije.Clear();
                     IzabraniSmestaji.Clear();

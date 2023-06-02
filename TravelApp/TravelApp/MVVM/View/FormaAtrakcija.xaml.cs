@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace TravelApp.MVVM.View
     /// <summary>
     /// Interaction logic for FormaAtrakcija.xaml
     /// </summary>
-    public partial class FormaAtrakcija : Window, INotifyPropertyChanged
+    public partial class FormaAtrakcija : Window, INotifyPropertyChanged, IDataErrorInfo
     {
 
         private string _adresa { get; set; }
@@ -45,6 +46,7 @@ namespace TravelApp.MVVM.View
             }
         }
 
+  
         private string _opis { get; set; }
         public string Opis
         {
@@ -56,6 +58,39 @@ namespace TravelApp.MVVM.View
             }
         }
 
+        private string _nazivError { get; set; }
+        public string NazivError
+        {
+            get { return _nazivError; }
+            set
+            {
+                _nazivError = value;
+                OnPropertyChanged(nameof(NazivError));
+            }
+        }
+
+        private string _adresaError { get; set; }
+        public string AdresaError
+        {
+            get { return _adresaError; }
+            set
+            {
+                _adresaError = value;
+                OnPropertyChanged(nameof(AdresaError));
+            }
+        }
+
+        private string _opisError { get; set; }
+        public string OpisError
+        {
+            get { return _opisError; }
+            set
+            {
+                _opisError = value;
+                OnPropertyChanged(nameof(OpisError));
+            }
+        }
+
         public string Slika { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -64,10 +99,72 @@ namespace TravelApp.MVVM.View
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private bool _hasNoErrors;
+        public bool HasNoErrors
+        {
+            get { return _hasNoErrors; }
+            set
+            {
+                _hasNoErrors = value;
+                OnPropertyChanged(nameof(HasNoErrors));
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == "Naziv" && string.IsNullOrEmpty(Naziv))
+                {
+                    HasNoErrors = false;
+                    NazivError = "Mora da postoji naziv.";
+                    return "Mora da postoji naziv.";
+                }
+                if (columnName == "Naziv" && !string.IsNullOrEmpty(Naziv))
+                {
+                    NazivError = "";
+                    return null;
+                }
+                if (columnName == "Adresa" && string.IsNullOrEmpty(Adresa))
+                {
+                    HasNoErrors = false;
+                    AdresaError = "Mora da postoji adresa";
+                    return "Mora da postoji adresa";
+                }
+                if (columnName == "Adresa" && !string.IsNullOrEmpty(Adresa))
+                {
+                    AdresaError = "";
+                    return null;
+                }
+                if ( columnName == "Opis" && string.IsNullOrEmpty(Opis))
+                {
+                    HasNoErrors = false;
+                    OpisError = "Mora da postoji opis";
+                    return "Mora da postoji opis";
+                }
+                if (columnName == "Opis" && !string.IsNullOrEmpty(Opis))
+                {
+                    OpisError = "";
+                    return null;
+                }
+                if (!string.IsNullOrEmpty(Naziv) && !string.IsNullOrEmpty(Adresa) && !string.IsNullOrEmpty(Opis))
+                {
+                    HasNoErrors = true;
+                    return null;
+                }
+                return null;
+            }
+        }
+        public string Error
+        {
+            get { return null; }
+        }
         public FormaAtrakcija()
         {
             InitializeComponent();
             DataContext = this;
+            HasNoErrors = false;
         }
 
         private void Button_Click_Submit(object sender, RoutedEventArgs e)
@@ -94,8 +191,10 @@ namespace TravelApp.MVVM.View
                     Naziv = "";
                     Opis = "";
                     Adresa = "";
-                    Slika = "C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png";
-                } else if (result == MessageBoxResult.No)
+                    Slika = "";
+                    SelectedImage.Source = new BitmapImage(new Uri("C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png"));
+                }
+                else if (result == MessageBoxResult.No)
                 {
                     this.Close();
                 }
