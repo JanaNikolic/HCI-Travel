@@ -157,7 +157,8 @@ namespace TravelApp.MVVM.View
                     HasNoErrors = false;
                     NazivError = "Mora da postoji naziv.";
                     return "Mora da postoji naziv.";
-                } else
+                }
+                if (columnName == "Naziv" && !string.IsNullOrEmpty(Naziv))
                 {
                     NazivError = "";
                 }
@@ -166,7 +167,8 @@ namespace TravelApp.MVVM.View
                     HasNoErrors = false;
                     OpisError = "Mora da postoji opis.";
                     return "Mora da postoji opis";
-                } else
+                }
+                if (columnName == "Opis" && !string.IsNullOrEmpty(Opis))
                 {
                     OpisError = "";
                 }
@@ -174,18 +176,19 @@ namespace TravelApp.MVVM.View
                 {
                     HasNoErrors = false;
                     return "Mora da postoji Mesto Polaska.";
-                } 
+                }
                 if (columnName == "Destinacija" && string.IsNullOrEmpty(Destinacija))
                 {
                     HasNoErrors = false;
                     return "Mora da postoji destinacija.";
-                }
-                if (columnName == "Cena" && double.IsNegative(Cena) || Cena == default(double))
+                } 
+                if (columnName == "Cena" && double.IsNegative(Cena))
                 {
                     HasNoErrors = false;
                     CenaError = "Cena mora da bude pozitivan broj.";
                     return "Cena mora da bude pozitivan broj.";
-                } else
+                }
+                if (columnName == "Cena" && !double.IsNegative(Cena))
                 {
                     CenaError = "";
                 }

@@ -15,12 +15,19 @@ namespace TravelApp.Model
         [Key] public int Id { get; set; }
 
         [AllowNull]
-        public string PictureLocation { get; set; }
+        public string PictureLocation { get; set; } = "C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png";
         public string Name { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
 
-        public Atrakcija(string Name, string Description, string Address) { 
+        public Atrakcija(string Name, string Description, string Address, string pictureLocation) { 
+            this.Name = Name;
+            this.Description = Description;
+            this.Address = Address;
+            this.PictureLocation = pictureLocation;
+        }
+        public Atrakcija(string Name, string Description, string Address)
+        {
             this.Name = Name;
             this.Description = Description;
             this.Address = Address;

@@ -5,7 +5,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              StartupUri="/MVVM/View/FormaAranzman.xaml">
     <Application.Resources>
-
+        <ScaleTransform x:Key="FontStretchExpanded" ScaleX="1.2" />
         <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#3ea8c2"/>
         <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#3ea8c2"/>
         <ControlTemplate x:Key="TextBoxInput" TargetType="{x:Type TextBoxBase}">
@@ -82,6 +82,11 @@
                     <Setter Property="Foreground" Value="{StaticResource TextBox.MouseOver.Border}"/>
                 </Trigger>
             </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="odaberi" TargetType="CheckBox">
+            <StackPanel VerticalAlignment="Center" >
+                <TextBlock Text="ODABERI" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </StackPanel>
         </ControlTemplate>
     </Application.Resources>
 </Application>
