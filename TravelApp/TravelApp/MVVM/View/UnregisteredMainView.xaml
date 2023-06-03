@@ -48,16 +48,16 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Column="0" Margin="10,10,0,10" HorizontalAlignment="Left" Text="{Binding Name}" FontSize="24" FontFamily="Poppins" VerticalAlignment="Center" FontWeight="Bold" FontStretch="SemiExpanded"/>
-                                    <TextBlock Grid.Column="1" Margin="0" Text="{Binding FromDate}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#268AFF"/>
+                                    <TextBlock Grid.Column="0" Margin="10,10,0,10" Text="{Binding Name}" HorizontalAlignment="Left" FontSize="24" FontFamily="Poppins" VerticalAlignment="Center" FontWeight="Bold" FontStretch="SemiExpanded"/>
+                                    <TextBlock Grid.Column="1" Margin="0" Text="{Binding StartDate, StringFormat={}{0:MM.dd.yyyy.}}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#268AFF"/>
                                     <TextBlock Grid.Column="2" Margin="0" Text="-" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#268AFF"/>
-                                    <TextBlock Grid.Column="2" Margin="10 0" HorizontalAlignment="Right" Text="{Binding ToDate}" FontSize="18" VerticalAlignment="Center" Foreground="#268AFF"/>
+                                    <TextBlock Grid.Column="2" Margin="10 0" Text="{Binding EndDate, StringFormat={}{0:MM.dd.yyyy.}}" HorizontalAlignment="Right" FontSize="18" VerticalAlignment="Center" Foreground="#268AFF"/>
                                 </Grid>
                                 <TextBlock Margin="10 0" Text="{Binding Description}" TextWrapping="Wrap" FontSize="18" VerticalAlignment="Center" Height="115"/>
                                 <DockPanel VerticalAlignment="Bottom" >
                                     <TextBlock Grid.Column="0" Margin="10,0" Text="Mesto polaska:" FontSize="24" FontFamily="Franklin Gothic Medium"/>
-                                    <TextBlock Grid.Column="1" Margin="5 0" Text="{Binding StartAdderss}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                                    <TextBlock Grid.Column="2" Margin="0,0,10,0" Text="{Binding Price, StringFormat={}RSD}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#52B03A"/>
+                                    <TextBlock Grid.Column="1" Margin="5 0" Text="{Binding StartLocation}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                    <TextBlock Grid.Column="2" Margin="0,0,10,0" Text="{Binding Price, StringFormat={}{0:N2} RSD, ConverterCulture=de-DE}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#52B03A"/>
                                 </DockPanel>
 
                             </StackPanel>

@@ -21,7 +21,8 @@ namespace TravelApp.Model
         public string Description { get; set; }
         public string Address { get; set; }
 
-        public Atrakcija(string Name, string Description, string Address) { 
+        public Atrakcija(string Name, string Description, string Address)
+        {
             this.Name = Name;
             this.Description = Description;
             this.Address = Address;
