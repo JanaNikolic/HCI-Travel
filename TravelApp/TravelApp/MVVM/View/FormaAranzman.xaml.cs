@@ -516,9 +516,9 @@ namespace TravelApp.MVVM.View
                 dbContext.Restaurants.Add(new Restoran("Naziv3", "adresa", FoodType.Domaca));
                 dbContext.Restaurants.Add(new Restoran("Naziv4", "adresa", FoodType.Meksicka));
 
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 2));
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 3));
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 4));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 2, "https://stackoverflow.com"));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 3, "https://stackoverflow.com"));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 4, "https://stackoverflow.com"));
                 dbContext.SaveChanges();
             }
         }
