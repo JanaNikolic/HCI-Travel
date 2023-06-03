@@ -40,16 +40,11 @@ namespace TravelApp.MVVM.View
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public PojedinacnaAtrakcija()
+        public PojedinacnaAtrakcija(Atrakcija atrakcija)
         {
             InitializeComponent();
             DataContext = this;
-
-            using (var db = new MyDbContext())
-            {
-                this.Atrakcija = db.Attractions.Find(2);
-                Trace.WriteLine(Atrakcija.Name.ToString());
-            }
+            this.Atrakcija = atrakcija;
         }
     }
 }
