@@ -203,21 +203,24 @@
                                         materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                         UniformCornerRadius="6">
                                     <StackPanel>
-                                        <TextBlock Text="{Binding Name}"
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}"
                                                 FontSize="20"
                                                FontWeight="Bold"
                                                FontFamily="../../Fonts/#Arial"/>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Ocena: "
+                                            <materialDesign:RatingBar Value="{Binding Stars}" IsReadOnly="True"/>
+                                        </StackPanel>
+                                        <TextBlock>
+                                            <Hyperlink NavigateUri="{Binding Link}">
+                                                <TextBlock Text="{Binding Link}" 
                                                 FontStretch="UltraExpanded"
                                                 FontSize="18"
                                                 VerticalAlignment="Bottom"
                                                 Margin="0 0 15 0"
                                                 FontWeight="Bold"
                                                 FontFamily="../../Fonts/#Arial"/>
-
-                                            <materialDesign:RatingBar Value="{Binding Stars}" IsReadOnly="True"/>
-                                        </StackPanel>
+                                            </Hyperlink>
+                                        </TextBlock>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="Adresa: "
                                                 FontStretch="UltraExpanded"
