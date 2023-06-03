@@ -14,9 +14,8 @@ namespace TravelApp.Model
     {
         [Key] public int Id { get; set; }
 
-        [Column(TypeName = "varbinary(max)")]
         [AllowNull]
-        public byte[] Picture { get; set; }
+        public string PictureLocation { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }

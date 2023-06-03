@@ -12,21 +12,16 @@ namespace TravelApp.Model
         [Key] public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public Stars stars { get; set; }
+        public double Stars { get; set; }
 
         public Smestaj() { }
 
-        public Smestaj(string name, string address, Stars stars)
+        public Smestaj(string name, string address, double stars)
         {
             Name = name;
             Address = address;
-            this.stars = stars;
+            Stars = stars;
         }
-
     }
 
-    public enum Stars
-    {
-        one, two, three, four, five
-    }
 }

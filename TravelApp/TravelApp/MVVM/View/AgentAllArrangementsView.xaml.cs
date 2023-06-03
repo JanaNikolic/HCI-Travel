@@ -57,6 +57,14 @@ namespace TravelApp.MVVM.View
 
             using (var dbContext = new MyDbContext())
             {
+                Aranzman a = new Aranzman("Manastiri Fruske Gore", "Opis putovanja...", DateTime.Now.AddDays(1), DateTime.Now.AddDays(5), "Beograd", "Novi Sad", 2000.00, "");
+                dbContext.Arrangements.Add(a);
+                ////dbContext.Arrangements.Add(a);
+                ////dbContext.Arrangements.Add(a);
+                ////dbContext.Arrangements.Add(a);
+                ////dbContext.Arrangements.Add(a);
+                dbContext.SaveChanges();
+
                 SviAranzmani = dbContext.Arrangements.ToList();
                 if (SviAranzmani.Count > 0)
                     ListViewAranzmans.ItemsSource = SviAranzmani;
