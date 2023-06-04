@@ -40,6 +40,30 @@ namespace TravelApp.MVVM.View
 
         public ObservableCollection<Smestaj> IzabraniSmestaji { get; set; }
 
+        private bool edit { get; set; }
+
+        private Aranzman editAranzman { get; set; }
+
+        private int _indeks { get; set; }
+        public int indeks {
+            get { return _indeks; }
+            set
+            {
+                _indeks = value;
+                OnPropertyChanged(nameof(indeks));
+            }
+        }
+
+        private int _brOdabranih { get; set; }
+        public int brOdabranih {
+            get { return _brOdabranih; }
+            set
+            {
+                _brOdabranih = value;
+                OnPropertyChanged(nameof(brOdabranih));
+            }
+        }        
+
         private double _cena { get; set; }
         public double Cena {
             get { return _cena; }
@@ -157,7 +181,8 @@ namespace TravelApp.MVVM.View
                     HasNoErrors = false;
                     NazivError = "Mora da postoji naziv.";
                     return "Mora da postoji naziv.";
-                } else
+                }
+                if (columnName == "Naziv" && !string.IsNullOrEmpty(Naziv))
                 {
                     NazivError = "";
                 }
@@ -166,7 +191,8 @@ namespace TravelApp.MVVM.View
                     HasNoErrors = false;
                     OpisError = "Mora da postoji opis.";
                     return "Mora da postoji opis";
-                } else
+                }
+                if (columnName == "Opis" && !string.IsNullOrEmpty(Opis))
                 {
                     OpisError = "";
                 }
@@ -174,18 +200,19 @@ namespace TravelApp.MVVM.View
                 {
                     HasNoErrors = false;
                     return "Mora da postoji Mesto Polaska.";
-                } 
+                }
                 if (columnName == "Destinacija" && string.IsNullOrEmpty(Destinacija))
                 {
                     HasNoErrors = false;
                     return "Mora da postoji destinacija.";
-                }
-                if (columnName == "Cena" && double.IsNegative(Cena) || Cena == default(double))
+                } 
+                if (columnName == "Cena" && double.IsNegative(Cena))
                 {
                     HasNoErrors = false;
                     CenaError = "Cena mora da bude pozitivan broj.";
                     return "Cena mora da bude pozitivan broj.";
-                } else
+                }
+                if (columnName == "Cena" && !double.IsNegative(Cena))
                 {
                     CenaError = "";
                 }
@@ -220,6 +247,7 @@ namespace TravelApp.MVVM.View
 
         public FormaAranzman()
         {
+            edit = false;
             InitializeComponent();
             DataContext = this;
             HasNoErrors = false;
@@ -231,6 +259,45 @@ namespace TravelApp.MVVM.View
             IzabraniRestorani = new ObservableCollection<Restoran>();
             HasNoErrors = false;
             loadLists();
+        }
+
+        public FormaAranzman(Aranzman aranzman, int brOdabranih, int indeks)
+        {
+
+            //TODO dodati broj odabranih i trenutni
+            edit = true;
+            editAranzman = aranzman;
+            this.indeks = indeks;
+            this.brOdabranih = brOdabranih;
+            
+            InitializeComponent();
+
+            var elem = this.FindName("ListForEdit") as StackPanel;
+            elem.Visibility = Visibility.Visible;
+            DataContext = this;
+            HasNoErrors = false;
+            SveAtrakcije = new ObservableCollection<Atrakcija>();
+            SviSmestaji = new ObservableCollection<Smestaj>();
+            SviRestorani = new ObservableCollection<Restoran>();
+            IzabraneAtrakcije = new ObservableCollection<Atrakcija>();
+            IzabraniSmestaji = new ObservableCollection<Smestaj>();
+            IzabraniRestorani = new ObservableCollection<Restoran>();
+            HasNoErrors = false;
+            loadLists();
+
+            this.Naziv = aranzman.Name;
+            this.Opis = aranzman.Description;
+            this.MestoPolaska = aranzman.StartLocation;
+            this.Destinacija = aranzman.EndLocation;
+            this.Cena = aranzman.Price;
+            this.Slika = aranzman.PictureLocation;
+            //SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png"));
+            //IzabraniRestorani.Clear();
+            //IzabraneAtrakcije.Clear();
+            //IzabraniSmestaji.Clear();
+            this.DatumPolaska = aranzman.StartDate;
+            this.DatumPovratka = aranzman.EndDate;  
+
         }
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
@@ -426,37 +493,78 @@ namespace TravelApp.MVVM.View
         {
             try
             {
-                Aranzman aranzman = new Aranzman(Naziv, Opis, DatumPolaska, DatumPovratka, MestoPolaska, Destinacija, Cena, Slika, IzabraniRestorani.ToList(), IzabraneAtrakcije.ToList(), IzabraniSmestaji.ToList());
-                using (var dbContext = new MyDbContext())
+                if (edit)
                 {
-                    dbContext.Arrangements.Add(aranzman);
-                    dbContext.SaveChanges();
+                    
+                    using (var dbContext = new MyDbContext())
+                    {
+                        //dbContext.Arrangements.Edit(aranzman);
+                        var result = dbContext.Arrangements.SingleOrDefault(x => x.Id == editAranzman.Id);
+
+                        if (result != null)
+                        {
+                            result.Name = Naziv;
+                            result.Description = Opis;
+                            result.StartDate = DatumPolaska;
+                            result.EndDate = DatumPovratka;
+                            result.StartLocation = MestoPolaska;
+                            result.EndLocation = Destinacija;
+                            result.Price = Cena;
+                            result.PictureLocation = Slika;
+                            result.Restorani = IzabraniRestorani.ToList();
+                            result.Atrakcije = IzabraneAtrakcije.ToList();
+                            result.Smestaji = IzabraniSmestaji.ToList();
+
+                            dbContext.SaveChanges();
+                        }
+                        else
+                        {
+                            string messageBoxText = "Greška prilikom izmene aranžmana";
+                            string caption = "Izmena aranžmana";
+                            MessageBoxButton button = MessageBoxButton.OK;
+                            MessageBoxImage icon = MessageBoxImage.Information;
+                            MessageBoxResult mbResult;
+
+                            mbResult = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.OK);
+
+                        }
+                        this.Close();
+                    }
                 }
-
-                string messageBoxText = "Nov aranžman je uspešno sačuvan. Da li zelite da nastavite?";
-                string caption = "Čuvanje";
-                MessageBoxButton button = MessageBoxButton.YesNo;
-                MessageBoxImage icon = MessageBoxImage.Information;
-                MessageBoxResult result;
-
-                result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
-                
-                if(result == MessageBoxResult.Yes)
+                else 
                 {
-                    Naziv="";
-                    this.Opis = "";
-                    this.MestoPolaska = "";
-                    this.Destinacija = "";
-                    this.Cena = 0;
-                    Slika = "";
-                    SelectedImage.Source = new BitmapImage(new Uri("C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png"));
-                    IzabraniRestorani.Clear();
-                    IzabraneAtrakcije.Clear();
-                    IzabraniSmestaji.Clear();
-                    this.DatumPolaska = DateTime.Now;
-                    this.DatumPovratka = DateTime.Now;
+                    Aranzman aranzman = new Aranzman(Naziv, Opis, DatumPolaska, DatumPovratka, MestoPolaska, Destinacija, Cena, Slika, IzabraniRestorani.ToList(), IzabraneAtrakcije.ToList(), IzabraniSmestaji.ToList());
+                    using (var dbContext = new MyDbContext())
+                    {
+                        dbContext.Arrangements.Add(aranzman);
+                        dbContext.SaveChanges();
+                    }
 
-                    loadLists();
+                    string messageBoxText = "Nov aranžman je uspešno sačuvan";
+                    string caption = "Čuvanje";
+                    MessageBoxButton button = MessageBoxButton.OK;
+                    MessageBoxImage icon = MessageBoxImage.Information;
+                    MessageBoxResult result;
+
+                    result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.OK);
+
+                    if (result == MessageBoxResult.OK)
+                    {
+                        Naziv = "";
+                        this.Opis = "";
+                        this.MestoPolaska = "";
+                        this.Destinacija = "";
+                        this.Cena = 0;
+                        Slika = "";
+                        SelectedImage.Source = new BitmapImage(new Uri("C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png"));
+                        IzabraniRestorani.Clear();
+                        IzabraneAtrakcije.Clear();
+                        IzabraniSmestaji.Clear();
+                        this.DatumPolaska = DateTime.Now;
+                        this.DatumPovratka = DateTime.Now;
+
+                        loadLists();
+                    }
                 }
             } catch (Exception ex) {
                 string messageBoxText = "Došlo je do greške prilikom sačuvanja aranžmana. Pokušajte ponovo.";
@@ -513,9 +621,9 @@ namespace TravelApp.MVVM.View
                 dbContext.Restaurants.Add(new Restoran("Naziv3", "adresa", FoodType.Domaca));
                 dbContext.Restaurants.Add(new Restoran("Naziv4", "adresa", FoodType.Meksicka));
 
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 2));
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 3));
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 4));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 2, "https://stackoverflow.com"));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 3, "https://stackoverflow.com"));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 4, "https://stackoverflow.com"));
                 dbContext.SaveChanges();
             }
         }

@@ -14,13 +14,16 @@ namespace TravelApp.Model
         public string Address { get; set; }
         public double Stars { get; set; }
 
+        public string Link { get; set; }
+
         public Smestaj() { }
 
-        public Smestaj(string name, string address, double stars)
+        public Smestaj(string name, string address, double stars, string link)
         {
             Name = name;
             Address = address;
             Stars = stars;
+            Link = link;
         }
     }
 

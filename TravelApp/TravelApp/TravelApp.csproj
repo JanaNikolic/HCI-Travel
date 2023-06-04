@@ -9,12 +9,17 @@
 
   <ItemGroup>
     <None Remove="Images\vidikovac.jpg" />
+    <Compile Remove="Utils\**" />
+    <EmbeddedResource Remove="Utils\**" />
+    <None Remove="Utils\**" />
+    <Page Remove="Utils\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Core\" />
     <Folder Include="MVVM\Model\" />
-    <Folder Include="MVVM\ViewModel\" />
+    <Folder Include="Images\" />
+	<Folder Include="Model\" />
   </ItemGroup>
 
   <ItemGroup>
