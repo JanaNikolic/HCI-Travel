@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\vidikovac.jpg" />
     <Compile Remove="Utils\**" />
     <EmbeddedResource Remove="Utils\**" />
     <None Remove="Utils\**" />
@@ -16,9 +17,9 @@
 
   <ItemGroup>
     <Folder Include="Core\" />
+    <Folder Include="MVVM\Model\" />
     <Folder Include="Images\" />
 	<Folder Include="Model\" />
-    <Folder Include="MVVM\ViewModel\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +37,7 @@
 	    <Resource Include="Images\user-icon.png" />
 		<Resource Include="Images\login.png" />
 	    <Resource Include="Images\logo.png" />
+	    <Resource Include="Images\vidikovac.jpg" />
     </ItemGroup>
 
 </Project>
