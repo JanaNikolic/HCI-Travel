@@ -181,7 +181,8 @@ namespace TravelApp.MVVM.View
                     HasNoErrors = false;
                     NazivError = "Mora da postoji naziv.";
                     return "Mora da postoji naziv.";
-                } else
+                }
+                if (columnName == "Naziv" && !string.IsNullOrEmpty(Naziv))
                 {
                     NazivError = "";
                 }
@@ -190,7 +191,8 @@ namespace TravelApp.MVVM.View
                     HasNoErrors = false;
                     OpisError = "Mora da postoji opis.";
                     return "Mora da postoji opis";
-                } else
+                }
+                if (columnName == "Opis" && !string.IsNullOrEmpty(Opis))
                 {
                     OpisError = "";
                 }
@@ -198,18 +200,19 @@ namespace TravelApp.MVVM.View
                 {
                     HasNoErrors = false;
                     return "Mora da postoji Mesto Polaska.";
-                } 
+                }
                 if (columnName == "Destinacija" && string.IsNullOrEmpty(Destinacija))
                 {
                     HasNoErrors = false;
                     return "Mora da postoji destinacija.";
-                }
-                if (columnName == "Cena" && double.IsNegative(Cena) || Cena == default(double))
+                } 
+                if (columnName == "Cena" && double.IsNegative(Cena))
                 {
                     HasNoErrors = false;
                     CenaError = "Cena mora da bude pozitivan broj.";
                     return "Cena mora da bude pozitivan broj.";
-                } else
+                }
+                if (columnName == "Cena" && !double.IsNegative(Cena))
                 {
                     CenaError = "";
                 }
@@ -618,9 +621,9 @@ namespace TravelApp.MVVM.View
                 dbContext.Restaurants.Add(new Restoran("Naziv3", "adresa", FoodType.Domaca));
                 dbContext.Restaurants.Add(new Restoran("Naziv4", "adresa", FoodType.Meksicka));
 
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 2));
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 3));
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 4));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 2, "https://stackoverflow.com"));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 3, "https://stackoverflow.com"));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 4, "https://stackoverflow.com"));
                 dbContext.SaveChanges();
             }
         }

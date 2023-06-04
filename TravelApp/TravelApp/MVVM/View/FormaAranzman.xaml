@@ -441,7 +441,7 @@
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                             
                         Margin="0,10,0,0"/>
-                        <TextBlock Text="{Binding AdresaError}" Foreground="red" FontSize="18" Margin="20,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding CenaError}" Foreground="red" FontSize="18" Margin="20,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </StackPanel>
                     <TextBox Template="{DynamicResource TextBoxInput}"
                         FontSize="20"

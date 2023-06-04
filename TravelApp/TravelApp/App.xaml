@@ -5,7 +5,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              StartupUri="/MVVM/View/AgentAllArrangementsView.xaml">
     <Application.Resources>
-
+        <ScaleTransform x:Key="FontStretchExpanded" ScaleX="1.2" />
         <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#3ea8c2"/>
         <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#3ea8c2"/>
         <ControlTemplate x:Key="ItemsControlTemplate1" TargetType="{x:Type ItemsControl}">
