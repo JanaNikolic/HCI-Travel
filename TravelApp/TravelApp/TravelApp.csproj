@@ -8,8 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\vidikovac.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Core\" />
-    <Folder Include="Images\" />
     <Folder Include="MVVM\Model\" />
     <Folder Include="MVVM\ViewModel\" />
   </ItemGroup>
@@ -29,6 +32,7 @@
 	    <Resource Include="Images\user-icon.png" />
 		<Resource Include="Images\login.png" />
 	    <Resource Include="Images\logo.png" />
+	    <Resource Include="Images\vidikovac.jpg" />
     </ItemGroup>
 
 </Project>
