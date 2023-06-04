@@ -19,12 +19,19 @@
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="436.29"/>
                 <RowDefinition Height="915.71"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Column="0" Grid.Row="0" Margin="50,0,50,0" Grid.RowSpan="2">
-                <Image x:Name="SelectedImage" Height="200" Margin="10" Source="C:\fax\hci\HCI-Travel\TravelApp\TravelApp\Images\placeholder-image.png"/>
+            <StackPanel x:Name="ListForEdit" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Visibility="Hidden">
+                <TextBlock  Text="{Binding indeks}" FontSize="26" FontWeight="DemiBold" VerticalAlignment="Center" Margin="30 0"></TextBlock>
+                <TextBlock  Text="od" FontSize="24" VerticalAlignment="Center" ></TextBlock>
+                <TextBlock  Text="{Binding brOdabranih}" FontSize="26" VerticalAlignment="Center" FontWeight="DemiBold" Margin="30 0"></TextBlock>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="0" Grid.Row="1" Margin="50,0,50,0" Grid.RowSpan="2">
+                <Image x:Name="SelectedImage" Height="200" Margin="10" Source="..\..\Images\placeholder-image.png"/>
                 <Button Content="DODAJ SLIKU" 
                         Template="{DynamicResource AddButton}"
                     FontSize="18"
@@ -469,7 +476,7 @@
                     </TextBox>
                 </Grid>
             </StackPanel>
-            <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+            <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
                 <TextBlock  Height="600" Width="200" Background="AliceBlue" VerticalAlignment="Top"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Content="ODUSTANI" Width="120" Height="40" Margin="15"
