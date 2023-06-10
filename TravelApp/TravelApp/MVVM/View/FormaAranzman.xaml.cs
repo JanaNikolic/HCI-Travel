@@ -261,13 +261,13 @@ namespace TravelApp.MVVM.View
         public FormaAranzman(Aranzman aranzman, int brOdabranih, int indeks)
         {
 
-            //TODO dodati broj odabranih i trenutni
             edit = true;
             editAranzman = aranzman;
             this.indeks = indeks;
             this.brOdabranih = brOdabranih;
             
             InitializeComponent();
+            this.Title = "Izmeni aranžman";
 
             var elem = this.FindName("ListForEdit") as StackPanel;
             elem.Visibility = Visibility.Visible;
@@ -655,7 +655,7 @@ namespace TravelApp.MVVM.View
         {
 
             string messageBoxText = "Jeste li sigurni da želite odustati? Svi podaci koji nisu sačuvani će se izgubiti.";
-            string caption = "Odustajanje od novog aranžmana";
+            string caption = "Odustajanje od čuanja aranžmana";
             MessageBoxButton button = MessageBoxButton.YesNo;
             MessageBoxImage icon = MessageBoxImage.Warning;
             MessageBoxResult result;

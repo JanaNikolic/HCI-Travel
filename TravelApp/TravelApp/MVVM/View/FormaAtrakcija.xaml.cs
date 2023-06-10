@@ -1,19 +1,10 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using TravelApp.Model;
 
 namespace TravelApp.MVVM.View
@@ -100,6 +91,32 @@ namespace TravelApp.MVVM.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private bool edit { get; set; }
+
+        private Atrakcija editAtrakcija { get; set; }
+
+        private int _indeks { get; set; }
+        public int indeks
+        {
+            get { return _indeks; }
+            set
+            {
+                _indeks = value;
+                OnPropertyChanged(nameof(indeks));
+            }
+        }
+
+        private int _brOdabranih { get; set; }
+        public int brOdabranih
+        {
+            get { return _brOdabranih; }
+            set
+            {
+                _brOdabranih = value;
+                OnPropertyChanged(nameof(brOdabranih));
+            }
+        }
+
         private bool _hasNoErrors;
         public bool HasNoErrors
         {
@@ -167,37 +184,90 @@ namespace TravelApp.MVVM.View
             HasNoErrors = false;
         }
 
+        public FormaAtrakcija(Atrakcija atrakcija, int brOdabranih, int indeks)
+        {
+            edit = true;
+            editAtrakcija = atrakcija;
+            this.indeks = indeks;
+            this.brOdabranih = brOdabranih;
+            
+
+            InitializeComponent();
+            this.Title = "Izmeni atrakciju";
+
+            var elem = this.FindName("ListForEdit") as StackPanel;
+            elem.Visibility = Visibility.Visible;
+
+            DataContext = this;
+            HasNoErrors = false;          
+
+            Naziv = atrakcija.Name;
+            Opis = atrakcija.Description;
+            Adresa = atrakcija.Address;
+            Slika = atrakcija.PictureLocation;
+            //SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png"));
+        }
+
         private void Button_Click_Submit(object sender, RoutedEventArgs e)
         {
             try
             {
-                Atrakcija atrakcija = new Atrakcija(Naziv, Opis, Adresa);
-                using (var dbContext = new MyDbContext())
+                if (edit)
                 {
-                    dbContext.Attractions.Add(atrakcija);
-                    dbContext.SaveChanges();
-                }
+                    using (var dbContext = new MyDbContext())
+                    {
+                        var atrakcija = dbContext.Attractions.SingleOrDefault(a => a.Id == editAtrakcija.Id);
 
-                string messageBoxText = "Nova atrakcija je uspešno sačuvana! Da li zelite da dodate jos?";
-                string caption = "Čuvanje";
-                MessageBoxButton button = MessageBoxButton.YesNo;
-                MessageBoxImage icon = MessageBoxImage.Information;
-                MessageBoxResult result;
+                        if (atrakcija != null)
+                        {
+                            atrakcija.Name = Naziv;
+                            atrakcija.Description = Opis;
+                            atrakcija.Address = Adresa;
+                            dbContext.SaveChanges();
+                        }
+                        else
+                        {
+                            string messageBoxText = "Greška prilikom izmene atrakcije";
+                            string caption = "Izmena atrakcije";
+                            MessageBoxButton button = MessageBoxButton.OK;
+                            MessageBoxImage icon = MessageBoxImage.Information;
+                            MessageBoxResult mbResult;
 
-                result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
-
-                if (result == MessageBoxResult.Yes)
-                {
-                    Naziv = "";
-                    Opis = "";
-                    Adresa = "";
-                    Slika = "";
-                    SelectedImage.Source = new BitmapImage(new Uri("C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png"));
-                }
-                else if (result == MessageBoxResult.No)
-                {
+                            mbResult = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.OK);
+                        }
+                    }
                     this.Close();
                 }
+                else 
+                {
+                    Atrakcija atrakcija = new Atrakcija(Naziv, Opis, Adresa);
+                    using (var dbContext = new MyDbContext())
+                    {
+                        dbContext.Attractions.Add(atrakcija);
+                        dbContext.SaveChanges();
+                    }
+
+                    string messageBoxText = "Nova atrakcija je uspešno sačuvana! Da li zelite da dodate jos?";
+                    string caption = "Čuvanje";
+                    MessageBoxButton button = MessageBoxButton.YesNo;
+                    MessageBoxImage icon = MessageBoxImage.Information;
+                    MessageBoxResult result;
+
+                    result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        Naziv = "";
+                        Opis = "";
+                        Adresa = "";
+                        Slika = "";
+                        SelectedImage.Source = new BitmapImage(new Uri("C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png"));
+                    }
+                    else if (result == MessageBoxResult.No)
+                    {
+                        this.Close();
+                    }
+                }                
             }
             catch (Exception ex) {
                 string messageBoxText = "Došlo je do greške prilikom sačuvanja atrakcije. Pokušajte ponovo.";
@@ -214,7 +284,7 @@ namespace TravelApp.MVVM.View
         {
 
             string messageBoxText = "Jeste li sigurni da želite odustati? Svi podaci koji nisu sačuvani će se izgubiti.";
-            string caption = "Odustajanje od novog aranžmana";
+            string caption = "Odustajanje od čuvanja aranžmana";
             MessageBoxButton button = MessageBoxButton.YesNo;
             MessageBoxImage icon = MessageBoxImage.Warning;
             MessageBoxResult result;

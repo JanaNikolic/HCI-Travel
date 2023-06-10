@@ -97,6 +97,33 @@ namespace TravelApp.MVVM.View
             }
         }
 
+        private bool edit { get; set; }
+
+        private Smestaj editSmestaj { get; set; }
+
+        private int _indeks { get; set; }
+        public int indeks
+        {
+            get { return _indeks; }
+            set
+            {
+                _indeks = value;
+                OnPropertyChanged(nameof(indeks));
+            }
+        }
+
+        private int _brOdabranih { get; set; }
+        public int brOdabranih
+        {
+            get { return _brOdabranih; }
+            set
+            {
+                _brOdabranih = value;
+                OnPropertyChanged(nameof(brOdabranih));
+            }
+        }
+
+
         public string this[string columnName]
         {
             get
@@ -142,39 +169,94 @@ namespace TravelApp.MVVM.View
             HasNoErrors = false;
         }
 
+        public FormaSmestaj(Smestaj smestaj, int brOdabranih, int indeks)
+        {
+            edit = true;
+            editSmestaj = smestaj;
+            this.indeks = indeks;
+            this.brOdabranih = brOdabranih;
+
+
+            InitializeComponent();
+            this.Title = "Izmeni smeštaj";
+
+            var elem = this.FindName("ListForEdit") as StackPanel;
+            elem.Visibility = Visibility.Visible;
+
+            DataContext = this;
+            HasNoErrors = false;
+
+            NazivSmestaja = smestaj.Name;
+
+            AdresaSmestaja = smestaj.Address;
+            Rating = smestaj.Stars;
+            // TODO Link
+        }
+
         private void Button_Click_Submit(object sender, RoutedEventArgs e)
         {
             try
             {
-                Smestaj smestaj = new Smestaj(NazivSmestaja, AdresaSmestaja, Rating);
-                using (var dbContext = new MyDbContext())
+                if (edit)
                 {
-                    dbContext.Hotels.Add(smestaj);
-                    dbContext.SaveChanges();
-                }
+                    using (var dbContext = new MyDbContext())
+                    {
+                        var smestaj = dbContext.Hotels.SingleOrDefault(a => a.Id == editSmestaj.Id);
 
-                string messageBoxText = "Nov smestaj je uspešno sačuvan! Da li zelite da nastavite?";
-                string caption = "Čuvanje";
-                MessageBoxButton button = MessageBoxButton.YesNo;
-                MessageBoxImage icon = MessageBoxImage.Information;
-                MessageBoxResult result;
+                        if (smestaj != null)
+                        {
+                            smestaj.Name = NazivSmestaja;
+                            smestaj.Address = AdresaSmestaja;
+                            smestaj.Stars = Rating;
+                            //smestaj.Link = Link;
+                            dbContext.SaveChanges();
+                        }
+                        else
+                        {
+                            string messageBoxText = "Greška prilikom izmene smeštaja";
+                            string caption = "Izmena smeštaja";
+                            MessageBoxButton button = MessageBoxButton.OK;
+                            MessageBoxImage icon = MessageBoxImage.Information;
+                            MessageBoxResult mbResult;
 
-                result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
-
-                if (result == MessageBoxResult.Yes)
-                {
-                    NazivSmestaja = "";
-                    AdresaSmestaja = "";
-                    Rating = 0;
-                }
-                else if (result == MessageBoxResult.No)
-                {
+                            mbResult = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.OK);
+                        }
+                    }
                     this.Close();
                 }
+                else
+                {
+                    Smestaj smestaj = new Smestaj(NazivSmestaja, AdresaSmestaja, Rating);
+                    using (var dbContext = new MyDbContext())
+                    {
+                        dbContext.Hotels.Add(smestaj);
+                        dbContext.SaveChanges();
+                    }
+
+                    string messageBoxText = "Nov smeštaj je uspešno sačuvan! Da li želite da nastavite?";
+                    string caption = "Čuvanje";
+                    MessageBoxButton button = MessageBoxButton.YesNo;
+                    MessageBoxImage icon = MessageBoxImage.Information;
+                    MessageBoxResult result;
+
+                    result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        NazivSmestaja = "";
+                        AdresaSmestaja = "";
+                        Rating = 0;
+                    }
+                    else if (result == MessageBoxResult.No)
+                    {
+                        this.Close();
+                    }
+                }
+
             }
             catch (Exception ex)
             {
-                string messageBoxText = "Došlo je do greške prilikom sačuvanja restorana. Pokušajte ponovo.";
+                string messageBoxText = "Došlo je do greške prilikom sačuvanja smeštaja. Pokušajte ponovo.";
                 string caption = "Čuvanje";
                 MessageBoxButton button = MessageBoxButton.OK;
                 MessageBoxImage icon = MessageBoxImage.Warning;
@@ -188,7 +270,7 @@ namespace TravelApp.MVVM.View
         {
 
             string messageBoxText = "Jeste li sigurni da želite odustati? Svi podaci koji nisu sačuvani će se izgubiti.";
-            string caption = "Odustajanje od novog aranžmana";
+            string caption = "Odustajanje od čuvanja smeštaja";
             MessageBoxButton button = MessageBoxButton.YesNo;
             MessageBoxImage icon = MessageBoxImage.Warning;
             MessageBoxResult result;
