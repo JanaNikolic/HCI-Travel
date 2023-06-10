@@ -70,17 +70,17 @@ namespace TravelApp.MVVM.View
         {
             using (var dbContext = new MyDbContext())
             {
-                //Smestaj a = new Smestaj("Smestaj", "Adresa", 3.2);
-                //dbContext.Hotels.Add(a);
-                //a = new Smestaj("Smesaj 1", "Adresa", 2.5);
-                //dbContext.Hotels.Add(a);
-                //a = new Smestaj("Smesaj 2", "Adresa", 4);
-                //dbContext.Hotels.Add(a);
-                //a = new Smestaj("Smesaj 3", "Adresa", 4.5);
-                //dbContext.Hotels.Add(a);
-                //a = new Smestaj("Smesaj 4", "Adresa", 5);
-                //dbContext.Hotels.Add(a);
-                //dbContext.SaveChanges();
+                Smestaj a = new Smestaj("Smestaj", "Adresa", 3.2, "link");
+                dbContext.Hotels.Add(a);
+                a = new Smestaj("Smesaj 1", "Adresa", 2.5, "www.google.com");
+                dbContext.Hotels.Add(a);
+                a = new Smestaj("Smesaj 2", "Adresa", 4, "link");
+                dbContext.Hotels.Add(a);
+                a = new Smestaj("Smesaj 3", "Adresa", 4.5, "link");
+                dbContext.Hotels.Add(a);
+                a = new Smestaj("Smesaj 4", "Adresa", 5, "link");
+                dbContext.Hotels.Add(a);
+                dbContext.SaveChanges();
 
                 SviSmestaji = dbContext.Hotels.ToList();
                 if (SviSmestaji.Count > 0)

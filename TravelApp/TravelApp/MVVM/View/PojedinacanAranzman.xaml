@@ -1,0 +1,245 @@
+﻿<Window x:Class="TravelApp.MVVM.View.PojedinacanAranzman"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:local="clr-namespace:TravelApp.MVVM.View"
+        mc:Ignorable="d"
+        Icon="../../Images/logo.png"
+        Title="PojedinacanAranzman" Height="650" Width="900"
+        MinWidth="650"
+        MinHeight="400">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" Margin="40 0 40 0">
+            <Image x:Name="SelectedImage" Height="200" Margin="0 10 0 10" Stretch="UniformToFill" Source="C:\fax\hci\HCI-Travel\TravelApp\TravelApp\Images\placeholder-image.png"/>
+            <TextBlock Text="{Binding Aranzman.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                       HorizontalAlignment="Center"
+                       Height="40"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       FontFamily="../../Fonts/#Arial" />
+            <TextBlock Text="{Binding Aranzman.Description, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                       TextAlignment="Justify"
+                       HorizontalAlignment="Stretch"
+                       TextWrapping="Wrap" 
+                       Margin="0 0 0 10"
+                       FontSize="18"
+                       FontWeight="Medium"
+                       FontFamily="../../Fonts/#Arial" />
+            <StackPanel Orientation="Horizontal"
+                           Height="40">
+                <TextBlock Text="Datum putovanja:"
+                       Foreground="#1F1F1F"
+                       FontSize="18"
+                        VerticalAlignment="Center"
+                       FontWeight="Bold"
+                       FontFamily="../../Fonts/#Arial"/>
+                    <TextBlock Text="{Binding Aranzman.StartDate , StringFormat={}{0:MM.dd.yyyy.}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                           Margin="15 0 5 0"
+                        VerticalAlignment="Center"
+                       FontSize="18"
+                       FontWeight="Medium"
+                       FontFamily="../../Fonts/#Arial"/>
+                <TextBlock Text="-"
+                        VerticalAlignment="Center"
+                       FontSize="18"
+                       FontWeight="Medium"
+                       FontFamily="../../Fonts/#Arial"/>
+                    <TextBlock Text="{Binding Aranzman.EndDate, StringFormat={}{0:MM.dd.yyyy.}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                       FontSize="18"
+                        VerticalAlignment="Center"
+                           Margin="5 0 0 0"
+                       FontWeight="Medium"
+                       FontFamily="../../Fonts/#Arial"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                           Height="40">
+                <TextBlock Text="Mesto polaska:"
+                       Foreground="#1F1F1F"
+                        VerticalAlignment="Center"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       FontFamily="../../Fonts/#Arial"/>
+                <TextBlock Text="{Binding Aranzman.StartLocation, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                       FontSize="18"
+                       VerticalAlignment="Center"
+                       Margin="15 0 0 0"
+                       FontWeight="Medium"
+                       FontFamily="../../Fonts/#Arial"/>
+            </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                           Height="40">
+                    <TextBlock Text="Destinacija:"
+                       Foreground="#1F1F1F"
+                        VerticalAlignment="Center"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       FontFamily="../../Fonts/#Arial"/>
+                    <TextBlock Text="{Binding Aranzman.EndLocation, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                       FontSize="18"
+                       VerticalAlignment="Center"
+                       Margin="15 0 0 0"
+                       FontWeight="Medium"
+                       FontFamily="../../Fonts/#Arial"/>
+                </StackPanel>
+                <TextBlock Text="Atrakcije"
+                       HorizontalAlignment="Center"
+                       FontSize="22"
+                       Margin="0 10 0 10"
+                       FontWeight="Bold"
+                       FontFamily="../../Fonts/#Arial"/>
+            <ItemsControl ItemsSource="{Binding Aranzman.Atrakcije}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="0">
+                                <materialDesign:Card HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Foreground="Black"
+                                        Background="White"
+                                        Margin="5"
+                                        materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                        UniformCornerRadius="6">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding PictureLocation, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                               Width="150"/>
+                                        <StackPanel Margin="15" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Name}"
+                                                FontSize="18"
+                                               FontWeight="Bold"
+                                               FontFamily="../../Fonts/#Arial"/>
+                                            <TextBlock Text="{Binding Description}"
+                                                FontSize="18"
+                                               FontWeight="Medium"
+                                               FontFamily="../../Fonts/#Arial"/>
+                                            <TextBlock Text="{Binding Address}"
+                                                FontSize="18"
+                                               FontWeight="Medium"
+                                               FontFamily="../../Fonts/#Arial"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </materialDesign:Card>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock Text="Restorani"
+                       HorizontalAlignment="Center"
+                       FontSize="22"
+                       Margin="0 10 0 10"
+                       FontWeight="Bold"
+                       FontFamily="../../Fonts/#Arial"/>
+            <ItemsControl ItemsSource="{Binding Aranzman.Restorani}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="0">
+                                <materialDesign:Card HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Foreground="Black"
+                                        Background="White"
+                                        Margin="5"
+                                        Padding="25 15 25 15"
+                                        materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                        UniformCornerRadius="6">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Name}"
+                                                FontSize="20"
+                                               FontWeight="Bold"
+                                               FontFamily="../../Fonts/#Arial"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Adresa: "
+                                                FontStretch="UltraExpanded"
+                                                FontSize="18"
+                                                Margin="0 0 15 0"
+                                                FontWeight="Bold"
+                                                FontFamily="../../Fonts/#Arial"/>
+                                            <TextBlock Text="{Binding Address}"
+                                                FontSize="18"
+                                                FontWeight="Medium"
+                                                FontFamily="../../Fonts/#Arial"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Vrsta kuhinje: "
+                                                FontStretch="UltraExpanded"
+                                                FontSize="18"
+                                                Margin="0 0 15 0"
+                                                FontWeight="Bold"
+                                                FontFamily="../../Fonts/#Arial"/>
+                                            <TextBlock Text="{Binding FoodType}"
+                                                FontSize="18"
+                                                FontWeight="Medium"
+                                                FontFamily="../../Fonts/#Arial"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </materialDesign:Card>
+                            </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+                <TextBlock Text="Smestaj"
+                       HorizontalAlignment="Center"
+                       FontSize="22"
+                       Margin="0 10 0 10"
+                       FontWeight="Bold"
+                       FontFamily="../../Fonts/#Arial"/>
+            <ItemsControl ItemsSource="{Binding Aranzman.Smestaji}" Margin="0 0 0 20">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="0">
+                                <materialDesign:Card HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Foreground="Black"
+                                        Background="White"
+                                        Margin="5"
+                                        Padding="25 15 25 15"
+                                        materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                        UniformCornerRadius="6">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}"
+                                                FontSize="20"
+                                               FontWeight="Bold"
+                                               FontFamily="../../Fonts/#Arial"/>
+                                            <materialDesign:RatingBar Value="{Binding Stars}" IsReadOnly="True"/>
+                                        </StackPanel>
+                                        <TextBlock>
+                                            <Hyperlink NavigateUri="{Binding Link}">
+                                                <TextBlock Text="{Binding Link}" 
+                                                FontStretch="UltraExpanded"
+                                                FontSize="18"
+                                                VerticalAlignment="Bottom"
+                                                Margin="0 0 15 0"
+                                                FontWeight="Bold"
+                                                FontFamily="../../Fonts/#Arial"/>
+                                            </Hyperlink>
+                                        </TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Adresa: "
+                                                FontStretch="UltraExpanded"
+                                                FontSize="18"
+                                                Margin="0 0 15 0"
+                                                FontWeight="Bold"
+                                                FontFamily="../../Fonts/#Arial"/>
+                                            <TextBlock Text="{Binding Address}"
+                                                FontSize="18"
+                                                FontWeight="Medium"
+                                                FontFamily="../../Fonts/#Arial"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </materialDesign:Card>
+                            </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Grid>
+    </ScrollViewer>
+</Window>

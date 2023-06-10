@@ -72,9 +72,9 @@ namespace TravelApp.MVVM.View
         {
             using (var dbContext = new MyDbContext())
             {
-                //Restoran a = new Restoran("Loft", "Adresa", FoodType.Italijanska);
-                //dbContext.Restaurants.Add(a);
-                //dbContext.SaveChanges();
+                Restoran a = new Restoran("Loft", "Adresa", FoodType.Italijanska);
+                dbContext.Restaurants.Add(a);
+                dbContext.SaveChanges();
 
                 SviRestorani = dbContext.Restaurants.ToList();
                 if (SviRestorani.Count > 0)

@@ -46,7 +46,6 @@ namespace TravelApp.MVVM.View
         }
 
         private double _rating;
-
         public double Rating
         {
             get { return _rating; }
@@ -54,6 +53,17 @@ namespace TravelApp.MVVM.View
             {
                 _rating = value;
                 OnPropertyChanged(nameof(Rating));
+            }
+        }
+
+        private string _link;
+        public string Link
+        {
+            get { return _link;  }
+            set
+            {
+                _link = value;
+                OnPropertyChanged(nameof(Link));
             }
         }
 
@@ -76,6 +86,17 @@ namespace TravelApp.MVVM.View
             {
                 _adresaError = value;
                 OnPropertyChanged(nameof(AdresaError));
+            }
+        }
+
+        private string _linkError { get; set; }
+        public string LinkError
+        {
+            get { return _linkError; }
+            set
+            {
+                _linkError = value;
+                OnPropertyChanged(nameof(LinkError));
             }
         }
 
@@ -150,7 +171,18 @@ namespace TravelApp.MVVM.View
                     AdresaError = "";
                     return null;
                 }
-                if (!string.IsNullOrEmpty(NazivSmestaja) && !string.IsNullOrEmpty(AdresaSmestaja))
+                if(columnName == "Link" && string.IsNullOrEmpty(Link))
+                {
+                    HasNoErrors = false;
+                    LinkError = "Morate uneti link";
+                    return "Morate uneti link";
+                }
+                if (columnName == "Link" && !string.IsNullOrEmpty(Link))
+                {
+                    LinkError = "";
+                    return null;
+                }
+                if (!string.IsNullOrEmpty(NazivSmestaja) && !string.IsNullOrEmpty(AdresaSmestaja) && !string.IsNullOrEmpty(Link))
                 {
                     HasNoErrors = true;
                     return null;
@@ -190,7 +222,7 @@ namespace TravelApp.MVVM.View
 
             AdresaSmestaja = smestaj.Address;
             Rating = smestaj.Stars;
-            // TODO Link
+            Link = smestaj.Link;
         }
 
         private void Button_Click_Submit(object sender, RoutedEventArgs e)
@@ -208,7 +240,7 @@ namespace TravelApp.MVVM.View
                             smestaj.Name = NazivSmestaja;
                             smestaj.Address = AdresaSmestaja;
                             smestaj.Stars = Rating;
-                            //smestaj.Link = Link;
+                            smestaj.Link = Link;
                             dbContext.SaveChanges();
                         }
                         else
@@ -226,7 +258,7 @@ namespace TravelApp.MVVM.View
                 }
                 else
                 {
-                    Smestaj smestaj = new Smestaj(NazivSmestaja, AdresaSmestaja, Rating);
+                    Smestaj smestaj = new Smestaj(NazivSmestaja, AdresaSmestaja, Rating, Link);
                     using (var dbContext = new MyDbContext())
                     {
                         dbContext.Hotels.Add(smestaj);
