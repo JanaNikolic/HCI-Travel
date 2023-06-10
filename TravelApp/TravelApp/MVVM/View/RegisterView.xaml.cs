@@ -161,7 +161,6 @@ namespace TravelApp.MVVM.View
                 using (var db = new MyDbContext())
                 {
                     User user = new User(UserName, Password, Role.Client);
-                    Trace.WriteLine(user);
                     db.Users.Add(user);
                     db.SaveChanges();
                 }

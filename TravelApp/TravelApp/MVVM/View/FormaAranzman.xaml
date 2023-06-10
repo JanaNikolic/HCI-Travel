@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelApp.MVVM.View"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         x:Class="TravelApp.MVVM.View.FormaAranzman"
         mc:Ignorable="d"
@@ -12,26 +13,23 @@
         Title="Kreiraj aranzman"
         WindowState="Maximized"
         >
-    <ScrollViewer>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="6*"/>
-                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="436.29"/>
-                <RowDefinition Height="915.71"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <StackPanel x:Name="ListForEdit" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Visibility="Hidden">
                 <TextBlock  Text="{Binding indeks}" FontSize="26" FontWeight="DemiBold" VerticalAlignment="Center" Margin="30 0"></TextBlock>
                 <TextBlock  Text="od" FontSize="24" VerticalAlignment="Center" ></TextBlock>
                 <TextBlock  Text="{Binding brOdabranih}" FontSize="26" VerticalAlignment="Center" FontWeight="DemiBold" Margin="30 0"></TextBlock>
             </StackPanel>
-            
-            <StackPanel Grid.Column="0" Grid.Row="1" Margin="50,0,50,0" Grid.RowSpan="2">
-                <Image x:Name="SelectedImage" Height="200" Margin="10" Source="..\..\Images\placeholder-image.png"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Grid.Column="0" Grid.Row="0" Margin="50,0,50,0" Grid.RowSpan="2">
+                <Image x:Name="SelectedImage" Stretch="UniformToFill" Height="200" Margin="10" Source="C:\fax\hci\HCI-Travel\TravelApp\TravelApp\Images\placeholder-image.png"/>
                 <Button Content="DODAJ SLIKU" 
                         Template="{DynamicResource AddButton}"
                     FontSize="18"
@@ -40,7 +38,7 @@
                     Cursor="Hand"   
                     Click="BrowseButton_Click"/>
                 <StackPanel Orientation="Horizontal">
-                <Label Content="NAZIV ARANZMANA"
+                    <Label Content="NAZIV ARANZMANA"
                        Foreground="#1F1F1F"
                         FontSize="20"
                         FontWeight="Medium"
@@ -112,6 +110,45 @@
                         </ControlTemplate>
                     </Validation.ErrorTemplate>
                 </TextBox>
+                <StackPanel Orientation="Horizontal" 
+                        Grid.Row="10"
+                        Grid.Column="0" >
+                    <Label Content="CENA" 
+                        Foreground="#1F1F1F"
+                        FontSize="20"
+                        FontWeight="Medium"
+                        FontFamily="../../Fonts/#Poppins"                             
+                        Margin="0,10,0,0"/>
+                    <TextBlock Text="{Binding CenaError}" Foreground="red" FontSize="18" Margin="20,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                </StackPanel>
+                <TextBox Template="{DynamicResource TextBoxInput}"
+                        FontSize="20"
+                        Text="{Binding Cena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                        FontWeight="Medium"
+                        FontFamily="../../Fonts/#Poppins"                            
+                        Foreground="#1F1F1F"
+                        CaretBrush="#1F1F1F"
+                        BorderThickness="2"
+                        BorderBrush="Black"
+                        VerticalContentAlignment="Center"
+                        Margin="2,2,2,2"
+                        Padding="5,2,2,2"
+                         AcceptsReturn="True" TextWrapping="Wrap" >
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
+                            </Grid>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                </TextBox>
 
                 <Grid Margin="0 0 0 15">
                     <Grid.ColumnDefinitions>
@@ -119,8 +156,6 @@
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -224,6 +259,7 @@
                         Margin="2,2,12,2"
                         Padding="4,4,4,4"
                         Grid.Row="3"
+                        LostFocus="AddStartLocation"
                          AcceptsReturn="True" TextWrapping="Wrap" Height="40">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
@@ -264,6 +300,7 @@
                         Padding="4,4,4,4"
                         Grid.Row="3"
                         Grid.Column="1"
+                        LostFocus="AddDestination"
                          AcceptsReturn="True" TextWrapping="Wrap" Height="40">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
@@ -432,53 +469,22 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <StackPanel Orientation="Horizontal" 
-                        Grid.Row="10"
-                        Grid.Column="0" >
-                        <Label Content="CENA" 
-                        Foreground="#1F1F1F"
-                        FontSize="20"
-                        FontWeight="Medium"
-                        FontFamily="../../Fonts/#Poppins"                             
-                        Margin="0,10,0,0"/>
-                        <TextBlock Text="{Binding CenaError}" Foreground="red" FontSize="18" Margin="20,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    </StackPanel>
-                    <TextBox Template="{DynamicResource TextBoxInput}"
-                        FontSize="20"
-                        Text="{Binding Cena, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                        FontWeight="Medium"
-                        Grid.Row="11"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="2"
-                        FontFamily="../../Fonts/#Poppins"                            
-                        Foreground="#1F1F1F"
-                        CaretBrush="#1F1F1F"
-                        BorderThickness="2"
-                        BorderBrush="Black"
-                        VerticalContentAlignment="Center"
-                        Margin="2,2,2,2"
-                        Padding="5,2,2,2"
-                         AcceptsReturn="True" TextWrapping="Wrap" >
-                        <Validation.ErrorTemplate>
-                            <ControlTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-
-                                    <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
-                                </Grid>
-                            </ControlTemplate>
-                        </Validation.ErrorTemplate>
-                    </TextBox>
+                    
                 </Grid>
             </StackPanel>
-            <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
-                <TextBlock  Height="600" Width="200" Background="AliceBlue" VerticalAlignment="Top"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+        </ScrollViewer>
+        <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+            <m:Map Grid.Row="0"
+                       x:Name="myMap"
+                       CredentialsProvider="VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3" 
+                       Center="44.316093, 20.851270" 
+                       ZoomLevel="7"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
                     <Button Content="ODUSTANI" Width="120" Height="40" Margin="15"
                             Template="{DynamicResource AddButton}"
                             FontSize="18"
@@ -516,8 +522,6 @@
                         </Button.Template>
                     </Button>
                 </StackPanel>
-
-            </StackPanel>
+            </Grid>
         </Grid>
-    </ScrollViewer>
 </Window>

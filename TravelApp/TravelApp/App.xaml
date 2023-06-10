@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TravelApp"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             StartupUri="/MVVM/View/RegisterView.xaml">
+             StartupUri="/MVVM/View/FormaAranzman.xaml">
     <Application.Resources>
         <ScaleTransform x:Key="FontStretchExpanded" ScaleX="1.2" />
         <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#3ea8c2"/>

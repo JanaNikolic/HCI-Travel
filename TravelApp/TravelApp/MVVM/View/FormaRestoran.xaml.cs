@@ -108,7 +108,6 @@ namespace TravelApp.MVVM.View
                 if (columnName == "Naziv" && !string.IsNullOrEmpty(Naziv))
                 {
                     NazivError = "";
-                    return null;
                 }
                 if (columnName == "Adresa" && string.IsNullOrEmpty(Adresa))
                 {
@@ -119,7 +118,6 @@ namespace TravelApp.MVVM.View
                 if (columnName == "Adresa" && !string.IsNullOrEmpty(Adresa))
                 {
                     AdresaError = "";
-                    return null;
                 }
                 if (!string.IsNullOrEmpty(Naziv) && !string.IsNullOrEmpty(Adresa))
                 {
