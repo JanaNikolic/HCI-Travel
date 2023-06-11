@@ -9,6 +9,19 @@
         Title="FormaSmestaj" Height="520" Width="700"
         MinHeight="500"
         MinWidth="500">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:CustomCommands.Save}"
+                        Executed="SaveExecuted"
+                        CanExecute="CanSaveExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.Close}"
+                        Executed="CloseExecuted"
+                        CanExecute="CanCloseExecute" />
+    </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{x:Static local:CustomCommands.Save}" />
+        <KeyBinding Gesture="CTRL+X" Command="{x:Static local:CustomCommands.Close}" />
+    </Window.InputBindings>
     <StackPanel Margin="80 20 80 0">
         <StackPanel Orientation="Horizontal">
             <Label Content="NAZIV SMESTAJA"

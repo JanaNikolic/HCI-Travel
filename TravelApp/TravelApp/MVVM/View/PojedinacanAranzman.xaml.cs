@@ -31,7 +31,6 @@ namespace TravelApp.MVVM.View
 
     public partial class PojedinacanAranzman : Window, INotifyPropertyChanged
     {
-
         private Aranzman _aranzman { get; set; }
         public Aranzman Aranzman
         {
@@ -53,6 +52,8 @@ namespace TravelApp.MVVM.View
         {
             InitializeComponent();
             DataContext = this;
+            CommandManager.RegisterClassCommandBinding(typeof(PojedinacnaAtrakcija), new CommandBinding(CustomCommands.Close, CloseExecuted, CanCloseExecute));
+
 
             Aranzman = aranzman;
             if (Aranzman.PictureLocation == null || Aranzman.PictureLocation == "")
@@ -188,6 +189,16 @@ namespace TravelApp.MVVM.View
                 myMap.Children.Add(routeLine);
             }
         }
-        
+
+        private void CloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void CanCloseExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
     }
 }

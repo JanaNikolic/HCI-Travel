@@ -11,6 +11,15 @@
         Title="PojedinacanAranzman" Height="650" Width="900"
         MinWidth="650"
         MinHeight="400">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:CustomCommands.Close}"
+                        Executed="CloseExecuted"
+                        CanExecute="CanCloseExecute" />
+    </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Gesture="CTRL+X" Command="{x:Static local:CustomCommands.Close}" />
+    </Window.InputBindings>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
     <Grid>
         <Grid.ColumnDefinitions>

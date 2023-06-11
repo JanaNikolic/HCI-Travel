@@ -13,6 +13,23 @@
         Title="Kreiraj aranzman"
         WindowState="Maximized"
         >
+        <Window.CommandBindings>
+            <CommandBinding Command="{x:Static local:CustomCommands.Save}"
+                            Executed="SaveExecuted"
+                            CanExecute="CanSaveExecute" />
+            <CommandBinding Command="{x:Static local:CustomCommands.Close}"
+                            Executed="CloseExecuted"
+                            CanExecute="CanCloseExecute" />
+            <CommandBinding Command="{x:Static local:CustomCommands.Browse}"
+                                Executed="BrowseExecuted"
+                                CanExecute="CanBrowseExecute" />
+    </Window.CommandBindings>
+
+        <Window.InputBindings>
+            <KeyBinding Key="Enter" Command="{x:Static local:CustomCommands.Save}" />
+            <KeyBinding Gesture="CTRL+X" Command="{x:Static local:CustomCommands.Close}" />
+            <KeyBinding Gesture="CTRL+O" Command="{x:Static local:CustomCommands.Browse}" />
+    </Window.InputBindings>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7*"/>

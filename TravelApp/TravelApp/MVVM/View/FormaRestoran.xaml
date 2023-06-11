@@ -4,8 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelApp"
+        xmlns:local2="clr-namespace:TravelApp.MVVM.View"
         mc:Ignorable="d"
         Title="FormaRestoran" Height="550" Width="680">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local2:CustomCommands.Close}"
+                        Executed="CloseExecuted"
+                        CanExecute="CanCloseExecute" />
+        <CommandBinding Command="{x:Static local2:CustomCommands.Save}"
+                        Executed="SaveExecuted"
+                        CanExecute="CanSaveExecute" />
+    </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{x:Static local2:CustomCommands.Save}" />
+        <KeyBinding Gesture="CTRL+X" Command="{x:Static local2:CustomCommands.Close}" />
+    </Window.InputBindings>
     <ScrollViewer>
         <StackPanel Margin="80 20 80 40">
             <StackPanel Orientation="Horizontal">

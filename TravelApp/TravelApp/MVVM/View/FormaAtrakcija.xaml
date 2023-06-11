@@ -9,6 +9,23 @@
         WindowStartupLocation="CenterScreen"
         Background="#F0F0F0"
         Title="FormaAtrakcija" Height="750" Width="900">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:CustomCommands.Save}"
+                        Executed="SaveExecuted"
+                        CanExecute="CanSaveExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.Close}"
+                        Executed="CloseExecuted"
+                        CanExecute="CanCloseExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.Browse}"
+                        Executed="BrowseExecuted"
+                        CanExecute="CanBrowseExecute" />
+    </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{x:Static local:CustomCommands.Save}" />
+        <KeyBinding Gesture="CTRL+X" Command="{x:Static local:CustomCommands.Close}" />
+        <KeyBinding Gesture="CTRL+O" Command="{x:Static local:CustomCommands.Browse}" />
+    </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*"/>
@@ -175,6 +192,7 @@
                        Center="44.316093, 20.851270" 
                        ZoomLevel="7"
                        MouseDoubleClick="MapWithPushpins_MouseDoubleClick"
-                       TouchDown="MapWithPushpins_TouchDown"/>
+                       TouchDown="MapWithPushpins_TouchDown"
+                       />
     </Grid>
 </Window>
