@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using TravelApp.Model;
 
 namespace TravelApp.MVVM.View
@@ -163,6 +164,16 @@ namespace TravelApp.MVVM.View
             FormaAranzman forma = new FormaAranzman();
             forma.Show();
             //this.Close();
+        }
+
+        
+
+        private void Item_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Aranzman aranzman = ((StackPanel)sender).Tag as Aranzman;
+            Trace.WriteLine(aranzman);
+            PojedinacanAranzman w = new PojedinacanAranzman(aranzman);
+            w.Show();
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,7 +49,26 @@ namespace TravelApp.MVVM.View
             Aranzman = aranzman;
             if (Aranzman.PictureLocation == null || Aranzman.PictureLocation == "")
             {
-                SelectedImage.Source = new BitmapImage(new Uri("C:\\Users\\davor\\OneDrive\\Desktop\\P5-APR-iStock-1359675618.jpg"));
+                SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.jpg", UriKind.Relative));
+            }
+            else
+            {
+                SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png", UriKind.Relative));
+
+                //SelectedImage.Source = new BitmapImage(new Uri(aranzman.PictureLocation, UriKind.Relative));
+            }
+            using (var dbContext = new MyDbContext())
+            {
+                Aranzman = dbContext.Arrangements.SingleOrDefault(a => a.Id == aranzman.Id);
+                if (Aranzman != null)
+                {
+                    dbContext.Arrangements.Include(Aranzman => Aranzman.Restorani).Include(Aranzman => Aranzman.Atrakcije).Include(Aranzman => Aranzman.Smestaji);
+                    Trace.WriteLine($"Restorani: {Aranzman.Restorani.Count()}");
+                    Trace.WriteLine($"Atrakcije: {Aranzman.Atrakcije.Count()}");
+                    Trace.WriteLine($"Smestaji: {Aranzman.Smestaji.Count()}");
+                }
+                
+
             }
         }
     }

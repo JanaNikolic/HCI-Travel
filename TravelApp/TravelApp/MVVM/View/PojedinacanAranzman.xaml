@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:TravelApp.MVVM.View"
         mc:Ignorable="d"
         Icon="../../Images/logo.png"
-        Title="PojedinacanAranzman" Height="650" Width="900"
+        Title="Pregled aranžmana" Height="650" Width="900"
         MinWidth="650"
         MinHeight="400">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
