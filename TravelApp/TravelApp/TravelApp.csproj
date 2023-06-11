@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\placeholder-image.png" />
     <None Remove="Images\vidikovac.jpg" />
     <Compile Remove="Utils\**" />
     <EmbeddedResource Remove="Utils\**" />
@@ -18,13 +19,14 @@
   <ItemGroup>
     <Folder Include="Core\" />
     <Folder Include="MVVM\Model\" />
-    <Folder Include="Images\" />
 	<Folder Include="Model\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BingMapsRESTToolkit" Version="1.1.4" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="MaterialDesignThemes.Wpf" Version="1.0.1" />
+    <PackageReference Include="Microsoft.Maps.MapControl.WPF" Version="1.0.0.3" />
     <PackageReference Include="Syncfusion.Shared.WPF" Version="21.2.6" />
   </ItemGroup>
     <ItemGroup>
@@ -34,8 +36,8 @@
 	    <Resource Include="Fonts\Poppins-Regular.ttf" />
 	    <Resource Include="Fonts\Poppins-SemiBold.ttf" />
 	    <Resource Include="Images\key-icon.png" />
+	    <Resource Include="Images\placeholder-image.png" />
 	    <Resource Include="Images\user-icon.png" />
-		<Resource Include="Images\login.png" />
 	    <Resource Include="Images\logo.png" />
 	    <Resource Include="Images\vidikovac.jpg" />
     </ItemGroup>

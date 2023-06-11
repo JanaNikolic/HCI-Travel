@@ -1,12 +1,19 @@
-﻿using Microsoft.Win32;
+﻿using BingMapsRESTToolkit;
+using Microsoft.Maps.MapControl.WPF;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Runtime.Serialization.Json;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,8 +23,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
 using System.Xml.Linq;
 using TravelApp.Model;
+using Location = Microsoft.Maps.MapControl.WPF.Location;
+using Point = System.Windows.Point;
 
 namespace TravelApp.MVVM.View
 {
@@ -26,8 +36,10 @@ namespace TravelApp.MVVM.View
     /// </summary>
     public partial class FormaAranzman : Window, INotifyPropertyChanged, IDataErrorInfo
     {
-        Point startPoint = new Point();
 
+        MapPolyline currentRoute = null;
+        Point startPoint = new Point();
+        Dictionary<string, Pushpin> pinMap = new Dictionary<string, Pushpin>();
         public ObservableCollection<Atrakcija> SveAtrakcije { get; set; }
 
         public ObservableCollection<Atrakcija> IzabraneAtrakcije { get; set; }
@@ -331,14 +343,16 @@ namespace TravelApp.MVVM.View
                 ListView listView = sender as ListView;
                 ListViewItem listViewItem =
                     FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
+                if (listViewItem != null)
+                {
+                    // Find the data behind the ListViewItem
+                    Atrakcija atrakcija = (Atrakcija)listView.ItemContainerGenerator.
+                        ItemFromContainer(listViewItem);
 
-                // Find the data behind the ListViewItem
-                Atrakcija atrakcija = (Atrakcija)listView.ItemContainerGenerator.
-                    ItemFromContainer(listViewItem);
-
-                // Initialize the drag & drop operation
-                DataObject dragData = new DataObject("myFormat", atrakcija);
-                DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
+                    // Initialize the drag & drop operation
+                    DataObject dragData = new DataObject("myFormat", atrakcija);
+                    DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
+                }
             }
         }
 
@@ -355,14 +369,16 @@ namespace TravelApp.MVVM.View
                 ListView listView = sender as ListView;
                 ListViewItem listViewItem =
                     FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
+                if (listViewItem != null)
+                {
+                    // Find the data behind the ListViewItem
+                    Restoran restoran = (Restoran)listView.ItemContainerGenerator.
+                        ItemFromContainer(listViewItem);
 
-                // Find the data behind the ListViewItem
-                Restoran restoran = (Restoran)listView.ItemContainerGenerator.
-                    ItemFromContainer(listViewItem);
-
-                // Initialize the drag & drop operation
-                DataObject dragData = new DataObject("myFormat", restoran);
-                DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
+                    // Initialize the drag & drop operation
+                    DataObject dragData = new DataObject("myFormat", restoran);
+                    DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
+                }
             }
         }
 
@@ -379,14 +395,16 @@ namespace TravelApp.MVVM.View
                 ListView listView = sender as ListView;
                 ListViewItem listViewItem =
                     FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
+                if (listViewItem != null)
+                {
+                    // Find the data behind the ListViewItem
+                    Smestaj smestaj = (Smestaj)listView.ItemContainerGenerator.
+                        ItemFromContainer(listViewItem);
 
-                // Find the data behind the ListViewItem
-                Smestaj smestaj = (Smestaj)listView.ItemContainerGenerator.
-                    ItemFromContainer(listViewItem);
-
-                // Initialize the drag & drop operation
-                DataObject dragData = new DataObject("myFormat", smestaj);
-                DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
+                    // Initialize the drag & drop operation
+                    DataObject dragData = new DataObject("myFormat", smestaj);
+                    DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
+                }
             }
         }
 
@@ -421,6 +439,7 @@ namespace TravelApp.MVVM.View
                 {
                     SveAtrakcije.Remove(atrakcija);
                     IzabraneAtrakcije.Add(atrakcija);
+                    AddPin(atrakcija.Name, atrakcija.Address, Colors.Blue);
                 }
             }
         }
@@ -434,6 +453,7 @@ namespace TravelApp.MVVM.View
                 {
                     IzabraneAtrakcije.Remove(atrakcija);
                     SveAtrakcije.Add(atrakcija);
+                    RemovePin(atrakcija.Name);
                 }
             }
         }
@@ -447,6 +467,7 @@ namespace TravelApp.MVVM.View
                 {
                     SviRestorani.Remove(restoran);
                     IzabraniRestorani.Add(restoran);
+                    AddPin(restoran.Name, restoran.Address, Colors.Green);
                 }
             }
         }
@@ -460,6 +481,7 @@ namespace TravelApp.MVVM.View
                 {
                     IzabraniRestorani.Remove(restoran);
                     SviRestorani.Add(restoran);
+                    RemovePin(restoran.Name);
                 }
             }
         }
@@ -473,6 +495,7 @@ namespace TravelApp.MVVM.View
                 {
                     SviSmestaji.Remove(smestaj);
                     IzabraniSmestaji.Add(smestaj);
+                    AddPin(smestaj.Name, smestaj.Address, Colors.Purple);
                 }
             }
         }
@@ -486,6 +509,7 @@ namespace TravelApp.MVVM.View
                 {
                     IzabraniSmestaji.Remove(smestaj);
                     SviSmestaji.Add(smestaj);
+                    RemovePin(smestaj.Name);
                 }
             }
         }
@@ -605,29 +629,6 @@ namespace TravelApp.MVVM.View
             }
         }
 
-        public void inhabitDatabase()
-        {
-            using (var dbContext = new MyDbContext())
-            {
-                dbContext.Attractions.Add(new Atrakcija("Naziv1", "Opis", "adresa"));
-                dbContext.Attractions.Add(new Atrakcija("Naziv2", "Opis", "adresa"));
-                dbContext.Attractions.Add(new Atrakcija("Naziv3", "Opis", "adresa"));
-                dbContext.Attractions.Add(new Atrakcija("Naziv4", "Opis", "adresa"));
-                dbContext.Attractions.Add(new Atrakcija("Naziv5", "Opis", "adresa"));
-                dbContext.Attractions.Add(new Atrakcija("Naziv6", "Opis", "adresa"));
-
-                dbContext.Restaurants.Add(new Restoran("Naziv1", "adresa", FoodType.Meksicka));
-                dbContext.Restaurants.Add(new Restoran("Naziv2", "adresa", FoodType.Italijanska));
-                dbContext.Restaurants.Add(new Restoran("Naziv3", "adresa", FoodType.Domaca));
-                dbContext.Restaurants.Add(new Restoran("Naziv4", "adresa", FoodType.Meksicka));
-
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 2, "https://stackoverflow.com"));
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 3, "https://stackoverflow.com"));
-                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 4, "https://stackoverflow.com"));
-                dbContext.SaveChanges();
-            }
-        }
-
         public void OpenAtractionForm_Click(object sender, RoutedEventArgs e)
         {
             var w = new FormaAtrakcija();
@@ -669,6 +670,191 @@ namespace TravelApp.MVVM.View
                 this.Close();
             }
         }
-    }
 
+        //private void MapWithPushpins_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        //{
+        //    // Disables the default mouse double-click action.
+        //    e.Handled = true;
+
+        //    // Determin the location to place the pushpin at on the map.
+
+        //    //Get the mouse click coordinates
+        //    Point mousePosition = e.GetPosition(myMap);
+        //    //Convert the mouse coordinates to a locatoin on the map
+        //    Location pinLocation = myMap.ViewportPointToLocation(mousePosition);
+
+        //    // The pushpin to add to the map.
+        //    Pushpin pin = new Pushpin();
+        //    pin.Location = pinLocation;
+
+        //    // Adds the pushpin to the map.
+        //    myMap.Children.Add(pin);
+        //}
+
+        //private void MapWithPushpins_TouchDown(object sender, TouchEventArgs e)
+        //{
+
+        //    // Get the touch position relative to the MapWithPushpins control
+        //    TouchPoint touchPosition = e.GetTouchPoint(myMap);
+
+        //    // Convert the touch position to a location on the map
+        //    Location pinLocation = myMap.ViewportPointToLocation(touchPosition.Position);
+
+        //    // Create and add the pushpin to the map
+        //    Pushpin pin = new Pushpin();
+        //    pin.Location = pinLocation;
+
+        //    var pushpinsToRemove = myMap.Children.OfType<Pushpin>().ToList();
+        //    foreach (var pushpin in pushpinsToRemove)
+        //    {
+        //        myMap.Children.Remove(pushpin);
+        //    }
+
+        //    myMap.Children.Add(pin);
+        //}
+
+        private XmlDocument GetXmlResponse(string requestUrl)
+        {
+            System.Diagnostics.Trace.WriteLine("Request URL (XML): " + requestUrl);
+            HttpWebRequest request = WebRequest.Create(requestUrl) as HttpWebRequest;
+            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            {
+                if (response.StatusCode != HttpStatusCode.OK)
+                    throw new Exception(String.Format("Server error (HTTP {0}: {1}).",
+                    response.StatusCode,
+                    response.StatusDescription));
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(response.GetResponseStream());
+                return xmlDoc;
+            }
+        }
+
+        private void AddPin(string key, string address, Color color)
+        {
+            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address) + "?o=xml&key=" + "VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3";
+
+            //Make the request and get the response
+            XmlDocument geocodeResponse = GetXmlResponse(geocodeRequest);
+
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(geocodeResponse.NameTable);
+            nsmgr.AddNamespace("rest", "http://schemas.microsoft.com/search/local/ws/rest/v1");
+
+            //Get all locations in the response and then extract the coordinates for the top location
+            XmlNodeList locationElements = geocodeResponse.SelectNodes("//rest:Location", nsmgr);
+            if (locationElements.Count == 0)
+            {
+                string messageBoxText = "Adresa odabranog elementa ne moze da se pronadje na mapi";
+                string caption = "Greska prilikom geolokacije";
+                MessageBoxButton button = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.Warning;
+                MessageBoxResult mbResult;
+
+                mbResult = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.OK);
+
+            }
+            else
+            {
+                //Get the geocode points that are used for display (UsageType=Display)
+                XmlNodeList displayGeocodePoints =
+                        locationElements[0].SelectNodes(".//rest:GeocodePoint/rest:UsageType[.='Display']/parent::node()", nsmgr);
+                string latitude = displayGeocodePoints[0].SelectSingleNode(".//rest:Latitude", nsmgr).InnerText;
+                string longitude = displayGeocodePoints[0].SelectSingleNode(".//rest:Longitude", nsmgr).InnerText;
+                // The pushpin to add to the map.
+                Pushpin pin = new Pushpin();
+                double lat = double.Parse(latitude, CultureInfo.InvariantCulture);
+                double lon = double.Parse(longitude, CultureInfo.InvariantCulture);
+                pin.Location = new Location(lat, lon);
+                pin.Background = new SolidColorBrush(color);
+                Trace.WriteLine(pin.Location.ToString());
+                // Adds the pushpin to the map.
+                myMap.Children.Add(pin);
+                Trace.WriteLine(myMap.Children.Count);
+                pinMap.Add(key, pin);
+
+            }
+        }
+
+        private void RemovePin(string key)
+        {
+            try
+            {
+                Pushpin pin = pinMap[key];
+                pinMap.Remove(key);
+                myMap.Children.Remove(pin);
+            } catch { }
+        }
+
+        public void AddStartLocation(object sender, RoutedEventArgs e)
+        {
+            RemovePin("startLocation");
+            AddPin("startLocation", MestoPolaska, Colors.Red);
+            if (!string.IsNullOrEmpty(Destinacija)) {
+                DrawRoute(MestoPolaska, Destinacija);
+            }
+        }
+
+        public void AddDestination(object sender, RoutedEventArgs e)
+        {
+            RemovePin("destination");
+            AddPin("destination", Destinacija, Colors.Red);
+            if (!string.IsNullOrEmpty(MestoPolaska))
+            {
+                DrawRoute(MestoPolaska, Destinacija);
+            }
+        }
+
+        private async void DrawRoute(string startLocation, string endLocation)
+        {
+            myMap.Children.Remove(currentRoute);
+            // Define the start and end locations for the route
+            var request = new RouteRequest()
+            {
+                RouteOptions = new RouteOptions()
+                {
+                    RouteAttributes = new List<RouteAttributeType>()
+                    {
+                        RouteAttributeType.RoutePath
+                    }
+                },
+                Waypoints = new List<SimpleWaypoint>()
+                {
+                    new SimpleWaypoint() {
+                        Address = startLocation
+                    },
+                    new SimpleWaypoint() {
+                        Address = endLocation
+                    }
+                },
+                BingMapsKey = "VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3"
+            };
+            var response = await ServiceManager.GetResponseAsync(request);
+
+            if (response != null &&
+                response.ResourceSets != null &&
+                response.ResourceSets.Length > 0 &&
+                response.ResourceSets[0].Resources != null &&
+                response.ResourceSets[0].Resources.Length > 0)
+            {
+
+                var route = response.ResourceSets[0].Resources[0] as Route;
+                var coords = route.RoutePath.Line.Coordinates; //This is 2D array of lat/long values.
+                var locs = new LocationCollection();
+
+                for (int i = 0; i < coords.Length; i++)
+                {
+                    locs.Add(new Location(coords[i][0], coords[i][1]));
+                }
+
+                var routeLine = new MapPolyline()
+                {
+                    Locations = locs,
+                    Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red),
+                    StrokeThickness = 5
+                };
+                currentRoute = routeLine;
+                myMap.Children.Add(routeLine);
+            }
+        }
+
+        }
 }

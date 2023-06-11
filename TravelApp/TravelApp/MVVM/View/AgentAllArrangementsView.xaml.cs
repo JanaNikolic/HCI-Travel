@@ -29,6 +29,5 @@ namespace TravelApp.MVVM.View
         {
             InitializeComponent();
         }
-
     }
 }
