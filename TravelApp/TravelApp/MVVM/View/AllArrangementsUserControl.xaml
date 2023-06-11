@@ -34,9 +34,9 @@
 
                                     <DockPanel>
                                         <TextBlock  Margin="20 5" Text="Datum:" FontSize="22" FontWeight="Bold" />
-                                        <TextBlock  Margin="10 0" Text="{Binding StartDate, StringFormat={}{0:MM.dd.yyyy.}}" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBlock  Margin="10 0" Text="{Binding StartDate, StringFormat={}{0:dd.MM.yyyy.}}" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                                         <TextBlock  Margin="10 0" Text="-" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                                        <TextBlock  Margin="5 0"  Text="{Binding EndDate, StringFormat={}{0:MM.dd.yyyy.}}" FontSize="20" VerticalAlignment="Center" />
+                                        <TextBlock  Margin="5 0"  Text="{Binding EndDate, StringFormat={}{0:dd.MM.yyyy.}}" FontSize="20" VerticalAlignment="Center" />
                                     </DockPanel>
 
 

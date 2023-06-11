@@ -74,17 +74,17 @@ namespace TravelApp.MVVM.View
         {
             using (var dbContext = new MyDbContext())
             {
-                Atrakcija a = new Atrakcija("Manastiri Fruske Gore", "Opis putovanja...", "Fruska Gora");
-                dbContext.Attractions.Add(a);
-                a = new Atrakcija("Vrnjačka  Banja", "Opis putovanja...", "Vrnjačka  Banja");
-                dbContext.Attractions.Add(a);
-                a = new Atrakcija("Manastiri Fruske Gore", "Opis putovanja...", "Fruska Gora");
-                dbContext.Attractions.Add(a);
-                a = new Atrakcija("Vrnjačka  Banja", "Opis putovanja...", "Vrnjačka  Banja");
-                dbContext.Attractions.Add(a);
-                a = new Atrakcija("Manastiri Fruske Gore", "Opis putovanja...", "Fruska Gora");
-                dbContext.Attractions.Add(a);
-                dbContext.SaveChanges();
+                //Atrakcija a = new Atrakcija("Manastiri Fruske Gore", "Opis putovanja...", "Fruska Gora");
+                //dbContext.Attractions.Add(a);
+                //a = new Atrakcija("Vrnjačka  Banja", "Opis putovanja...", "Vrnjačka  Banja");
+                //dbContext.Attractions.Add(a);
+                //a = new Atrakcija("Manastiri Fruske Gore", "Opis putovanja...", "Fruska Gora");
+                //dbContext.Attractions.Add(a);
+                //a = new Atrakcija("Vrnjačka  Banja", "Opis putovanja...", "Vrnjačka  Banja");
+                //dbContext.Attractions.Add(a);
+                //a = new Atrakcija("Manastiri Fruske Gore", "Opis putovanja...", "Fruska Gora");
+                //dbContext.Attractions.Add(a);
+                //dbContext.SaveChanges();
 
                 SveAtrakcije = dbContext.Attractions.ToList();
                 if (SveAtrakcije.Count > 0)

@@ -70,16 +70,16 @@ namespace TravelApp.MVVM.View
         {
             using (var dbContext = new MyDbContext())
             {
-                Smestaj a = new Smestaj("Smestaj", "Adresa", 3.2, "link");
-                dbContext.Hotels.Add(a);
-                a = new Smestaj("Smesaj 1", "Adresa", 2.5, "www.google.com");
-                dbContext.Hotels.Add(a);
-                a = new Smestaj("Smesaj 2", "Adresa", 4, "link");
-                dbContext.Hotels.Add(a);
-                a = new Smestaj("Smesaj 3", "Adresa", 4.5, "link");
-                dbContext.Hotels.Add(a);
-                a = new Smestaj("Smesaj 4", "Adresa", 5, "link");
-                dbContext.Hotels.Add(a);
+                //Smestaj a = new Smestaj("Smestaj", "Adresa", 3.2, "http://www.google.com");
+                //dbContext.Hotels.Add(a);
+                //a = new Smestaj("Smesaj 1", "Adresa", 2.5, "https://www.google.com");
+                //dbContext.Hotels.Add(a);
+                //a = new Smestaj("Smesaj 2", "Adresa", 4, "link");
+                //dbContext.Hotels.Add(a);
+                //a = new Smestaj("Smesaj 3", "Adresa", 4.5, "link");
+                //dbContext.Hotels.Add(a);
+                //a = new Smestaj("Smesaj 4", "Adresa", 5, "link");
+                //dbContext.Hotels.Add(a);
                 dbContext.SaveChanges();
 
                 SviSmestaji = dbContext.Hotels.ToList();
@@ -169,6 +169,14 @@ namespace TravelApp.MVVM.View
             FormaSmestaj forma = new FormaSmestaj();
             forma.Show();
             //this.Close();
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            // for .NET Core you need to add UseShellExecute = true
+            // see https://learn.microsoft.com/dotnet/api/system.diagnostics.processstartinfo.useshellexecute#property-value
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
+            e.Handled = true;
         }
     }
 }

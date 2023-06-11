@@ -43,7 +43,7 @@
                         VerticalAlignment="Center"
                        FontWeight="Bold"
                        FontFamily="../../Fonts/#Arial"/>
-                    <TextBlock Text="{Binding Aranzman.StartDate , StringFormat={}{0:MM.dd.yyyy.}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBlock Text="{Binding Aranzman.StartDate , StringFormat={}{0:dd.MM.yyyy.}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                            Margin="15 0 5 0"
                         VerticalAlignment="Center"
                        FontSize="18"
@@ -54,7 +54,7 @@
                        FontSize="18"
                        FontWeight="Medium"
                        FontFamily="../../Fonts/#Arial"/>
-                    <TextBlock Text="{Binding Aranzman.EndDate, StringFormat={}{0:MM.dd.yyyy.}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBlock Text="{Binding Aranzman.EndDate, StringFormat={}{0:dd.MM.yyyy.}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                        FontSize="18"
                         VerticalAlignment="Center"
                            Margin="5 0 0 0"
