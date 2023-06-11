@@ -21,7 +21,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Column="0" Grid.Row="0" Margin="40 0 40 0">
-            <Image x:Name="SelectedImage" Height="200" Margin="0 10 0 10" Stretch="UniformToFill" Source="C:\fax\hci\HCI-Travel\TravelApp\TravelApp\Images\placeholder-image.png"/>
+            <Image x:Name="SelectedImage" Height="200" Margin="0 10 0 10" Stretch="UniformToFill" Source="..\..\Images\placeholder-image.png"/>
             <TextBlock Text="{Binding Aranzman.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                        HorizontalAlignment="Center"
                        Height="40"
@@ -241,7 +241,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </StackPanel>
-            <m:Map x:Name="myMap" Grid.Column="1" CredentialsProvider="VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3" Center="44.316093, 20.851270" ZoomLevel="7.1"/>
+            <m:Map x:Name="myMap" Grid.Column="1" CredentialsProvider="" Center="44.316093, 20.851270" ZoomLevel="7.1"/>
         </Grid>
     </ScrollViewer>
 </Window>

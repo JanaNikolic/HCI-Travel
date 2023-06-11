@@ -29,6 +29,8 @@ namespace TravelApp.MVVM.View
     {
         Dictionary<string, Pushpin> pinMap = new Dictionary<string, Pushpin>();
 
+        private string KEY = "";
+
         private string _adresa { get; set; }
         public string Adresa
         {
@@ -220,7 +222,7 @@ namespace TravelApp.MVVM.View
             Opis = atrakcija.Description;
             Adresa = atrakcija.Address;
             Slika = atrakcija.PictureLocation;
-            //SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png"));
+            SelectedImage.Source = new BitmapImage(new Uri(atrakcija.PictureLocation, UriKind.RelativeOrAbsolute));
         }
 
         private void Button_Click_Submit(object sender, RoutedEventArgs e)
@@ -276,7 +278,7 @@ namespace TravelApp.MVVM.View
                         Opis = "";
                         Adresa = "";
                         Slika = "";
-                        SelectedImage.Source = new BitmapImage(new Uri("C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png"));
+                        SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png"));
                     }
                     else if (result == MessageBoxResult.No)
                     {
@@ -331,7 +333,7 @@ namespace TravelApp.MVVM.View
 
         private void AddPin(string key, string address, Color color)
         {
-            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address) + "?o=xml&key=" + "VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3";
+            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address) + "?o=xml&key=" + KEY;
 
             //Make the request and get the response
             XmlDocument geocodeResponse = GetXmlResponse(geocodeRequest);
@@ -423,7 +425,7 @@ namespace TravelApp.MVVM.View
             Pushpin pin = new Pushpin();
             pin.Location = pinLocation;
 
-            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + pin.Location.Latitude.ToString().Replace(",", ".") + "," + pin.Location.Longitude.ToString().Replace(",", ".") + "?o=xml&key=" + "VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3";
+            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + pin.Location.Latitude.ToString().Replace(",", ".") + "," + pin.Location.Longitude.ToString().Replace(",", ".") + "?o=xml&key=" + KEY;
 
             //Make the request and get the response
             XmlDocument geocodeResponse = GetXmlResponse(geocodeRequest);

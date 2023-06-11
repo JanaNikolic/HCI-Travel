@@ -27,7 +27,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border x:Name="NazivBordera" Margin="10" Width="600" Height="200" BorderThickness="1" BorderBrush="Black" CornerRadius="5" >
-                            <StackPanel Orientation="Horizontal" ToolTip="Klikni za detalje aranžmana" >
+                            <StackPanel Orientation="Horizontal" ToolTip="Klikni za detalje aranžmana" MouseLeftButtonUp="Item_MouseLeftButtonUp" Tag="{Binding}">
                                 <StackPanel Width="450">
                                     <TextBlock  Margin="20,10,0,10" HorizontalAlignment="Left" Text="{Binding Name}" FontSize="24" VerticalAlignment="Center" FontWeight="Bold" FontStretch="SemiExpanded"/>
 

@@ -36,7 +36,7 @@ namespace TravelApp.MVVM.View
     /// </summary>
     public partial class FormaAranzman : Window, INotifyPropertyChanged, IDataErrorInfo
     {
-
+        private string KEY = "";
         MapPolyline currentRoute = null;
         Point startPoint = new Point();
         Dictionary<string, Pushpin> pinMap = new Dictionary<string, Pushpin>();
@@ -580,7 +580,7 @@ namespace TravelApp.MVVM.View
                         this.Destinacija = "";
                         this.Cena = 0;
                         Slika = "";
-                        SelectedImage.Source = new BitmapImage(new Uri("C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png"));
+                        SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png"));
                         IzabraniRestorani.Clear();
                         IzabraneAtrakcije.Clear();
                         IzabraniSmestaji.Clear();
@@ -731,7 +731,7 @@ namespace TravelApp.MVVM.View
 
         private void AddPin(string key, string address, Color color)
         {
-            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address) + "?o=xml&key=" + "VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3";
+            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address) + "?o=xml&key=" + KEY;
 
             //Make the request and get the response
             XmlDocument geocodeResponse = GetXmlResponse(geocodeRequest);
@@ -825,7 +825,7 @@ namespace TravelApp.MVVM.View
                         Address = endLocation
                     }
                 },
-                BingMapsKey = "VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3"
+                BingMapsKey = KEY
             };
             var response = await ServiceManager.GetResponseAsync(request);
 
