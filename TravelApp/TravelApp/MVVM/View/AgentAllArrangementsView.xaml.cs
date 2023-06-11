@@ -170,8 +170,14 @@ namespace TravelApp.MVVM.View
         public void KreirajAranzman(object sender, RoutedEventArgs e)
         {
             FormaAranzman forma = new FormaAranzman();
+            forma.Closed += Forma_Closed;
             forma.Show();
             //this.Close();
+        }
+
+        private void Forma_Closed(object sender, EventArgs e)
+        {
+            LoadAranzmani();
         }
     }
 }

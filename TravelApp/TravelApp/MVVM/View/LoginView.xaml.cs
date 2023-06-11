@@ -80,6 +80,7 @@ namespace TravelApp.MVVM.View
             InitializeComponent();
             DataContext = this;
             Password = "";
+            //inhabitDatabase();
             CommandManager.RegisterClassCommandBinding(typeof(RegisterView), new CommandBinding(CustomCommands.Register, RegisterExecuted, CanRegisterExecute));
         }
 
@@ -94,13 +95,17 @@ namespace TravelApp.MVVM.View
 
                     if (users!= null)
                     {
-                        string messageBoxText = users[0].UserName;
-                        string caption = "Dobrodosli!";
-                        MessageBoxButton button = MessageBoxButton.OK;
-                        MessageBoxImage icon = MessageBoxImage.Information;
-                        MessageBoxResult result;
-
-                        result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.OK);
+                        if (users[0].Role == Role.Agent)
+                        {
+                            AgentAllArrangementsView newWindow = new AgentAllArrangementsView();
+                            newWindow.Show();
+                            Close();
+                        } else
+                        {
+                            UnregisteredMainView view = new UnregisteredMainView();
+                            view.Show();
+                            Close();
+                        }
                     }
                 }
             }
@@ -131,6 +136,31 @@ namespace TravelApp.MVVM.View
         {
             if (this.DataContext != null)
             { Password = ((PasswordBox)sender).Password; }
+        }
+
+        public void inhabitDatabase()
+        {
+            using (var dbContext = new MyDbContext())
+            {
+                dbContext.Attractions.Add(new Atrakcija("Naziv1", "Opis", "adresa"));
+                dbContext.Attractions.Add(new Atrakcija("Naziv2", "Opis", "adresa"));
+                dbContext.Attractions.Add(new Atrakcija("Naziv3", "Opis", "adresa"));
+                dbContext.Attractions.Add(new Atrakcija("Naziv4", "Opis", "adresa"));
+                dbContext.Attractions.Add(new Atrakcija("Naziv5", "Opis", "adresa"));
+                dbContext.Attractions.Add(new Atrakcija("Naziv6", "Opis", "adresa"));
+
+                dbContext.Restaurants.Add(new Restoran("Naziv1", "adresa", FoodType.Meksicka));
+                dbContext.Restaurants.Add(new Restoran("Naziv2", "adresa", FoodType.Italijanska));
+                dbContext.Restaurants.Add(new Restoran("Naziv3", "adresa", FoodType.Domaca));
+                dbContext.Restaurants.Add(new Restoran("Naziv4", "adresa", FoodType.Meksicka));
+
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 2, "https://stackoverflow.com"));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 3, "https://stackoverflow.com"));
+                dbContext.Hotels.Add(new Smestaj("Naziv1", "adresa", 4, "https://stackoverflow.com"));
+
+                dbContext.Users.Add(new User("agent", "password", Role.Agent));
+                dbContext.SaveChanges();
+            }
         }
     }
 }
