@@ -3,6 +3,7 @@ using Microsoft.Maps.MapControl.WPF;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -57,7 +58,26 @@ namespace TravelApp.MVVM.View
             Aranzman = aranzman;
             if (Aranzman.PictureLocation == null || Aranzman.PictureLocation == "")
             {
-                SelectedImage.Source = new BitmapImage(new Uri("C:\\Users\\davor\\OneDrive\\Desktop\\P5-APR-iStock-1359675618.jpg"));
+                SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.jpg", UriKind.Relative));
+            }
+            else
+            {
+                SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png", UriKind.Relative));
+
+                //SelectedImage.Source = new BitmapImage(new Uri(aranzman.PictureLocation, UriKind.Relative));
+            }
+            using (var dbContext = new MyDbContext())
+            {
+                Aranzman = dbContext.Arrangements.SingleOrDefault(a => a.Id == aranzman.Id);
+                if (Aranzman != null)
+                {
+                    dbContext.Arrangements.Include(Aranzman => Aranzman.Restorani).Include(Aranzman => Aranzman.Atrakcije).Include(Aranzman => Aranzman.Smestaji);
+                    Trace.WriteLine($"Restorani: {Aranzman.Restorani.Count()}");
+                    Trace.WriteLine($"Atrakcije: {Aranzman.Atrakcije.Count()}");
+                    Trace.WriteLine($"Smestaji: {Aranzman.Smestaji.Count()}");
+                }
+                
+
             }
             AddPin(Aranzman.StartLocation, Colors.Red);
             AddPin(Aranzman.EndLocation, Colors.Red);
@@ -79,7 +99,7 @@ namespace TravelApp.MVVM.View
 
         private void AddPin(string address, Color color)
         {
-            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address) + "?o=xml&key=" + KEY;
+            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address) + "?o=xml&key=" + "VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3";
 
             //Make the request and get the response
             XmlDocument geocodeResponse = GetXmlResponse(geocodeRequest);
@@ -158,7 +178,7 @@ namespace TravelApp.MVVM.View
                         Address = endLocation
                     }
                 },
-                BingMapsKey = KEY
+                BingMapsKey = "VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3"
             };
             var response = await ServiceManager.GetResponseAsync(request);
 

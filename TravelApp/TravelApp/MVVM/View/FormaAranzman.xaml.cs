@@ -276,13 +276,13 @@ namespace TravelApp.MVVM.View
         public FormaAranzman(Aranzman aranzman, int brOdabranih, int indeks)
         {
 
-            //TODO dodati broj odabranih i trenutni
             edit = true;
             editAranzman = aranzman;
             this.indeks = indeks;
             this.brOdabranih = brOdabranih;
             
             InitializeComponent();
+            this.Title = "Izmeni aranžman";
 
             var elem = this.FindName("ListForEdit") as StackPanel;
             elem.Visibility = Visibility.Visible;
@@ -303,7 +303,7 @@ namespace TravelApp.MVVM.View
             this.Destinacija = aranzman.EndLocation;
             this.Cena = aranzman.Price;
             this.Slika = aranzman.PictureLocation;
-            //SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png"));
+            SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\vidikovac.jpg", UriKind.Relative));
             //IzabraniRestorani.Clear();
             //IzabraneAtrakcije.Clear();
             //IzabraniSmestaji.Clear();
@@ -659,7 +659,7 @@ namespace TravelApp.MVVM.View
         {
 
             string messageBoxText = "Jeste li sigurni da želite odustati? Svi podaci koji nisu sačuvani će se izgubiti.";
-            string caption = "Odustajanje od novog aranžmana";
+            string caption = "Odustajanje od čuanja aranžmana";
             MessageBoxButton button = MessageBoxButton.YesNo;
             MessageBoxImage icon = MessageBoxImage.Warning;
             MessageBoxResult result;
@@ -731,7 +731,7 @@ namespace TravelApp.MVVM.View
 
         private void AddPin(string key, string address, Color color)
         {
-            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address) + "?o=xml&key=" + KEY;
+            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address) + "?o=xml&key=" + "VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3";
 
             //Make the request and get the response
             XmlDocument geocodeResponse = GetXmlResponse(geocodeRequest);
@@ -825,7 +825,7 @@ namespace TravelApp.MVVM.View
                         Address = endLocation
                     }
                 },
-                BingMapsKey = KEY
+                BingMapsKey = "VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3"
             };
             var response = await ServiceManager.GetResponseAsync(request);
 

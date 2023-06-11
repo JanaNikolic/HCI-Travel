@@ -77,6 +77,34 @@ namespace TravelApp.MVVM.View
             }
         }
 
+
+        private bool edit { get; set; }
+
+        private Restoran editRestoran { get; set; }
+
+        private int _indeks { get; set; }
+        public int indeks
+        {
+            get { return _indeks; }
+            set
+            {
+                _indeks = value;
+                OnPropertyChanged(nameof(indeks));
+            }
+        }
+
+        private int _brOdabranih { get; set; }
+        public int brOdabranih
+        {
+            get { return _brOdabranih; }
+            set
+            {
+                _brOdabranih = value;
+                OnPropertyChanged(nameof(brOdabranih));
+            }
+        }
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -138,36 +166,88 @@ namespace TravelApp.MVVM.View
             HasNoErrors = false;
         }
 
+        public FormaRestoran(Restoran restoran, int brOdabranih, int indeks)
+        {
+            edit = true;
+            editRestoran = restoran;
+            this.indeks = indeks;
+            this.brOdabranih = brOdabranih;
+
+
+            InitializeComponent();
+            this.Title = "Izmeni restoran";
+
+            var elem = this.FindName("ListForEdit") as StackPanel;
+            elem.Visibility = Visibility.Visible;
+
+            DataContext = this;
+            HasNoErrors = false;
+
+            Naziv = restoran.Name;
+            Adresa = restoran.Address;
+            VrstaHrane = restoran.FoodType;
+        }
+
         private void Button_Click_Submit(object sender, RoutedEventArgs e)
         {
             try
             {
-                Restoran restoran = new Restoran(Naziv, Adresa, VrstaHrane);
-                using (var dbContext = new MyDbContext())
+                if (edit)
                 {
-                    dbContext.Restaurants.Add(restoran);
-                    dbContext.SaveChanges();
-                }
+                    using (var dbContext = new MyDbContext())
+                    {
+                        var restoran = dbContext.Restaurants.SingleOrDefault(a => a.Id == editRestoran.Id);
 
-                string messageBoxText = "Nov restoran je uspešno sačuvan! Da li zelite da nastavite?";
-                string caption = "Čuvanje";
-                MessageBoxButton button = MessageBoxButton.YesNo;
-                MessageBoxImage icon = MessageBoxImage.Information;
-                MessageBoxResult result;
+                        if (restoran != null)
+                        {
+                            restoran.Name = Naziv;
+                            restoran.Address = Adresa;
+                            restoran.FoodType = VrstaHrane;
+                            dbContext.SaveChanges();
+                        }
+                        else
+                        {
+                            string messageBoxText = "Greška prilikom izmene restorana";
+                            string caption = "Izmena restorana";
+                            MessageBoxButton button = MessageBoxButton.OK;
+                            MessageBoxImage icon = MessageBoxImage.Information;
+                            MessageBoxResult mbResult;
 
-                result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
-
-                if (result == MessageBoxResult.Yes)
-                {
-                    Naziv = "";
-                    Adresa = "";
-                    VrstaHrane = FoodType.Domaca;
-                }
-
-                else if (result == MessageBoxResult.No)
-                {
+                            mbResult = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.OK);
+                        }
+                    }
                     this.Close();
                 }
+                else
+                {
+                    Restoran restoran = new Restoran(Naziv, Adresa, VrstaHrane);
+                    using (var dbContext = new MyDbContext())
+                    {
+                        dbContext.Restaurants.Add(restoran);
+                        dbContext.SaveChanges();
+                    }
+
+                    string messageBoxText = "Nov restoran je uspešno sačuvan! Da li zelite da nastavite?";
+                    string caption = "Čuvanje";
+                    MessageBoxButton button = MessageBoxButton.YesNo;
+                    MessageBoxImage icon = MessageBoxImage.Information;
+                    MessageBoxResult result;
+
+                    result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        Naziv = "";
+                        Adresa = "";
+                        VrstaHrane = FoodType.Domaca;
+                    }
+
+                    else if (result == MessageBoxResult.No)
+                    {
+                        this.Close();
+                    }
+                }
+
             }
             catch (Exception ex)
             {
