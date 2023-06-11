@@ -174,5 +174,13 @@ namespace TravelApp.MVVM.View
             forma.Show();
             //this.Close();
         }
+
+        private void Item_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Atrakcija atrakcija = ((StackPanel)sender).Tag as Atrakcija;
+            Trace.WriteLine(atrakcija);
+            PojedinacnaAtrakcija w = new PojedinacnaAtrakcija(atrakcija);
+            w.Show();
+        }
     }
 }

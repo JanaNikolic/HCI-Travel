@@ -482,7 +482,7 @@
                 </Grid.RowDefinitions>
             <m:Map Grid.Row="0"
                        x:Name="myMap"
-                       CredentialsProvider="VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3" 
+                       CredentialsProvider="" 
                        Center="44.316093, 20.851270" 
                        ZoomLevel="7"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">

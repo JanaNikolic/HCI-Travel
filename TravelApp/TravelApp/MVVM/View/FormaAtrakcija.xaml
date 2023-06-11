@@ -26,7 +26,7 @@
                 <TextBlock  Text="{Binding brOdabranih}" FontSize="26" VerticalAlignment="Center" FontWeight="DemiBold" Margin="30 0"></TextBlock>
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="1" Margin="50 0 50 0">
-                <Image x:Name="SelectedImage" Height="200" Margin="10" Source="C:\fax\hci\HCI-Travel\TravelApp\TravelApp\Images\placeholder-image.png"/>
+                <Image x:Name="SelectedImage" Height="200" Margin="10" Source="..\..\Images\placeholder-image.png"/>
                 <Button Content="DODAJ SLIKU" 
 
                     Click="BrowseButton_Click"
@@ -187,7 +187,7 @@
             </StackPanel>
         <m:Map Grid.Column="1" Grid.Row="1"
                        x:Name="myMap"
-                       CredentialsProvider="VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3" 
+                       CredentialsProvider="" 
                        Center="44.316093, 20.851270" 
                        ZoomLevel="7"
                        MouseDoubleClick="MapWithPushpins_MouseDoubleClick"

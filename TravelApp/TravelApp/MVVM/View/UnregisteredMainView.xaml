@@ -19,7 +19,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="10" Width="600" Height="450" BorderThickness="1" BorderBrush="Black" CornerRadius="5">
-                            <StackPanel>
+                            <StackPanel ToolTip="Klikni za detalje aranžmana" VerticalAlignment="Center"  MouseLeftButtonUp="Item_MouseLeftButtonUp" Tag="{Binding}">
                                 <StackPanel.Style>
                                     <Style TargetType="StackPanel">
                                         <Setter Property="Opacity" Value="1"/>
@@ -36,7 +36,7 @@
                                         <DropShadowEffect ShadowDepth="1"/>
                                     </Border.Effect>
                                     <Border.Background>
-                                        <ImageBrush ImageSource="../../Images/login.png" Stretch="UniformToFill"/>
+                                        <ImageBrush ImageSource="{Binding PictureLocation}" Stretch="UniformToFill"/>
                                     </Border.Background>
                                 </Border>
                                 <Grid>
