@@ -291,7 +291,7 @@ namespace TravelApp.MVVM.View
             this.Destinacija = aranzman.EndLocation;
             this.Cena = aranzman.Price;
             this.Slika = aranzman.PictureLocation;
-            //SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png"));
+            SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\vidikovac.jpg", UriKind.Relative));
             //IzabraniRestorani.Clear();
             //IzabraneAtrakcije.Clear();
             //IzabraniSmestaji.Clear();
