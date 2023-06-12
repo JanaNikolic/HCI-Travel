@@ -202,5 +202,23 @@ namespace TravelApp.MVVM.View
                 dbContext.SaveChanges();
             }
         }
+
+        private void CheckBox_Changed(object sender, RoutedEventArgs e)
+        {
+            var passwordBox1 = this.FindName("txtPass") as PasswordBox;
+            var textBox1 = this.FindName("passwordTxtBox") as TextBox;
+            if (revealModeCheckBox.IsChecked == true)
+            {
+                textBox1.Text = passwordBox1.Password;
+                passwordBox1.Visibility = Visibility.Collapsed;
+                textBox1.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                passwordBox1.Password = textBox1.Text;
+                passwordBox1.Visibility = Visibility.Visible;
+                textBox1.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }
