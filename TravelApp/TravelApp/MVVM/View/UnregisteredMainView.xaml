@@ -20,16 +20,39 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Horizontal" Margin="15">
-                <TextBox x:Name="textBox" FontSize="24" Padding="5 0" HorizontalAlignment="Left" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2" ToolTip="Unesite tekst za pretragu"
-                     Text="{Binding PretragaTB, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="PretragaAranzmana">Pretraga</Button>
+                <TextBox x:Name="textBox" FontSize="24" Padding="5 0" HorizontalAlignment="Left" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2"
+                     Text="{Binding PretragaTB, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.ToolTip>
+                        <ToolTip>
+                            <DockPanel Height="30">
+                                <TextBlock FontSize="20" Foreground="Black">Unesite tekst za pretragu</TextBlock>
+                            </DockPanel>
+                        </ToolTip>
+                    </TextBox.ToolTip>
+                </TextBox>
+                <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="PretragaAranzmana">Pretraga
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <DockPanel Height="30">
+                                <TextBlock FontSize="20" Foreground="Black">Kliknite za pretragu</TextBlock>
+                            </DockPanel>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
             </StackPanel>
             <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">
                 <ItemsControl Template="{DynamicResource ItemsControlTemplate1}" x:Name="ListViewAranzmans" ItemsSource="{Binding Aranzman}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Margin="10" Width="600" Height="450" BorderThickness="1" BorderBrush="Black" CornerRadius="5">
-                                <StackPanel ToolTip="Klikni za detalje aranžmana" VerticalAlignment="Center"  MouseLeftButtonUp="Item_MouseLeftButtonUp" Tag="{Binding}">
+                                <StackPanel VerticalAlignment="Center"  MouseLeftButtonUp="Item_MouseLeftButtonUp" Tag="{Binding}">
+                                    <StackPanel.ToolTip>
+                                        <ToolTip>
+                                            <DockPanel Height="30">
+                                                <TextBlock FontSize="20" Foreground="Black">Kliknite za detalje aranžmana</TextBlock>
+                                            </DockPanel>
+                                        </ToolTip>
+                                    </StackPanel.ToolTip>
                                     <StackPanel.Style>
                                         <Style TargetType="StackPanel">
                                             <Setter Property="Opacity" Value="1"/>

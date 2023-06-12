@@ -11,12 +11,52 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Margin="0 10">
-            <TextBox x:Name="textBox" FontSize="24" Padding="5 0" HorizontalAlignment="Left" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2" ToolTip="Unesite tekst za pretragu"
-                     Text="{Binding PretragaTB, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="PretragaRestorana">Pretraga</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="KreirajRestoran">Dodaj</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="IzmenaRestorana">Izmeni</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="BrisanjeRestorana">Obriši</Button>
+            <TextBox x:Name="textBox" FontSize="24" Padding="5 0" HorizontalAlignment="Left" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2"
+                     Text="{Binding PretragaTB, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Unesite tekst za pretragu</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </TextBox.ToolTip>
+            </TextBox>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="PretragaRestorana">Pretraga
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za pretragu</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="KreirajRestoran">Dodaj
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za kreiranje novog restorana</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="IzmenaRestorana">Izmeni
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za izmenu odabranih restorana</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="BrisanjeRestorana">Obriši
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za brisanje odabranih restorana</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
             <TextBlock Text="{Binding BrOdabranih, StringFormat=Odabrano: {0}, UpdateSourceTrigger=PropertyChanged}" FontSize="20" HorizontalAlignment="Right" FontWeight="DemiBold" VerticalAlignment="Center" />
         </DockPanel>
         <ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Row="1">
@@ -27,7 +67,14 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border x:Name="NazivBordera" Margin="10" Width="600" Height="150" BorderThickness="1" BorderBrush="Black" CornerRadius="5" >
-                            <StackPanel Orientation="Horizontal" ToolTip="Klikni za detalje restorana" >
+                            <StackPanel Orientation="Horizontal" >
+                                <StackPanel.ToolTip>
+                                    <ToolTip>
+                                        <DockPanel Height="30">
+                                            <TextBlock FontSize="20" Foreground="Black">Kliknite za detalje restorana</TextBlock>
+                                        </DockPanel>
+                                    </ToolTip>
+                                </StackPanel.ToolTip>
                                 <StackPanel Width="450">
                                     <TextBlock  Margin="20,10,0,10" HorizontalAlignment="Left" Text="{Binding Name}" FontSize="24" VerticalAlignment="Center" FontWeight="Bold" FontStretch="SemiExpanded"/>
 
@@ -58,8 +105,14 @@
                                     Tag="{Binding}"
                                     Checked="DodajRestoran"
                                     Unchecked="UkloniRestoran"
-                                    ToolTip="Klikni za odabir restorana">
-
+                                    >
+                                    <CheckBox.ToolTip>
+                                        <ToolTip>
+                                            <DockPanel Height="30">
+                                                <TextBlock FontSize="20" Foreground="Black">Kliknite za odabir restorana</TextBlock>
+                                            </DockPanel>
+                                        </ToolTip>
+                                    </CheckBox.ToolTip>
                                 </CheckBox>
 
 

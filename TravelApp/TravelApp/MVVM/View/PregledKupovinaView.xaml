@@ -23,7 +23,14 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Margin="10" BorderThickness="1" BorderBrush="Black" CornerRadius="5">
-                                <StackPanel Width="430" Height="250"  ToolTip="Klikni za detalje aranžmana" VerticalAlignment="Center"  MouseLeftButtonUp="Item_MouseLeftButtonUp" Tag="{Binding}">
+                                <StackPanel Width="430" Height="250" VerticalAlignment="Center"  MouseLeftButtonUp="Item_MouseLeftButtonUp" Tag="{Binding}">
+                                    <StackPanel.ToolTip>
+                                        <ToolTip>
+                                            <DockPanel Height="30">
+                                                <TextBlock FontSize="20" Foreground="Black">Kliknite za detalje aranžmana</TextBlock>
+                                            </DockPanel>
+                                        </ToolTip>
+                                    </StackPanel.ToolTip>
                                     <StackPanel.Style>
                                         <Style TargetType="StackPanel">
                                             <Setter Property="Opacity" Value="1"/>
@@ -83,7 +90,14 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Margin="10" BorderThickness="1" BorderBrush="Black" CornerRadius="5">
-                                <StackPanel Width="430" Height="250"  ToolTip="Klikni za detalje aranžmana" VerticalAlignment="Center"  MouseLeftButtonUp="Item_MouseLeftButtonUp" Tag="{Binding}">
+                                <StackPanel Width="430" Height="250" VerticalAlignment="Center"  MouseLeftButtonUp="Item_MouseLeftButtonUp" Tag="{Binding}">
+                                    <StackPanel.ToolTip>
+                                        <ToolTip>
+                                            <DockPanel Height="30">
+                                                <TextBlock FontSize="20" Foreground="Black">Kliknite za detalje aranžmana</TextBlock>
+                                            </DockPanel>
+                                        </ToolTip>
+                                    </StackPanel.ToolTip>
                                     <StackPanel.Style>
                                         <Style TargetType="StackPanel">
                                             <Setter Property="Opacity" Value="1"/>
