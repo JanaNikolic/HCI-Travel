@@ -12,10 +12,44 @@
         WindowState="Maximized" 
         MinHeight="200"
         MinWidth="500" FontFamily="../../Fonts/#Poppins">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:CustomCommands.Logout}"
+                        Executed="CloseExecuted"
+                        CanExecute="CanCloseExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.OnlineHelp}"
+                        Executed="OnlineHelpExecuted"
+                        CanExecute="CanOnlineHelpExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.RegisterWindow}"
+                        Executed="RegisterWindowExecuted"
+                        CanExecute="CanRegisterWindowExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.LoginWindow}"
+                        Executed="LoginWindowExecuted"
+                        CanExecute="CanLoginWindowExecute" />
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    </Window.CommandBindings>
 
+    <Window.InputBindings>
+        <KeyBinding Gesture="ALT+F4" Command="{x:Static local:CustomCommands.Logout}" />
+    </Window.InputBindings>
     <ScrollViewer VerticalScrollBarVisibility="Auto" >
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ItemsControl Template="{DynamicResource ItemsControlTemplate1}" x:Name="ListViewAranzmans" ItemsSource="{Binding Aranzman}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition MinHeight="200" MaxHeight="500"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Menu Grid.Row="0" FontSize="18" FontWeight="Medium">
+                <MenuItem Header="_Profil" Padding="10 0">
+                    <MenuItem Header="_Registracija" Command="{x:Static local:CustomCommands.RegisterWindow}"></MenuItem>
+                    <MenuItem Header="_Prijava" Command="{x:Static local:CustomCommands.LoginWindow}"></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="_Pregled putovanja"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Pomoć" Padding="10 0">
+                    <MenuItem Header="_Online pomoc" Command="{x:Static local:CustomCommands.OnlineHelp}" ></MenuItem>
+                </MenuItem>
+            </Menu>
+            <ItemsControl Grid.Row="1" Template="{DynamicResource ItemsControlTemplate1}" x:Name="ListViewAranzmans" ItemsSource="{Binding Aranzman}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="10" Width="600" Height="450" BorderThickness="1" BorderBrush="Black" CornerRadius="5">
@@ -36,7 +70,7 @@
                                         <DropShadowEffect ShadowDepth="1"/>
                                     </Border.Effect>
                                     <Border.Background>
-                                        <ImageBrush ImageSource="../../Images/login.png" Stretch="UniformToFill"/>
+                                        <ImageBrush ImageSource="C:\fax\hci\HCI-Travel\TravelApp\TravelApp\Images\login.jpg" Stretch="UniformToFill"/>
                                     </Border.Background>
                                 </Border>
                                 <Grid>

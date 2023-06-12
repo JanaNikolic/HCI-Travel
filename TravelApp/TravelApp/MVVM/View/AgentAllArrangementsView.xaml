@@ -18,6 +18,10 @@
         <CommandBinding Command="{x:Static local:CustomCommands.Logout}"
                         Executed="CloseExecuted"
                         CanExecute="CanCloseExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.OnlineHelp}"
+                        Executed="OnlineHelpExecuted"
+                        CanExecute="CanOnlineHelpExecute" />
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
     </Window.CommandBindings>
 
     <Window.InputBindings>
@@ -28,15 +32,15 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0" FontSize="18" FontWeight="Medium">
-            <MenuItem Header="_Profil" Padding="10 0">
-                <MenuItem Header="_Registracija" IsEnabled="False"></MenuItem>
-                <MenuItem Header="_Prijava" IsEnabled="False"></MenuItem>
+        <Menu Grid.Row="0" FontSize="18" FontWeight="Medium" local:HelpProvider.HelpKey="Toolbar">
+            <MenuItem Header="_Profil" Padding="10 0" local:HelpProvider.HelpKey="Toolbar">
+                <MenuItem Header="_Registracija" IsEnabled="False" local:HelpProvider.HelpKey="Toolbar"></MenuItem>
+                <MenuItem Header="_Prijava" IsEnabled="False" local:HelpProvider.HelpKey="Toolbar"></MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="_Odjava" Command="{x:Static local:CustomCommands.Logout}"></MenuItem>
             </MenuItem>
-            <MenuItem Header="_Pomoć" Padding="10 0">
-                <MenuItem Header="_Online pomoc" ></MenuItem>
+            <MenuItem Header="_Pomoć" Padding="10 0" local:HelpProvider.HelpKey="Toolbar">
+                <MenuItem Header="_Online pomoc" local:HelpProvider.HelpKey="Toolbar" Command="{x:Static local:CustomCommands.OnlineHelp}"></MenuItem>
             </MenuItem>
         </Menu>
         <TabControl Grid.Row="1">

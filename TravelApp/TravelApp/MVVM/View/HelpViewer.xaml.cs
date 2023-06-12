@@ -30,7 +30,7 @@ namespace TravelApp.MVVM.View
             Trace.WriteLine(path);
             if (!File.Exists(path))
             {
-                key = "error";
+                key = "Error";
             }
             Uri u = new Uri(String.Format("file:///{0}/../../../Help/{1}.html", curDir, key));
             ch = new JavaScriptHelper(originator);

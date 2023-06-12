@@ -81,8 +81,9 @@ namespace TravelApp.MVVM.View
             DataContext = this;
             Password = "";
             //inhabitDatabase();
-            CommandManager.RegisterClassCommandBinding(typeof(RegisterView), new CommandBinding(CustomCommands.Register, RegisterExecuted, CanRegisterExecute));
-            CommandManager.RegisterClassCommandBinding(typeof(RegisterView), new CommandBinding(CustomCommands.RegisterWindow, RegisterWindowExecuted, CanRegisterWindowExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(LoginView), new CommandBinding(CustomCommands.Register, RegisterExecuted, CanRegisterExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(LoginView), new CommandBinding(CustomCommands.RegisterWindow, RegisterWindowExecuted, CanRegisterWindowExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(LoginView), new CommandBinding(CustomCommands.UnregisteredWindow, UnregisteredWindowExecuted, CanUnregisteredWindowExecute));
         }
 
 
@@ -146,10 +147,48 @@ namespace TravelApp.MVVM.View
             e.CanExecute = true; // Enable the command by default
         }
 
+        private void UnregisteredWindowExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            UnregisteredMainView view = new UnregisteredMainView();
+            view.Show();
+            this.Close();
+        }
+
+        private void CanUnregisteredWindowExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void OnlineHelpExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            HelpProvider.ShowHelp("Travel", this);
+        }
+
+        private void CanOnlineHelpExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (this.DataContext != null)
             { Password = ((PasswordBox)sender).Password; }
+        }
+
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = Keyboard.FocusedElement;
+            Trace.WriteLine(focusedControl.GetType().ToString());
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                if (str == "Restoran")
+                {
+                    str = "Toolbar";
+                }
+                HelpProvider.ShowHelp(str, this);
+            }
         }
 
         public void inhabitDatabase()

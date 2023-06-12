@@ -41,5 +41,29 @@ namespace TravelApp.MVVM.View
         {
             e.CanExecute = true; // Enable the command by default
         }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = Keyboard.FocusedElement;
+            Trace.WriteLine(focusedControl.GetType().ToString());
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                if (str == "Restoran")
+                {
+                    str = "Agent";
+                }
+                HelpProvider.ShowHelp(str, this);
+            }
+        }
+        private void OnlineHelpExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            HelpProvider.ShowHelp("Travel", this);
+        }
+
+        private void CanOnlineHelpExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
     }
 }

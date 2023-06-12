@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Syncfusion.Windows.Shared.Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -129,6 +130,7 @@ namespace TravelApp.MVVM.View
             Password = "";
             CommandManager.RegisterClassCommandBinding(typeof(RegisterView), new CommandBinding(CustomCommands.Register, RegisterExecuted, CanRegisterExecute));
             CommandManager.RegisterClassCommandBinding(typeof(RegisterView), new CommandBinding(CustomCommands.LoginWindow, LoginWindowExecuted, CanLoginWindowExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(RegisterView), new CommandBinding(CustomCommands.UnregisteredWindow, UnregisteredWindowExecuted, CanUnregisteredWindowExecute));
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
@@ -215,5 +217,40 @@ namespace TravelApp.MVVM.View
             e.CanExecute = true; // Enable the command by default
         }
 
+        private void UnregisteredWindowExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            UnregisteredMainView view = new UnregisteredMainView();
+            view.Show();
+            this.Close();
+        }
+
+        private void CanUnregisteredWindowExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void OnlineHelpExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            HelpProvider.ShowHelp("Travel", this);
+        }
+
+        private void CanOnlineHelpExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = Keyboard.FocusedElement;
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                if (str == "Restoran")
+                {
+                    str = "Toolbar";
+                }
+                HelpProvider.ShowHelp(str, this);
+            }
+        }
     }
 }

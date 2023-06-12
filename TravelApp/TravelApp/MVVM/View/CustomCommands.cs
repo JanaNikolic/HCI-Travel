@@ -13,5 +13,7 @@ namespace TravelApp.MVVM.View
         public static readonly RoutedCommand Logout = new RoutedCommand();
         public static readonly RoutedCommand LoginWindow = new RoutedCommand();
         public static readonly RoutedCommand RegisterWindow = new RoutedCommand();
+        public static readonly RoutedCommand UnregisteredWindow = new RoutedCommand();
+        public static readonly RoutedCommand OnlineHelp = new RoutedCommand();
     }
 }

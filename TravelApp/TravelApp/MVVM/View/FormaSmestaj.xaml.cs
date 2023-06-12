@@ -329,9 +329,6 @@ namespace TravelApp.MVVM.View
                 }
                 HelpProvider.ShowHelp(str, this);
             }
-            else
-            {
-            }
         }
     }
 }
