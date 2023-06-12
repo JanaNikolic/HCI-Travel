@@ -92,6 +92,7 @@
                     BorderThickness="2"
                     BorderBrush="DarkSlateGray"
                     Cursor="Hand"
+                    Padding="10 0"
                     Background="White">
                 <ContentPresenter 
                     x:Name="content"

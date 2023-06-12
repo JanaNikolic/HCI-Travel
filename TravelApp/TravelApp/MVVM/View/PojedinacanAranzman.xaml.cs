@@ -32,6 +32,8 @@ namespace TravelApp.MVVM.View
 
     public partial class PojedinacanAranzman : Window, INotifyPropertyChanged
     {
+        private string KEY = "";
+
         private Aranzman _aranzman { get; set; }
         public Aranzman Aranzman
         {

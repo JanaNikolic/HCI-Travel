@@ -36,6 +36,8 @@ namespace TravelApp.MVVM.View
     /// </summary>
     public partial class FormaAranzman : Window, INotifyPropertyChanged, IDataErrorInfo
     {
+        private string KEY = "";
+
         MapPolyline currentRoute = null;
         Point startPoint = new Point();
         Dictionary<string, Pushpin> pinMap = new Dictionary<string, Pushpin>();
@@ -786,8 +788,9 @@ namespace TravelApp.MVVM.View
         public void AddStartLocation(object sender, RoutedEventArgs e)
         {
             RemovePin("startLocation");
-            AddPin("startLocation", MestoPolaska, Colors.Red);
-            if (!string.IsNullOrEmpty(Destinacija)) {
+            if (!string.IsNullOrEmpty(Destinacija))
+            {
+                AddPin("startLocation", MestoPolaska, Colors.Red);
                 DrawRoute(MestoPolaska, Destinacija);
             }
         }
@@ -795,9 +798,9 @@ namespace TravelApp.MVVM.View
         public void AddDestination(object sender, RoutedEventArgs e)
         {
             RemovePin("destination");
-            AddPin("destination", Destinacija, Colors.Red);
             if (!string.IsNullOrEmpty(MestoPolaska))
             {
+                AddPin("destination", Destinacija, Colors.Red);
                 DrawRoute(MestoPolaska, Destinacija);
             }
         }
@@ -854,6 +857,26 @@ namespace TravelApp.MVVM.View
                 myMap.Children.Add(routeLine);
             }
         }
-
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = Keyboard.FocusedElement;
+            Trace.WriteLine(focusedControl.GetType().ToString());
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                if (str == "Restoran")
+                {
+                    str = "Aranzman";
+                }
+                Trace.WriteLine(str);
+                HelpProvider.ShowHelp(str, this);
+            }
+            else
+            {
+                string windowKey = HelpProvider.GetHelpKey(this);
+                Trace.WriteLine("ne radi");
+                HelpProvider.ShowHelp(windowKey, this);
+            }
         }
+    }
 }

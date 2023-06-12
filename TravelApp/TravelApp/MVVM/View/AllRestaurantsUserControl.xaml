@@ -12,10 +12,10 @@
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Margin="0 10">
             <TextBox x:Name="textBox" FontSize="24" Padding="5 0" HorizontalAlignment="Left" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2" ToolTip="Unesite tekst za pretragu"/>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="PretragaRestorana">Pretraga</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="KreirajRestoran">Dodaj</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="IzmenaRestorana">Izmeni</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="BrisanjeRestorana">Obriši</Button>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource AddButton}" Click="PretragaRestorana">Pretraga</Button>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource AddButton}" Click="KreirajRestoran">Dodaj</Button>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource AddButton}" Click="IzmenaRestorana">Izmeni</Button>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource AddButton}" Click="BrisanjeRestorana">Obriši</Button>
             <TextBlock Text="{Binding BrOdabranih, StringFormat=Odabrano: {0}, UpdateSourceTrigger=PropertyChanged}" FontSize="20" HorizontalAlignment="Right" FontWeight="DemiBold" />
         </DockPanel>
         <ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Row="1">

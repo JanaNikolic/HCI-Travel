@@ -26,6 +26,8 @@ namespace TravelApp.MVVM.View
     /// </summary>
     public partial class PojedinacnaAtrakcija : Window, INotifyPropertyChanged
     {
+        private string KEY = "";
+
         private Model.Atrakcija _atrakcija { get; set; }
 
         public Model.Atrakcija Atrakcija

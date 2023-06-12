@@ -28,7 +28,7 @@ namespace TravelApp.MVVM.View
     public partial class FormaAtrakcija : Window, INotifyPropertyChanged, IDataErrorInfo
     {
         Dictionary<string, Pushpin> pinMap = new Dictionary<string, Pushpin>();
-
+        private string KEY = "";
         private string _adresa { get; set; }
         public string Adresa
         {

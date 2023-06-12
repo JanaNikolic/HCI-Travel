@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:TravelApp.MVVM.View"
         mc:Ignorable="d"
         Icon="../../Images/logo.png"
-        Title="Online pomoć" Height="450" Width="800">
+        Title="Online pomoć" Height="550" Width="1000">
     <Window.CommandBindings>
         <CommandBinding Command="NavigationCommands.BrowseBack" CanExecute="BrowseBack_CanExecute" Executed="BrowseBack_Executed" />
         <CommandBinding Command="NavigationCommands.BrowseForward" CanExecute="BrowseForward_CanExecute" Executed="BrowseForward_Executed" />
