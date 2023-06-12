@@ -240,7 +240,15 @@ namespace TravelApp.MVVM.View
                             atrakcija.Name = Naziv;
                             atrakcija.Description = Opis;
                             atrakcija.Address = Adresa;
+                            atrakcija.PictureLocation = Slika;
                             dbContext.SaveChanges();
+                            string messageBoxText = "Uspešno izmenjena atrakcija";
+                            string caption = "Izmena atrakcije";
+                            MessageBoxButton button = MessageBoxButton.OK;
+                            MessageBoxImage icon = MessageBoxImage.Information;
+                            MessageBoxResult mbResult;
+
+                            mbResult = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.OK);
                         }
                         else
                         {

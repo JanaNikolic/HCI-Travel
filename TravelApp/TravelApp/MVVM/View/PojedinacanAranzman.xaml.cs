@@ -34,6 +34,7 @@ namespace TravelApp.MVVM.View
     {
 
         private Aranzman _aranzman { get; set; }
+        private User user { get; set; }
         private string KEY = "";
         public Aranzman Aranzman
         {
@@ -55,6 +56,53 @@ namespace TravelApp.MVVM.View
         {
             InitializeComponent();
             DataContext = this;
+
+            Aranzman = aranzman;
+            if (Aranzman.PictureLocation == null || Aranzman.PictureLocation == "")
+            {
+                SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.jpg", UriKind.Relative));
+            }
+            else
+            {
+                SelectedImage.Source = new BitmapImage(new Uri(aranzman.PictureLocation, UriKind.RelativeOrAbsolute));
+            }
+            using (var dbContext = new MyDbContext())
+            {
+                Aranzman = dbContext.Arrangements.SingleOrDefault(a => a.Id == aranzman.Id);
+                if (Aranzman != null)
+                {
+                    var rs = dbContext.Arrangements.Include(s => s.Restorani).ToList();
+                    var at = dbContext.Arrangements.Include(s => s.Atrakcije).ToList();
+                    var ss = dbContext.Arrangements.Include(s => s.Smestaji).ToList();
+                }
+            }
+            AddPin(Aranzman.StartLocation, Colors.Red);
+            AddPin(Aranzman.EndLocation, Colors.Red);
+            foreach (Atrakcija attr in Aranzman.Atrakcije)
+            {
+                AddPin(attr.Address, Colors.Blue);
+            }
+            foreach (Restoran rest in Aranzman.Restorani)
+            {
+                AddPin(rest.Address, Colors.Green);
+            }
+            foreach (Smestaj attr in Aranzman.Smestaji)
+            {
+                AddPin(attr.Address, Colors.Purple);
+            }
+
+            DrawRoute(Aranzman.StartLocation, Aranzman.EndLocation);
+        }
+
+        public PojedinacanAranzman(Aranzman aranzman, User user)
+        {
+            this.user = user;
+
+            InitializeComponent();
+            DataContext = this;
+
+            var elem = this.FindName("bookingPanel") as StackPanel;
+            elem.Visibility = Visibility.Visible;
 
             Aranzman = aranzman;
             if (Aranzman.PictureLocation == null || Aranzman.PictureLocation == "")
@@ -204,6 +252,83 @@ namespace TravelApp.MVVM.View
                 myMap.Children.Add(routeLine);
             }
         }
-        
+
+        public void Kupovina(object sender, RoutedEventArgs e)
+        {
+            using (var dbContext = new MyDbContext())
+            {
+                var u = dbContext.Users.SingleOrDefault(a => a.UserName == this.user.UserName);
+                var at = dbContext.Arrangements.SingleOrDefault(a => a.Id == this.Aranzman.Id);
+
+                var r = dbContext.Bookings.SingleOrDefault(res => res.Aranzman.Id == this.Aranzman.Id && res.User.Id == this.user.Id);
+
+                if (r != null)
+                {
+                    MessageBox.Show("Već ste kupili ovaj aranžman", "Kupovina aranžmana", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+                    return;
+                }
+
+                var r1 = dbContext.Reservations.SingleOrDefault(res => res.Aranzman.Id == this.Aranzman.Id && res.User.Id == this.user.Id);
+                if (r1 != null)
+                {
+                    MessageBox.Show("Već ste rezervisali ovaj aranžman", "Kupovina aranžmana", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+                    return;
+                }
+
+                Kupovina k = new Kupovina(at, DateTime.Now, u);
+                dbContext.Bookings.Add(k);
+                dbContext.SaveChanges();
+            }
+
+            string messageBoxText = "Uspešno ste kupili aranžman";
+            string caption = "Kupovina aranžmana";
+
+            MessageBoxButton button = MessageBoxButton.OK;
+
+            MessageBoxImage icon = MessageBoxImage.Information;
+            MessageBoxResult result;
+
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.OK);
+
+        }
+
+        public void Rezervacija(object sender, RoutedEventArgs e)
+        {
+            using (var dbContext = new MyDbContext())
+            {
+                var u = dbContext.Users.SingleOrDefault(a => a.UserName == this.user.UserName);
+                var at = dbContext.Arrangements.SingleOrDefault(a => a.Id == this.Aranzman.Id);
+
+                var r = dbContext.Reservations.SingleOrDefault(res => res.Aranzman.Id == this.Aranzman.Id && res.User.Id == this.user.Id);
+
+                if (r != null) 
+                {
+                    MessageBox.Show("Već ste rezervisali ovaj aranžman", "Rezervacija aranžmana", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+                    return;
+                }
+                
+                var r1 = dbContext.Bookings.SingleOrDefault(res => res.Aranzman.Id == this.Aranzman.Id && res.User.Id == this.user.Id);
+                if (r1 != null)
+                {
+                    MessageBox.Show("Već ste Kupili ovaj aranžman", "Rezervacija aranžmana", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+                    return;
+                }
+                Rezervacija k = new Rezervacija(at, DateTime.Now, u);
+                dbContext.Reservations.Add(k);
+                dbContext.SaveChanges();
+            }
+
+            string messageBoxText = "Uspešno ste rezervisali aranžman";
+            string caption = "Rezervacija aranžmana";
+
+            MessageBoxButton button = MessageBoxButton.OK;
+
+            MessageBoxImage icon = MessageBoxImage.Information;
+            MessageBoxResult result;
+
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.OK);
+
+        }
+
     }
 }

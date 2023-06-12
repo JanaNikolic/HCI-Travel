@@ -14,6 +14,8 @@ namespace TravelApp.Model
         public DbSet<Smestaj> Hotels { get; set; }
         public DbSet<Aranzman> Arrangements { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Kupovina> Bookings { get; set; }
+        public DbSet<Rezervacija> Reservations { get; set; }
 
     }
 }
