@@ -46,6 +46,17 @@ namespace TravelApp.MVVM.View
             }
         }
 
+        private string _pretragaTB { get; set; }
+        public string PretragaTB
+        {
+            get { return _pretragaTB; }
+            set
+            {
+                _pretragaTB = value;
+                OnPropertyChanged(nameof(PretragaTB));
+            }
+        }
+
         public AllArrangementsUserControl()
         {
             InitializeComponent();
@@ -104,7 +115,18 @@ namespace TravelApp.MVVM.View
 
         public void PretragaAranzmana(object sender, RoutedEventArgs e)
         {
+            using (var dbContext = new MyDbContext())
+            {
+                Trace.WriteLine(PretragaTB);
+                SviAranzmani = dbContext.Arrangements.Where(a => a.Name.Contains(PretragaTB)).ToList();
 
+                if (SviAranzmani.Count > 0)
+                    ListViewAranzmans.ItemsSource = SviAranzmani;
+
+                OdabraniAranzmani.Clear();
+                BrOdabranih = 0;
+
+            }
         }
 
         public void BrisanjeAranzmana(object sender, RoutedEventArgs e)

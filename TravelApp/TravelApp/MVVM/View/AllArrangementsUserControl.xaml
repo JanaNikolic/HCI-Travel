@@ -12,14 +12,23 @@
             <RowDefinition Height="70"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" Margin="0 10">
-            <TextBox x:Name="textBox" FontSize="24" HorizontalAlignment="Left" Padding="5 0" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2" ToolTip="Unesite tekst za pretragu"/>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="PretragaAranzmana">Pretraga</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="KreirajAranzman">Dodaj</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="IzmenaAranzmana">Izmeni</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="BrisanjeAranzmana">Obriši</Button>
-            <TextBlock Text="{Binding BrOdabranih, StringFormat=Odabrano: {0}, UpdateSourceTrigger=PropertyChanged}" FontSize="20" HorizontalAlignment="Right" FontWeight="DemiBold" />
-        </DockPanel>
+        <Grid Grid.Row="0" Margin="0 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" x:Name="textBox" FontSize="24" HorizontalAlignment="Left" Padding="5 0" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2" ToolTip="Unesite tekst za pretragu" 
+                     Text="{Binding PretragaTB, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Grid.Column="1" Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="PretragaAranzmana">Pretraga</Button>
+            <Button Grid.Column="2" Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="KreirajAranzman">Dodaj</Button>
+            <Button Grid.Column="3" Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="IzmenaAranzmana">Izmeni</Button>
+            <Button Grid.Column="4" Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="BrisanjeAranzmana">Obriši</Button>
+            <TextBlock Grid.Column="5" Text="{Binding BrOdabranih, StringFormat=Odabrano: {0}, UpdateSourceTrigger=PropertyChanged}" FontSize="20" HorizontalAlignment="Right" FontWeight="DemiBold" VerticalAlignment="Center" />
+        </Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Row="1">
 
 

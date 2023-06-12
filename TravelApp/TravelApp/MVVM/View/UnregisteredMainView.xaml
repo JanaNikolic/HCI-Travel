@@ -14,63 +14,74 @@
         MinWidth="500" FontFamily="../../Fonts/#Poppins">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" >
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ItemsControl Template="{DynamicResource ItemsControlTemplate1}" x:Name="ListViewAranzmans" ItemsSource="{Binding Aranzman}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border Margin="10" Width="600" Height="450" BorderThickness="1" BorderBrush="Black" CornerRadius="5">
-                            <StackPanel ToolTip="Klikni za detalje aranžmana" VerticalAlignment="Center"  MouseLeftButtonUp="Item_MouseLeftButtonUp" Tag="{Binding}">
-                                <StackPanel.Style>
-                                    <Style TargetType="StackPanel">
-                                        <Setter Property="Opacity" Value="1"/>
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter Property="StackPanel.Opacity" Value="0.5" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </StackPanel.Style>
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Horizontal" Margin="15">
+                <TextBox x:Name="textBox" FontSize="24" Padding="5 0" HorizontalAlignment="Left" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2" ToolTip="Unesite tekst za pretragu"
+                     Text="{Binding PretragaTB, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="PretragaAranzmana">Pretraga</Button>
+            </StackPanel>
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">
+                <ItemsControl Template="{DynamicResource ItemsControlTemplate1}" x:Name="ListViewAranzmans" ItemsSource="{Binding Aranzman}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="10" Width="600" Height="450" BorderThickness="1" BorderBrush="Black" CornerRadius="5">
+                                <StackPanel ToolTip="Klikni za detalje aranžmana" VerticalAlignment="Center"  MouseLeftButtonUp="Item_MouseLeftButtonUp" Tag="{Binding}">
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Setter Property="Opacity" Value="1"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="true">
+                                                    <Setter Property="StackPanel.Opacity" Value="0.5" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
 
-                                <Border Height="260">
-                                    <Border.Effect>
-                                        <DropShadowEffect ShadowDepth="1"/>
-                                    </Border.Effect>
-                                    <Border.Background>
-                                        <ImageBrush ImageSource="{Binding PictureLocation}" Stretch="UniformToFill"/>
-                                    </Border.Background>
-                                </Border>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Column="0" Margin="10,20,0,10" Text="{Binding Name}" HorizontalAlignment="Left" FontSize="24" FontFamily="Poppins" VerticalAlignment="Center" FontWeight="Bold" FontStretch="SemiExpanded"/>
-                                    <TextBlock Grid.Column="1" Margin="0" Text="{Binding StartDate, StringFormat={}{0:dd.MM.yyyy.}}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#268AFF"/>
-                                    <TextBlock Grid.Column="2" Margin="0" Text="-" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#268AFF"/>
-                                    <TextBlock Grid.Column="2" Margin="10 0" Text="{Binding EndDate, StringFormat={}{0:dd.MM.yyyy.}}" HorizontalAlignment="Right" FontSize="18" VerticalAlignment="Center" Foreground="#268AFF"/>
-                                </Grid>
-                                <TextBlock Margin="10 0" Text="{Binding Description}" TextWrapping="Wrap" FontSize="18" VerticalAlignment="Center" Height="100"/>
-                                <DockPanel VerticalAlignment="Bottom" Margin="0 0 0 20">
-                                    <TextBlock Grid.Column="0" Margin="10,0" Text="Mesto polaska:" FontSize="24" FontFamily="Franklin Gothic Medium"/>
-                                    <TextBlock Grid.Column="1" Margin="10 0" Text="{Binding StartLocation}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                                    <TextBlock Grid.Column="2" Margin="0,0,10,0" Text="{Binding Price, StringFormat={}{0:N2} RSD, ConverterCulture=de-DE}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#52B03A"/>
-                                </DockPanel>
+                                    <Border Height="260">
+                                        <Border.Effect>
+                                            <DropShadowEffect ShadowDepth="1"/>
+                                        </Border.Effect>
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="{Binding PictureLocation}" Stretch="UniformToFill"/>
+                                        </Border.Background>
+                                    </Border>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Margin="10,20,0,10" Text="{Binding Name}" HorizontalAlignment="Left" FontSize="24" FontFamily="Poppins" VerticalAlignment="Center" FontWeight="Bold" FontStretch="SemiExpanded"/>
+                                        <TextBlock Grid.Column="1" Margin="0" Text="{Binding StartDate, StringFormat={}{0:dd.MM.yyyy.}}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#268AFF"/>
+                                        <TextBlock Grid.Column="2" Margin="0" Text="-" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#268AFF"/>
+                                        <TextBlock Grid.Column="2" Margin="10 0" Text="{Binding EndDate, StringFormat={}{0:dd.MM.yyyy.}}" HorizontalAlignment="Right" FontSize="18" VerticalAlignment="Center" Foreground="#268AFF"/>
+                                    </Grid>
+                                    <TextBlock Margin="10 0" Text="{Binding Description}" TextWrapping="Wrap" FontSize="18" VerticalAlignment="Center" Height="100"/>
+                                    <DockPanel VerticalAlignment="Bottom" Margin="0 0 0 20">
+                                        <TextBlock Grid.Column="0" Margin="10,0" Text="Mesto polaska:" FontSize="24" FontFamily="Franklin Gothic Medium"/>
+                                        <TextBlock Grid.Column="1" Margin="10 0" Text="{Binding StartLocation}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="2" Margin="0,0,10,0" Text="{Binding Price, StringFormat={}{0:N2} RSD, ConverterCulture=de-DE}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#52B03A"/>
+                                    </DockPanel>
 
-                            </StackPanel>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
-            </ItemsControl>
+                </ItemsControl>
+            </Grid>
         </Grid>
     </ScrollViewer>
 </Window>

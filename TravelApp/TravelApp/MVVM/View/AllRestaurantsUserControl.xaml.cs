@@ -101,9 +101,31 @@ namespace TravelApp.MVVM.View
 
         }
 
+        private string _pretragaTB { get; set; }
+        public string PretragaTB
+        {
+            get { return _pretragaTB; }
+            set
+            {
+                _pretragaTB = value;
+                OnPropertyChanged(nameof(PretragaTB));
+            }
+        }
+
         public void PretragaRestorana(object sender, RoutedEventArgs e)
         {
+            using (var dbContext = new MyDbContext())
+            {
+                Trace.WriteLine(PretragaTB);
+                SviRestorani = dbContext.Restaurants.Where(a => a.Name.Contains(PretragaTB)).ToList();
 
+                if (SviRestorani.Count > 0)
+                    ListViewRestorans.ItemsSource = SviRestorani;
+
+                OdabraniRestorani.Clear();
+                BrOdabranih = 0;
+
+            }
         }
 
         public void BrisanjeRestorana(object sender, RoutedEventArgs e)
