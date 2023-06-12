@@ -12,14 +12,64 @@
             <RowDefinition Height="70"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" Margin="0 10">
-            <TextBox x:Name="textBox" local:HelpProvider.HelpKey="Pretraga" FontSize="24" HorizontalAlignment="Left" Padding="5 0" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2" ToolTip="Unesite tekst za pretragu"/>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource AddButton}" Click="PretragaAranzmana">Pretraga</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource AddButton}" Click="KreirajAranzman">Dodaj</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource AddButton}" Click="IzmenaAranzmana">Izmeni</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource AddButton}" Click="BrisanjeAranzmana">Obriši</Button>
-            <TextBlock Text="{Binding BrOdabranih, StringFormat=Odabrano: {0}, UpdateSourceTrigger=PropertyChanged}" FontSize="20" HorizontalAlignment="Right" FontWeight="DemiBold" />
-        </DockPanel>
+        <Grid Grid.Row="0" Margin="0 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0" local:HelpProvider.HelpKey="Pretraga" x:Name="textBox" FontSize="24" HorizontalAlignment="Left" Padding="5 0" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2"
+                     Text="{Binding PretragaTB, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Unesite tekst za pretragu</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </TextBox.ToolTip>
+            </TextBox>
+            <Button Grid.Column="1" Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="PretragaAranzmana">Pretraga
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za pretragu</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Grid.Column="2" Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="KreirajAranzman">Dodaj
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za kreiranje novog aranžmana</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Grid.Column="3" Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="IzmenaAranzmana">Izmeni
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za izmenu odabranih aranžmana</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Grid.Column="4" Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="BrisanjeAranzmana">Obriši
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za brisanje odabranih aranžmana</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <TextBlock Grid.Column="5" Text="{Binding BrOdabranih, StringFormat=Odabrano: {0}, UpdateSourceTrigger=PropertyChanged}" FontSize="20" HorizontalAlignment="Right" FontWeight="DemiBold" VerticalAlignment="Center" />
+        </Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Row="1">
 
 
@@ -28,7 +78,14 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border x:Name="NazivBordera" Margin="10" Width="600" Height="200" BorderThickness="1" BorderBrush="Black" CornerRadius="5">
-                            <StackPanel Orientation="Horizontal" ToolTip="Klikni za detalje aranžmana" VerticalAlignment="Center" MouseLeftButtonUp="Item_MouseLeftButtonUp" Tag="{Binding}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" MouseLeftButtonUp="Item_MouseLeftButtonUp" Tag="{Binding}">
+                                <StackPanel.ToolTip>
+                                    <ToolTip>
+                                        <DockPanel Height="30">
+                                            <TextBlock FontSize="20" Foreground="Black">Kliknite za detalje aranžmana</TextBlock>
+                                        </DockPanel>
+                                    </ToolTip>
+                                </StackPanel.ToolTip>
                                 <StackPanel Width="450">
                                     <TextBlock  Margin="20,0,0,10" HorizontalAlignment="Left" Text="{Binding Name}" FontSize="24" VerticalAlignment="Center" FontWeight="Bold" FontStretch="SemiExpanded"/>
 
@@ -67,7 +124,14 @@
                                     Tag="{Binding}"
                                     Checked="DodajAranzman"
                                     Unchecked="UkloniAranzman"
-                                    ToolTip="Klikni za odabir aranžmana">
+                                    >
+                                    <CheckBox.ToolTip>
+                                        <ToolTip>
+                                            <DockPanel Height="30">
+                                                <TextBlock FontSize="20" Foreground="Black">Kliknite za odabir aranžmana</TextBlock>
+                                            </DockPanel>
+                                        </ToolTip>
+                                    </CheckBox.ToolTip>
                                 </CheckBox>
 
 

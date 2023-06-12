@@ -12,8 +12,7 @@
         Icon="../../Images/logo.png"
         WindowState="Maximized" 
         MinHeight="300"
-        MinWidth="600" 
-        >
+        MinWidth="600" >
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:CustomCommands.Logout}"
                         Executed="CloseExecuted"

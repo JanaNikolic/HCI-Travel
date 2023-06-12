@@ -111,9 +111,31 @@ namespace TravelApp.MVVM.View
 
         }
 
+        private string _pretragaTB { get; set; }
+        public string PretragaTB
+        {
+            get { return _pretragaTB; }
+            set
+            {
+                _pretragaTB = value;
+                OnPropertyChanged(nameof(PretragaTB));
+            }
+        }
+
         public void PretragaAtrakcija(object sender, RoutedEventArgs e)
         {
+            using (var dbContext = new MyDbContext())
+            {
+                Trace.WriteLine(PretragaTB);
+                SveAtrakcije = dbContext.Attractions.Where(a => a.Name.Contains(PretragaTB)).ToList();
 
+                if (SveAtrakcije.Count > 0)
+                    ListViewAtrakcijas.ItemsSource = SveAtrakcije;
+
+                OdabraneAtrakcije.Clear();
+                BrOdabranih = 0;
+
+            }
         }
 
         public void BrisanjeAtrakcija(object sender, RoutedEventArgs e)
@@ -173,6 +195,15 @@ namespace TravelApp.MVVM.View
             FormaAtrakcija forma = new FormaAtrakcija();
             forma.Show();
             //this.Close();
+            LoadAtrakcije();
+        }
+
+        private void Item_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Atrakcija atrakcija = ((StackPanel)sender).Tag as Atrakcija;
+            Trace.WriteLine(atrakcija);
+            PojedinacnaAtrakcija w = new PojedinacnaAtrakcija(atrakcija);
+            w.Show();
         }
     }
 }

@@ -12,13 +12,28 @@
         Background="#F0F0F0"
         Title="Kreiraj aranžman"
         WindowState="Maximized"
-    local:HelpProvider.HelpKey="Aranzman"
-        Icon="../../Images/logo.png">
+        Icon="../../Images/logo.png"
+        local:HelpProvider.HelpKey="Aranzman">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+        <CommandBinding Command="{x:Static local:CustomCommands.Save}"
+                            Executed="SaveExecuted"
+                            CanExecute="CanSaveExecute" />
+            <CommandBinding Command="{x:Static local:CustomCommands.Close}"
+                            Executed="CloseExecuted"
+                            CanExecute="CanCloseExecute" />
+            <CommandBinding Command="{x:Static local:CustomCommands.Browse}"
+                                Executed="BrowseExecuted"
+                                CanExecute="CanBrowseExecute" />
     </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{x:Static local:CustomCommands.Save}" />
+        <KeyBinding Gesture="CTRL+X" Command="{x:Static local:CustomCommands.Close}" />
+        <KeyBinding Gesture="CTRL+O" Command="{x:Static local:CustomCommands.Browse}" />
+    </Window.InputBindings>
     <Grid local:HelpProvider.HelpKey="Aranzman">
-            <Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7*"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
@@ -43,7 +58,7 @@
                     Cursor="Hand"   
                     Click="BrowseButton_Click"/>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="NAZIV ARANZMANA"
+                    <Label Content="NAZIV ARANŽMANA"
                        Foreground="#1F1F1F"
                         FontSize="20"
                         FontWeight="Medium"
@@ -80,7 +95,7 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="OPIS ARANZMANA" Foreground="#1F1F1F"
+                    <Label Content="OPIS ARANŽMANA" Foreground="#1F1F1F"
                         FontSize="20"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                             
@@ -192,7 +207,6 @@
                         Background="White"
                         Margin="2,2,12,2">
                         <DatePicker x:Name="datumPolaska" 
-                                    local:HelpProvider.HelpKey="Datum"
                         FontSize="18"
                         SelectedDate="{Binding DatumPolaska, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         FontWeight="Medium"
@@ -200,6 +214,7 @@
                         VerticalContentAlignment="Center"                         
                         Foreground="#1F1F1F"
                         Padding="4,4,4,4"
+                        local:HelpProvider.HelpKey="Datum"
                         Height="40">
                         </DatePicker>
                     </Border>
@@ -221,13 +236,14 @@
                         BorderBrush="DarkSlateGray"
                         Background="White"
                         Margin="12,2,2,2">
-                        <DatePicker x:Name="datumPovratka" local:HelpProvider.HelpKey="Datum"
+                        <DatePicker x:Name="datumPovratka" 
                         FontSize="18"
                         SelectedDate="{Binding DatumPovratka, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"   
                         VerticalContentAlignment="Center"                         
                         Foreground="#1F1F1F"
+                        local:HelpProvider.HelpKey="Datum"
                         Padding="4,4,4,4"
                         Height="40"/>
                     </Border>
@@ -356,7 +372,7 @@
                         Padding="4,4,4,4">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}"  local:HelpProvider.HelpKey="Datum"
+                                <TextBlock Text="{Binding Name}"
                               FontSize="18"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins" />
@@ -379,7 +395,7 @@
                         Padding="4,4,4,4">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}" local:HelpProvider.HelpKey="Datum"
+                                <TextBlock Text="{Binding Name}"
                               FontSize="18"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins" />
@@ -414,7 +430,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
 
-                    <Label Content="SMESTAJ" 
+                    <Label Content="SMEŠTAJ" 
                         Foreground="#1F1F1F"
                         FontSize="20"
                         FontWeight="Medium"
@@ -446,7 +462,7 @@
                         Height="25"
                         Width="135">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Grid.Column="1" Text="NOV SMESTAJ" FontWeight="Medium" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="1" Text="NOV SMEŠTAJ" FontWeight="Medium" VerticalAlignment="Center" />
                             <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Margin="8 0 0 0"/>
                         </StackPanel>
                     </Button>

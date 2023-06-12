@@ -15,8 +15,12 @@ namespace TravelApp.Model
         public double Stars { get; set; }
 
         public string Link { get; set; }
+        public virtual ICollection<Aranzman> Arrangements { get; set; }
 
-        public Smestaj() { }
+        public Smestaj() 
+        {
+            this.Arrangements = new List<Aranzman>();
+        }
 
         public Smestaj(string name, string address, double stars, string link)
         {
@@ -24,6 +28,7 @@ namespace TravelApp.Model
             Address = address;
             Stars = stars;
             Link = link;
+            this.Arrangements = new List<Aranzman>();
         }
     }
 

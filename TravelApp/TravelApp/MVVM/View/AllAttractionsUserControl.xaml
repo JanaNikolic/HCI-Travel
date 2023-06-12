@@ -12,12 +12,53 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Margin="0 10">
-            <TextBox x:Name="textBox" local:HelpProvider.HelpKey="Pretraga" FontSize="24" Padding="5 0" HorizontalAlignment="Left" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2" ToolTip="Unesite tekst za pretragu"/>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource AddButton}" Click="PretragaAtrakcija">Pretraga</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource AddButton}" Click="KreirajAtrakciju">Dodaj</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource AddButton}" Click="IzmenaAtrakcija">Izmeni</Button>
-            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource AddButton}" Click="BrisanjeAtrakcija">Obriši</Button>
-            <TextBlock Text="{Binding BrOdabranih, StringFormat=Odabrano: {0}, UpdateSourceTrigger=PropertyChanged}" FontSize="20" HorizontalAlignment="Right" FontWeight="DemiBold" />
+            <TextBox x:Name="textBox" local:HelpProvider.HelpKey="Pretraga" FontSize="24" Padding="5 0" HorizontalAlignment="Left" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2"
+                     Text="{Binding PretragaTB, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Unesite tekst za pretragu</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </TextBox.ToolTip>
+            </TextBox>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="PretragaAtrakcija">Pretraga
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za pretragu</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="KreirajAtrakciju">Dodaj
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za kreiranje nove atrakcije</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="IzmenaAtrakcija">Izmeni
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za izmenu odabranih atrakcija</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="BrisanjeAtrakcija">Obriši
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za brisanje odabranih atrakcija</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <TextBlock Text="{Binding BrOdabranih, StringFormat=Odabrano: {0}, UpdateSourceTrigger=PropertyChanged}" FontSize="20" HorizontalAlignment="Right" FontWeight="DemiBold" VerticalAlignment="Center"/>
         </DockPanel>
         <ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Row="1">
 
@@ -27,7 +68,14 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border x:Name="NazivBordera" Margin="10" Width="600" Height="200" BorderThickness="1" BorderBrush="Black" CornerRadius="5" >
-                            <StackPanel Orientation="Horizontal" ToolTip="Klikni za detalje aranžmana" >
+                            <StackPanel Orientation="Horizontal" MouseLeftButtonUp="Item_MouseLeftButtonUp" Tag="{Binding}">
+                                <StackPanel.ToolTip>
+                                    <ToolTip>
+                                        <DockPanel Height="30">
+                                            <TextBlock FontSize="20" Foreground="Black">Kliknite za detalje atrakcije</TextBlock>
+                                        </DockPanel>
+                                    </ToolTip>
+                                </StackPanel.ToolTip>
                                 <StackPanel Width="450">
                                     <TextBlock  Margin="20,10,0,10" HorizontalAlignment="Left" Text="{Binding Name}" FontSize="24" VerticalAlignment="Center" FontWeight="Bold" FontStretch="SemiExpanded"/>
 
@@ -55,10 +103,15 @@
                                     Tag="{Binding}"
                                     Checked="DodajAtrakciju"
                                     Unchecked="UkloniAtrakciju"
-                                    ToolTip="Klikni za odabir atrakcije">
-
+                                    >
+                                    <CheckBox.ToolTip>
+                                        <ToolTip>
+                                            <DockPanel Height="30">
+                                                <TextBlock FontSize="20" Foreground="Black">Kliknite za odabir atrakcije</TextBlock>
+                                            </DockPanel>
+                                        </ToolTip>
+                                    </CheckBox.ToolTip>
                                 </CheckBox>
-
 
                             </StackPanel>
                         </Border>

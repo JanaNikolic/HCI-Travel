@@ -77,6 +77,46 @@ namespace TravelApp.MVVM.View
         }
         public LoginView()
         {
+            //using (var db = new MyDbContext())
+            //{
+            //    User user = new User("j", "jana", Role.Agent);
+            //    db.Users.Add(user);
+            //    db.SaveChanges();
+            //}
+
+            //using (var dbContext = new MyDbContext())
+            //{
+            //    User user = new User("jana", "jana", Role.Client);
+            //    dbContext.Users.Add(user);
+
+            //    Restoran a = new Restoran("Loft", "Novosadskog Sajma 105 Novi Sad", FoodType.Italijanska);
+            //    dbContext.Restaurants.Add(a);
+
+            //    Smestaj s = new Smestaj("Smestaj", "Jevrejska 15", 3.2, "http://www.google.com");
+            //    dbContext.Hotels.Add(s);
+
+            //    Atrakcija at1 = new Atrakcija("Manastiri Fruske Gore", "Opis putovanja...", "Fruska Gora");
+            //    dbContext.Attractions.Add(at1);
+
+            //    Atrakcija at = new Atrakcija("Vrnjačka  Banja", "Opis putovanja...", "Vrnjačka  Banja");
+            //    dbContext.Attractions.Add(at);
+
+            //    Aranzman ar = new Aranzman("Manastiri Fruske Gore", "Opis putovanja...", DateTime.Now.AddDays(1), DateTime.Now.AddDays(5), "Beograd", "Novi Sad", 2000.00, "..\\..\\Images\\login.jpg");
+            //    ar.Restorani.Add(a);
+            //    ar.Atrakcije.Add(at1);
+            //    ar.Smestaji.Add(s);
+            //    dbContext.Arrangements.Add(ar);
+
+            //    ar = new Aranzman("Vrnjačka  Banja", "Opis putovanja...", DateTime.Now.AddDays(10), DateTime.Now.AddDays(15), "Beograd", "Vrnjačka Banja", 12000.00, "..\\..\\Images\\login.jpg");
+            //    ar.Restorani.Add(a);
+            //    ar.Atrakcije.Add(at);
+            //    ar.Smestaji.Add(s);
+            //    dbContext.Arrangements.Add(ar);
+
+            //    dbContext.SaveChanges();
+            //}
+
+
             InitializeComponent();
             DataContext = this;
             Password = "";
@@ -104,7 +144,7 @@ namespace TravelApp.MVVM.View
                             Close();
                         } else
                         {
-                            UnregisteredMainView view = new UnregisteredMainView();
+                            UnregisteredMainView view = new UnregisteredMainView(users[0]);
                             view.loggedIn = true;
                             view.Show();
                             Close();
@@ -114,7 +154,7 @@ namespace TravelApp.MVVM.View
             }
             catch (Exception ex)
             {
-                string messageBoxText = "Doslo je do greske prilikom registracije.";
+                string messageBoxText = "Doslo je do greske prilikom prijave.";
                 string caption = "Upozorenje!";
                 MessageBoxButton button = MessageBoxButton.OK;
                 MessageBoxImage icon = MessageBoxImage.Error;
@@ -213,6 +253,24 @@ namespace TravelApp.MVVM.View
 
                 dbContext.Users.Add(new User("agent", "password", Role.Agent));
                 dbContext.SaveChanges();
+            }
+        }
+
+        private void CheckBox_Changed(object sender, RoutedEventArgs e)
+        {
+            var passwordBox1 = this.FindName("txtPass") as PasswordBox;
+            var textBox1 = this.FindName("passwordTxtBox") as TextBox;
+            if (revealModeCheckBox.IsChecked == true)
+            {
+                textBox1.Text = passwordBox1.Password;
+                passwordBox1.Visibility = Visibility.Collapsed;
+                textBox1.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                passwordBox1.Password = textBox1.Text;
+                passwordBox1.Visibility = Visibility.Visible;
+                textBox1.Visibility = Visibility.Collapsed;
             }
         }
     }

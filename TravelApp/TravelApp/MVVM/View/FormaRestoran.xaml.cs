@@ -164,7 +164,9 @@ namespace TravelApp.MVVM.View
         {
             InitializeComponent();
             DataContext = this;
-            HasNoErrors = false;
+            HasNoErrors = false; 
+            CommandManager.RegisterClassCommandBinding(typeof(FormaRestoran), new CommandBinding(CustomCommands.Save, SaveExecuted, CanSaveExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(FormaRestoran), new CommandBinding(CustomCommands.Close, CloseExecuted, CanCloseExecute));
         }
 
         public FormaRestoran(Restoran restoran, int brOdabranih, int indeks)
@@ -293,6 +295,29 @@ namespace TravelApp.MVVM.View
                 Trace.WriteLine("ne radi");
                 HelpProvider.ShowHelp(windowKey, this);
             }
+        }
+
+        private void SaveExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (HasNoErrors)
+            {
+                Button_Click_Submit(null, null);
+            }
+        }
+
+        private void CanSaveExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void CloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Button_Click_1(null, null);
+        }
+
+        private void CanCloseExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
         }
     }
 }

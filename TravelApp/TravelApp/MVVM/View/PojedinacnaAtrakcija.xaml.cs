@@ -27,7 +27,6 @@ namespace TravelApp.MVVM.View
     public partial class PojedinacnaAtrakcija : Window, INotifyPropertyChanged
     {
         private string KEY = "";
-
         private Model.Atrakcija _atrakcija { get; set; }
 
         public Model.Atrakcija Atrakcija
@@ -51,6 +50,8 @@ namespace TravelApp.MVVM.View
             InitializeComponent();
             DataContext = this;
             this.Atrakcija = atrakcija;
+
+            CommandManager.RegisterClassCommandBinding(typeof(PojedinacnaAtrakcija), new CommandBinding(CustomCommands.Close, CloseExecuted, CanCloseExecute));
 
             string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(atrakcija.Address) + "?o=xml&key=" + KEY;
 
@@ -107,6 +108,17 @@ namespace TravelApp.MVVM.View
                 xmlDoc.Load(response.GetResponseStream());
                 return xmlDoc;
             }
+        }
+
+
+        private void CloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void CanCloseExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
         }
     }
 }

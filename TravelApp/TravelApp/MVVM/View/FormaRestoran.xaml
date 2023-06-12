@@ -6,12 +6,25 @@
         xmlns:local="clr-namespace:TravelApp"
         xmlns:l="clr-namespace:TravelApp.MVVM.View"
         mc:Ignorable="d"
+        xmlns:local2="clr-namespace:TravelApp.MVVM.View"
         Icon="../../Images/logo.png"
         Title="Kreiraj Restoran" Height="550" Width="680"
-        WindowStartupLocation="CenterOwner" >
+        WindowStartupLocation="CenterOwner">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+            <CommandBinding Command="{x:Static local2:CustomCommands.Close}"
+                        Executed="CloseExecuted"
+                        CanExecute="CanCloseExecute" />
+        <CommandBinding Command="{x:Static local2:CustomCommands.Save}"
+                        Executed="SaveExecuted"
+                        CanExecute="CanSaveExecute" />
     </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{x:Static local2:CustomCommands.Save}" />
+        <KeyBinding Gesture="CTRL+X" Command="{x:Static local2:CustomCommands.Close}" />
+    </Window.InputBindings>
+
     <ScrollViewer l:HelpProvider.HelpKey="Restoran">
         <StackPanel Margin="80 20 80 40">
             <StackPanel x:Name="ListForEdit" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Hidden">
@@ -91,9 +104,10 @@
                         BorderThickness="2"
                         BorderBrush="Black"
                         VerticalContentAlignment="Center"
+                        l:HelpProvider.HelpKey="RestoranAdresa"
                         Margin="2,2,2,2"
-                        Padding="5,2,2,2"
-                        l:HelpProvider.HelpKey="RestoranAdresa">
+                        Padding="5,2,2,2">
+
                 <Validation.ErrorTemplate>
                     <ControlTemplate>
                         <Grid>

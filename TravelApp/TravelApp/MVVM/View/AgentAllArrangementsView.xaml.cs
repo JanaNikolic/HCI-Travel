@@ -26,6 +26,35 @@ namespace TravelApp.MVVM.View
         
         public AgentAllArrangementsView()
         {
+            //using (var dbContext = new MyDbContext())
+            //{
+            //    Restoran a = new Restoran("Loft", "Novosadskog Sajma 105 Novi Sad", FoodType.Italijanska);
+            //    dbContext.Restaurants.Add(a);
+
+            //    Smestaj s = new Smestaj("Smestaj", "Jevrejska 15", 3.2, "http://www.google.com");
+            //    dbContext.Hotels.Add(s);
+
+            //    Atrakcija at1 = new Atrakcija("Manastiri Fruske Gore", "Opis putovanja...", "Fruska Gora");
+            //    dbContext.Attractions.Add(at1);
+
+            //    Atrakcija at = new Atrakcija("Vrnjačka  Banja", "Opis putovanja...", "Vrnjačka  Banja");
+            //    dbContext.Attractions.Add(at);
+
+            //    Aranzman ar = new Aranzman("Manastiri Fruske Gore", "Opis putovanja...", DateTime.Now.AddDays(1), DateTime.Now.AddDays(5), "Beograd", "Novi Sad", 2000.00, "");
+            //    ar.Restorani.Add(a);
+            //    ar.Atrakcije.Add(at1);
+            //    ar.Smestaji.Add(s);
+            //    dbContext.Arrangements.Add(ar);
+
+            //    ar = new Aranzman("Vrnjačka  Banja", "Opis putovanja...", DateTime.Now.AddDays(10), DateTime.Now.AddDays(15), "Beograd", "Vrnjačka Banja", 12000.00, "");
+            //    ar.Restorani.Add(a);
+            //    ar.Atrakcije.Add(at);
+            //    ar.Smestaji.Add(s);
+            //    dbContext.Arrangements.Add(ar);
+
+            //    dbContext.SaveChanges();
+            //}
+
             InitializeComponent();
             CommandManager.RegisterClassCommandBinding(typeof(PojedinacnaAtrakcija), new CommandBinding(CustomCommands.Logout, CloseExecuted, CanCloseExecute));
         }
@@ -65,5 +94,5 @@ namespace TravelApp.MVVM.View
         {
             e.CanExecute = true; // Enable the command by default
         }
-    }
+        }
 }

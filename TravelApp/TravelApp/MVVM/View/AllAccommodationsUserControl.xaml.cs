@@ -107,9 +107,31 @@ namespace TravelApp.MVVM.View
 
         }
 
+        private string _pretragaTB { get; set; }
+        public string PretragaTB
+        {
+            get { return _pretragaTB; }
+            set
+            {
+                _pretragaTB = value;
+                OnPropertyChanged(nameof(PretragaTB));
+            }
+        }
+
         public void PretragaSmestaja(object sender, RoutedEventArgs e)
         {
+            using (var dbContext = new MyDbContext())
+            {
+                Trace.WriteLine(PretragaTB);
+                SviSmestaji = dbContext.Hotels.Where(a => a.Name.Contains(PretragaTB)).ToList();
 
+                if (SviSmestaji.Count > 0)
+                    ListViewSmestajs.ItemsSource = SviSmestaji;
+
+                OdabraniSmestaji.Clear();
+                BrOdabranih = 0;
+
+            }
         }
 
         public void BrisanjeSmestaja(object sender, RoutedEventArgs e)
@@ -168,7 +190,7 @@ namespace TravelApp.MVVM.View
         {
             FormaSmestaj forma = new FormaSmestaj();
             forma.Show();
-            //this.Close();
+            LoadSmestaje();
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)

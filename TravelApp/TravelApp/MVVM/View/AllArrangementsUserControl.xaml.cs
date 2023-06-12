@@ -46,6 +46,17 @@ namespace TravelApp.MVVM.View
             }
         }
 
+        private string _pretragaTB { get; set; }
+        public string PretragaTB
+        {
+            get { return _pretragaTB; }
+            set
+            {
+                _pretragaTB = value;
+                OnPropertyChanged(nameof(PretragaTB));
+            }
+        }
+
         public AllArrangementsUserControl()
         {
             InitializeComponent();
@@ -65,17 +76,17 @@ namespace TravelApp.MVVM.View
         {
             using (var dbContext = new MyDbContext())
             {
-                //Aranzman a = new Aranzman("Manastiri Fruske Gore", "Opis putovanja...", DateTime.Now.AddDays(1), DateTime.Now.AddDays(5), "Beograd", "Novi Sad", 2000.00, "");
-                //dbContext.Arrangements.Add(a);
-                //a = new Aranzman("Vrnjačka  Banja", "Opis putovanja...", DateTime.Now.AddDays(10), DateTime.Now.AddDays(15), "Beograd", "Vrnjačka Banja", 12000.00, "");
-                //dbContext.Arrangements.Add(a);
-                //a = new Aranzman("Manastiri Fruske Gore", "Opis putovanja...", DateTime.Now.AddDays(1), DateTime.Now.AddDays(5), "Beograd", "Novi Sad", 2000.00, "");
-                //dbContext.Arrangements.Add(a);
-                //a = new Aranzman("Vrnjačka  Banja", "Opis putovanja...", DateTime.Now.AddDays(10), DateTime.Now.AddDays(15), "Beograd", "Vrnjačka Banja", 12000.00, "");
-                //dbContext.Arrangements.Add(a);
-                //a = new Aranzman("Manastiri Fruske Gore", "Opis putovanja...", DateTime.Now.AddDays(1), DateTime.Now.AddDays(5), "Beograd", "Novi Sad", 2000.00, "");
-                //dbContext.Arrangements.Add(a);
-                //dbContext.SaveChanges();
+                Aranzman a = new Aranzman("Manastiri Fruske Gore", "Opis putovanja...", DateTime.Now.AddDays(1), DateTime.Now.AddDays(5), "Beograd", "Novi Sad", 2000.00, "");
+                dbContext.Arrangements.Add(a);
+                a = new Aranzman("Vrnjačka  Banja", "Opis putovanja...", DateTime.Now.AddDays(10), DateTime.Now.AddDays(15), "Beograd", "Vrnjačka Banja", 12000.00, "");
+                dbContext.Arrangements.Add(a);
+                a = new Aranzman("Manastiri Fruske Gore", "Opis putovanja...", DateTime.Now.AddDays(1), DateTime.Now.AddDays(5), "Beograd", "Novi Sad", 2000.00, "");
+                dbContext.Arrangements.Add(a);
+                a = new Aranzman("Vrnjačka  Banja", "Opis putovanja...", DateTime.Now.AddDays(10), DateTime.Now.AddDays(15), "Beograd", "Vrnjačka Banja", 12000.00, "");
+                dbContext.Arrangements.Add(a);
+                a = new Aranzman("Manastiri Fruske Gore", "Opis putovanja...", DateTime.Now.AddDays(1), DateTime.Now.AddDays(5), "Beograd", "Novi Sad", 2000.00, "");
+                dbContext.Arrangements.Add(a);
+                dbContext.SaveChanges();
 
                 SviAranzmani = dbContext.Arrangements.ToList();
                 if (SviAranzmani.Count > 0)
@@ -104,7 +115,18 @@ namespace TravelApp.MVVM.View
 
         public void PretragaAranzmana(object sender, RoutedEventArgs e)
         {
+            using (var dbContext = new MyDbContext())
+            {
+                Trace.WriteLine(PretragaTB);
+                SviAranzmani = dbContext.Arrangements.Where(a => a.Name.Contains(PretragaTB)).ToList();
 
+                if (SviAranzmani.Count > 0)
+                    ListViewAranzmans.ItemsSource = SviAranzmani;
+
+                OdabraniAranzmani.Clear();
+                BrOdabranih = 0;
+
+            }
         }
 
         public void BrisanjeAranzmana(object sender, RoutedEventArgs e)
@@ -168,6 +190,7 @@ namespace TravelApp.MVVM.View
             FormaAranzman forma = new FormaAranzman();
             forma.Show();
             //this.Close();
+            LoadAranzmani();
         }
 
         

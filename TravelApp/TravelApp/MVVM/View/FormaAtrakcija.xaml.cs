@@ -28,6 +28,7 @@ namespace TravelApp.MVVM.View
     public partial class FormaAtrakcija : Window, INotifyPropertyChanged, IDataErrorInfo
     {
         Dictionary<string, Pushpin> pinMap = new Dictionary<string, Pushpin>();
+
         private string KEY = "";
         private string _adresa { get; set; }
         public string Adresa
@@ -196,7 +197,10 @@ namespace TravelApp.MVVM.View
         {
             InitializeComponent();
             DataContext = this;
-            HasNoErrors = false;
+            HasNoErrors = false; 
+            CommandManager.RegisterClassCommandBinding(typeof(FormaAtrakcija), new CommandBinding(CustomCommands.Save, SaveExecuted, CanSaveExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(FormaAtrakcija), new CommandBinding(CustomCommands.Close, CloseExecuted, CanCloseExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(FormaAtrakcija), new CommandBinding(CustomCommands.Browse, BrowseExecuted, CanBrowseExecute));
         }
 
         public FormaAtrakcija(Atrakcija atrakcija, int brOdabranih, int indeks)
@@ -220,7 +224,12 @@ namespace TravelApp.MVVM.View
             Opis = atrakcija.Description;
             Adresa = atrakcija.Address;
             Slika = atrakcija.PictureLocation;
-            //SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png"));
+            SelectedImage.Source = new BitmapImage(new Uri(atrakcija.PictureLocation, UriKind.RelativeOrAbsolute));
+
+            CommandManager.RegisterClassCommandBinding(typeof(FormaAtrakcija), new CommandBinding(CustomCommands.Save, SaveExecuted, CanSaveExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(FormaAtrakcija), new CommandBinding(CustomCommands.Close, CloseExecuted, CanCloseExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(FormaAtrakcija), new CommandBinding(CustomCommands.Browse, BrowseExecuted, CanBrowseExecute));
+
         }
 
         private void Button_Click_Submit(object sender, RoutedEventArgs e)
@@ -238,7 +247,15 @@ namespace TravelApp.MVVM.View
                             atrakcija.Name = Naziv;
                             atrakcija.Description = Opis;
                             atrakcija.Address = Adresa;
+                            atrakcija.PictureLocation = Slika;
                             dbContext.SaveChanges();
+                            string messageBoxText = "Uspešno izmenjena atrakcija";
+                            string caption = "Izmena atrakcije";
+                            MessageBoxButton button = MessageBoxButton.OK;
+                            MessageBoxImage icon = MessageBoxImage.Information;
+                            MessageBoxResult mbResult;
+
+                            mbResult = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.OK);
                         }
                         else
                         {
@@ -276,7 +293,7 @@ namespace TravelApp.MVVM.View
                         Opis = "";
                         Adresa = "";
                         Slika = "";
-                        SelectedImage.Source = new BitmapImage(new Uri("C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png"));
+                        SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png"));
                     }
                     else if (result == MessageBoxResult.No)
                     {
@@ -443,7 +460,11 @@ namespace TravelApp.MVVM.View
 
         private void MapWithPushpins_TouchDown(object sender, TouchEventArgs e)
         {
-
+            var pushpinsToRemove = myMap.Children.OfType<Pushpin>().ToList();
+            foreach (var pushpin in pushpinsToRemove)
+            {
+                myMap.Children.Remove(pushpin);
+            }
             // Get the touch position relative to the MapWithPushpins control
             TouchPoint touchPosition = e.GetTouchPoint(myMap);
 
@@ -453,14 +474,54 @@ namespace TravelApp.MVVM.View
             // Create and add the pushpin to the map
             Pushpin pin = new Pushpin();
             pin.Location = pinLocation;
+            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + pin.Location.Latitude.ToString().Replace(",", ".") + "," + pin.Location.Longitude.ToString().Replace(",", ".") + "?o=xml&key=" + KEY;
 
-            var pushpinsToRemove = myMap.Children.OfType<Pushpin>().ToList();
-            foreach (var pushpin in pushpinsToRemove)
+            //Make the request and get the response
+            XmlDocument geocodeResponse = GetXmlResponse(geocodeRequest);
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(geocodeResponse.NameTable);
+            nsmgr.AddNamespace("rest", "http://schemas.microsoft.com/search/local/ws/rest/v1");
+
+            //Get all locations in the response and then extract the coordinates for the top location
+            XmlNodeList locationElements = geocodeResponse.SelectNodes("//rest:Location", nsmgr);
+            string address =
+                        locationElements[0].SelectSingleNode(".//rest:Name", nsmgr).InnerText;
+
+            Adresa = address;
+            RemovePin("startLocation");
+            AddPin("startLocation", Adresa, Colors.Red);
+        }
+
+        private void SaveExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (HasNoErrors)
             {
-                myMap.Children.Remove(pushpin);
+                Button_Click_Submit(null, null);
             }
+        }
 
-            myMap.Children.Add(pin);
+        private void CanSaveExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void CloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Button_Click_1(null, null);
+        }
+
+        private void CanCloseExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void BrowseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            BrowseButton_Click(null, null);
+        }
+
+        private void CanBrowseExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
         }
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {

@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\placeholder-image.png" />
     <Compile Remove="Utils\**" />
     <EmbeddedResource Remove="Utils\**" />
     <None Remove="Utils\**" />
@@ -18,7 +17,6 @@
   <ItemGroup>
     <Folder Include="Core\" />
     <Folder Include="MVVM\Model\" />
-	<Folder Include="Model\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +36,8 @@
 	    <Resource Include="Images\placeholder-image.png" />
 	    <Resource Include="Images\user-icon.png" />
 	    <Resource Include="Images\logo.png" />
+	    <Resource Include="Images\vidikovac.jpg" />
+		<Resource Include="Images\login.jpg" />
     </ItemGroup>
 
 </Project>
