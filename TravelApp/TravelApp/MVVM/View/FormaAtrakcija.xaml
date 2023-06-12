@@ -8,9 +8,12 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="#F0F0F0"
-        Title="Kreiraj atrakciju" Height="750" Width="900"
+        Title="Kreiraj atrakciju" Height="800" Width="900"
+        local:HelpProvider.HelpKey="Atrakcija"
         Icon="../../Images/logo.png">
+
     <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
         <CommandBinding Command="{x:Static local:CustomCommands.Save}"
                         Executed="SaveExecuted"
                         CanExecute="CanSaveExecute" />
@@ -27,24 +30,25 @@
         <KeyBinding Gesture="CTRL+X" Command="{x:Static local:CustomCommands.Close}" />
         <KeyBinding Gesture="CTRL+O" Command="{x:Static local:CustomCommands.Browse}" />
     </Window.InputBindings>
-    <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="6*"/>
-                <ColumnDefinition Width="4*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <StackPanel x:Name="ListForEdit" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Visibility="Hidden">
-                <TextBlock  Text="{Binding indeks}" FontSize="26" FontWeight="DemiBold" VerticalAlignment="Center" Margin="30 0"></TextBlock>
-                <TextBlock  Text="od" FontSize="24" VerticalAlignment="Center" ></TextBlock>
-                <TextBlock  Text="{Binding brOdabranih}" FontSize="26" VerticalAlignment="Center" FontWeight="DemiBold" Margin="30 0"></TextBlock>
-            </StackPanel>
-            <StackPanel Grid.Column="0" Grid.Row="1" Margin="50 0 50 0">
-                <Image x:Name="SelectedImage" Height="200" Margin="10" Source="..\..\Images\placeholder-image.png"/>
-                <Button Content="DODAJ SLIKU" 
+    <Grid local:HelpProvider.HelpKey="Atrakcija">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="ListForEdit" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Visibility="Hidden">
+            <TextBlock  Text="{Binding indeks}" FontSize="26" FontWeight="DemiBold" VerticalAlignment="Center" Margin="30 0"></TextBlock>
+            <TextBlock  Text="od" FontSize="24" VerticalAlignment="Center" ></TextBlock>
+            <TextBlock  Text="{Binding brOdabranih}" FontSize="26" VerticalAlignment="Center" FontWeight="DemiBold" Margin="30 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="1" Margin="50 0 50 0">
+            <Image x:Name="SelectedImage" Height="200" Margin="10" Source="..\..\Images\placeholder-image.png" Stretch="UniformToFill"/>
+
+            <Button Content="DODAJ SLIKU" 
 
                     Click="BrowseButton_Click"
                         Template="{DynamicResource AddButton}"
@@ -53,7 +57,7 @@
                     FontWeight="Medium"
                     Cursor="Hand"   
                     />
-                <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
                 <Label Content="NAZIV ATRAKCIJE"
                        Foreground="#1F1F1F"
                         FontSize="20"
@@ -72,30 +76,30 @@
                         VerticalContentAlignment="Center"
                         Margin="2,2,2,2"
                         Padding="5,2,2,2">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
 
-                                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
-                            </Grid>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
-                </TextBox>
-                <StackPanel Orientation="Horizontal">
+                            <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
+            <StackPanel Orientation="Horizontal">
                 <Label Content="OPIS ATRAKCIJE" Foreground="#1F1F1F"
                         FontSize="20"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                             
                         Margin="0,10,0,0"/>
                 <TextBlock Text="{Binding OpisError}" Foreground="red" FontSize="18" Margin="20,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                </StackPanel>
-                <TextBox Template="{DynamicResource TextBoxInput}" x:Name="opisAranzmana"
+            </StackPanel>
+            <TextBox Template="{DynamicResource TextBoxInput}" x:Name="opisAranzmana"
                         FontSize="20"
                         Text="{Binding Opis, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         FontWeight="Medium"
@@ -106,22 +110,22 @@
                         Margin="2,2,2,2"
                         Padding="5,2,2,2"
                          AcceptsReturn="True" TextWrapping="Wrap" Height="120">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
 
-                                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
-                            </Grid>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
-                </TextBox>
-                <StackPanel Orientation="Horizontal">
+                            <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
+            <StackPanel Orientation="Horizontal">
                 <Label Content="ADRESA"
                        Foreground="#1F1F1F"
                         FontSize="20"
@@ -129,8 +133,8 @@
                         FontFamily="../../Fonts/#Poppins"                             
                         Margin="0,10,0,0"/>
                 <TextBlock Text="{Binding AdresaError}" Foreground="red" FontSize="18" Margin="20,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                </StackPanel>
-                <TextBox Template="{DynamicResource TextBoxInput}" x:Name="adresaAtrakcije"
+            </StackPanel>
+            <TextBox Template="{DynamicResource TextBoxInput}" x:Name="adresaAtrakcije"
                         Text="{Binding Adresa, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         FontSize="20"
                         FontWeight="Medium"
@@ -138,23 +142,24 @@
                         Height="40"
                         LostFocus="AddStartLocation"
                         VerticalContentAlignment="Center"
+                local:HelpProvider.HelpKey="RestoranAdresa"
                         Margin="2,2,2,2"
                         Padding="5,2,2,2">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
 
-                                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
-                            </Grid>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
-                </TextBox>
+                            <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 30 0 0">
                 <Button Content="ODUSTANI" Width="120" Height="40" Margin="15"
                             Template="{DynamicResource AddButton}"
@@ -194,15 +199,14 @@
                     </Button.Template>
                 </Button>
             </StackPanel>
-            </StackPanel>
-        <m:Map Grid.Column="1" Grid.Row="1"
+        </StackPanel>
+        <m:Map Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
                        x:Name="myMap"
-                       CredentialsProvider=""
                        Center="44.316093, 20.851270" 
                        ZoomLevel="7"
+                       CredentialsProvider=""
                        MouseDoubleClick="MapWithPushpins_MouseDoubleClick"
                        TouchDown="MapWithPushpins_TouchDown"
                        />
     </Grid>
-
 </Window>

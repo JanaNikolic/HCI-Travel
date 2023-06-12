@@ -12,6 +12,16 @@
         <CommandBinding Command="{x:Static local:CustomCommands.Register}"
                         Executed="RegisterExecuted"
                         CanExecute="CanRegisterExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.LoginWindow}"
+                        Executed="LoginWindowExecuted"
+                        CanExecute="CanLoginWindowExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.UnregisteredWindow}"
+                        Executed="UnregisteredWindowExecuted"
+                        CanExecute="CanUnregisteredWindowExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.OnlineHelp}"
+                        Executed="OnlineHelpExecuted"
+                        CanExecute="CanOnlineHelpExecute" />
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
     </Window.CommandBindings>
 
     <Window.InputBindings>
@@ -20,15 +30,26 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="4*"/>
                 <RowDefinition Height="6*"/>
             </Grid.RowDefinitions>
-
-            <Image Grid.Row="0" MinHeight="200" MaxHeight="450" Source="../../Images/vidikovac.jpg" Stretch="UniformToFill" StretchDirection="Both" HorizontalAlignment="Center" />
+            <Menu Grid.Row="0" FontSize="18" FontWeight="Medium">
+                <MenuItem Header="_Profil" Padding="10 0">
+                    <MenuItem Header="_Registracija" ></MenuItem>
+                    <MenuItem Header="_Prijava" Command="{x:Static local:CustomCommands.LoginWindow}"></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="_Pregled putovanja" Command="{x:Static local:CustomCommands.UnregisteredWindow}"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Pomoć" Padding="10 0">
+                    <MenuItem Header="_Online pomoc" Command="{x:Static local:CustomCommands.OnlineHelp}"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <Image Grid.Row="1" MinHeight="200" MaxHeight="450" Source="C:\fax\hci\HCI-Travel\TravelApp\TravelApp\Images\vidikovac.jpg" Stretch="UniformToFill" StretchDirection="Both" HorizontalAlignment="Center" />
 
 
             <StackPanel Width="300"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Orientation="Vertical">
 
                 <TextBlock Text="Korisničko ime"

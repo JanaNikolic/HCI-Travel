@@ -152,8 +152,8 @@ namespace TravelApp.MVVM.View
                 if (columnName == "NazivSmestaja" && string.IsNullOrEmpty(NazivSmestaja))
                 {
                     HasNoErrors = false;
-                    NazivError = "Mora da postoji naziv.";
-                    return "Mora da postoji naziv.";
+                    NazivError = "Polje za naziv ne sme biti prazno";
+                    return "Polje za naziv ne sme biti prazno";
                 }
                 if (columnName == "NazivSmestaja" && !string.IsNullOrEmpty(NazivSmestaja))
                 {
@@ -162,8 +162,8 @@ namespace TravelApp.MVVM.View
                 if (columnName == "AdresaSmestaja" && string.IsNullOrEmpty(AdresaSmestaja))
                 {
                     HasNoErrors = false;
-                    AdresaError = "Mora da postoji opis";
-                    return "Mora da postoji opis";
+                    AdresaError = "Polje za opis ne sme biti prazno";
+                    return "Polje za opis ne sme biti prazno";
                 }
                 if (columnName == "AdresaSmestaja" && !string.IsNullOrEmpty(AdresaSmestaja))
                 {
@@ -172,8 +172,8 @@ namespace TravelApp.MVVM.View
                 if(columnName == "Link" && string.IsNullOrEmpty(Link))
                 {
                     HasNoErrors = false;
-                    LinkError = "Morate uneti link";
-                    return "Morate uneti link";
+                    LinkError = "Polje za link ne sme biti prazno";
+                    return "Polje za link ne sme biti prazno";
                 }
                 if (columnName == "Link" && !string.IsNullOrEmpty(Link))
                 {
@@ -316,6 +316,21 @@ namespace TravelApp.MVVM.View
         private void RatingBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<int> e)
         {
             Rating = e.NewValue;
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = Keyboard.FocusedElement;
+            Trace.WriteLine(focusedControl.GetType().ToString());
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                if (str == "Restoran")
+                {
+                    str = "Smestaj";
+                }
+                HelpProvider.ShowHelp(str, this);
+            }
         }
 
         private void SaveExecuted(object sender, ExecutedRoutedEventArgs e)

@@ -61,7 +61,7 @@ namespace TravelApp.MVVM.View
             Aranzman = aranzman;
             if (Aranzman.PictureLocation == null || Aranzman.PictureLocation == "")
             {
-                SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.jpg", UriKind.Relative));
+                SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png", UriKind.Relative));
             }
             else
             {
@@ -108,7 +108,7 @@ namespace TravelApp.MVVM.View
             Aranzman = aranzman;
             if (Aranzman.PictureLocation == null || Aranzman.PictureLocation == "")
             {
-                SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.jpg", UriKind.Relative));
+                SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png", UriKind.Relative));
             }
             else
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -130,8 +131,8 @@ namespace TravelApp.MVVM.View
                 if (columnName == "Naziv" && string.IsNullOrEmpty(Naziv))
                 {
                     HasNoErrors = false;
-                    NazivError = "Mora da postoji naziv.";
-                    return "Mora da postoji naziv.";
+                    NazivError = "Polje za naziv ne sme biti prazno";
+                    return "Polje za naziv ne sme biti prazno";
                 }
                 if (columnName == "Naziv" && !string.IsNullOrEmpty(Naziv))
                 {
@@ -140,8 +141,8 @@ namespace TravelApp.MVVM.View
                 if (columnName == "Adresa" && string.IsNullOrEmpty(Adresa))
                 {
                     HasNoErrors = false;
-                    AdresaError = "Mora da postoji opis";
-                    return "Mora da postoji opis";
+                    AdresaError = "Polje za adresu ne sme biti prazno";
+                    return "Polje za adresu ne sme biti prazno";
                 }
                 if (columnName == "Adresa" && !string.IsNullOrEmpty(Adresa))
                 {
@@ -229,7 +230,7 @@ namespace TravelApp.MVVM.View
                         dbContext.SaveChanges();
                     }
 
-                    string messageBoxText = "Nov restoran je uspešno sačuvan! Da li zelite da nastavite?";
+                    string messageBoxText = "Nov restoran je uspešno sačuvan! Da li zelite da kreirate još?";
                     string caption = "Čuvanje";
                     MessageBoxButton button = MessageBoxButton.YesNo;
                     MessageBoxImage icon = MessageBoxImage.Information;
@@ -267,7 +268,7 @@ namespace TravelApp.MVVM.View
         {
 
             string messageBoxText = "Jeste li sigurni da želite odustati? Svi podaci koji nisu sačuvani će se izgubiti.";
-            string caption = "Odustajanje od novog aranžmana";
+            string caption = "Odustajanje od novog restorana";
             MessageBoxButton button = MessageBoxButton.YesNo;
             MessageBoxImage icon = MessageBoxImage.Warning;
             MessageBoxResult result;
@@ -276,6 +277,23 @@ namespace TravelApp.MVVM.View
             if (result == MessageBoxResult.Yes)
             {
                 this.Close();
+            }
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = Keyboard.FocusedElement;
+            Trace.WriteLine(focusedControl.GetType().ToString());
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                Trace.WriteLine("radi");
+                HelpProvider.ShowHelp(str, this);
+            } else
+            {
+                string windowKey = HelpProvider.GetHelpKey(this);
+                Trace.WriteLine("ne radi");
+                HelpProvider.ShowHelp(windowKey, this);
             }
         }
 

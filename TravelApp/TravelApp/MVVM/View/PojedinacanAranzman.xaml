@@ -36,21 +36,21 @@
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="1" Margin="40 0 40 0">
                 <Image x:Name="SelectedImage" Height="200" Margin="0 10 0 10" Stretch="Uniform" Source="..\..\Images\placeholder-image.png"/>
-            <TextBlock Text="{Binding Aranzman.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                <TextBlock Text="{Binding Aranzman.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                        HorizontalAlignment="Center"
                        Height="40"
                        FontSize="24"
                        FontWeight="Bold"
                        FontFamily="../../Fonts/#Arial" />
-            <TextBlock Text="{Binding Aranzman.Description, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                <TextBlock Text="{Binding Aranzman.Description, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                        HorizontalAlignment="Stretch"
                        TextWrapping="Wrap" 
                        Margin="0 0 0 10"
                        FontSize="18"
                        FontFamily="../../Fonts/#Arial" />
-            <StackPanel Orientation="Horizontal"
+                <StackPanel Orientation="Horizontal"
                            Height="40">
-                <TextBlock Text="Datum putovanja:"
+                    <TextBlock Text="Datum putovanja:"
                        Foreground="#1F1F1F"
                        FontSize="18"
                         VerticalAlignment="Center"
@@ -61,7 +61,7 @@
                         VerticalAlignment="Center"
                        FontSize="18"
                        FontFamily="../../Fonts/#Arial"/>
-                <TextBlock Text="-"
+                    <TextBlock Text="-"
                         VerticalAlignment="Center"
                        FontSize="18"
                        FontFamily="../../Fonts/#Arial"/>
@@ -70,21 +70,21 @@
                         VerticalAlignment="Center"
                            Margin="5 0 0 0"
                        FontFamily="../../Fonts/#Arial"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal"
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
                            Height="40">
-                <TextBlock Text="Mesto polaska:"
+                    <TextBlock Text="Mesto polaska:"
                        Foreground="#1F1F1F"
                         VerticalAlignment="Center"
                        FontSize="18"
                        FontWeight="Bold"
                        FontFamily="../../Fonts/#Arial"/>
-                <TextBlock Text="{Binding Aranzman.StartLocation, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBlock Text="{Binding Aranzman.StartLocation, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                        FontSize="18"
                        VerticalAlignment="Center"
                        Margin="15 0 0 0"
                        FontFamily="../../Fonts/#Arial"/>
-            </StackPanel>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal"
                            Height="40">
                     <TextBlock Text="Destinacija:"
@@ -105,10 +105,10 @@
                        Margin="0 10 0 10"
                        FontWeight="Bold"
                        FontFamily="../../Fonts/#Arial"/>
-            <ItemsControl ItemsSource="{Binding Aranzman.Atrakcije}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border BorderThickness="0">
+                <ItemsControl ItemsSource="{Binding Aranzman.Atrakcije}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="0">
                                 <materialDesign:Card HorizontalAlignment="Stretch"
                                         VerticalAlignment="Center"
                                         Foreground="Black"
@@ -135,20 +135,20 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </materialDesign:Card>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <TextBlock Text="Restorani"
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <TextBlock Text="Restorani"
                        HorizontalAlignment="Center"
                        FontSize="22"
                        Margin="0 10 0 10"
                        FontWeight="Bold"
                        FontFamily="../../Fonts/#Arial"/>
-            <ItemsControl ItemsSource="{Binding Aranzman.Restorani}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border BorderThickness="0">
+                <ItemsControl ItemsSource="{Binding Aranzman.Restorani}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="0">
                                 <materialDesign:Card HorizontalAlignment="Stretch"
                                         VerticalAlignment="Center"
                                         Foreground="Black"
@@ -188,19 +188,19 @@
                                     </StackPanel>
                                 </materialDesign:Card>
                             </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
                 <TextBlock Text="Smeštaj"
                        HorizontalAlignment="Center"
                        FontSize="22"
                        Margin="0 10 0 10"
                        FontWeight="Bold"
                        FontFamily="../../Fonts/#Arial"/>
-            <ItemsControl ItemsSource="{Binding Aranzman.Smestaji}" Margin="0 0 0 20">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border BorderThickness="0">
+                <ItemsControl ItemsSource="{Binding Aranzman.Smestaji}" Margin="0 0 0 20">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="0">
                                 <materialDesign:Card HorizontalAlignment="Stretch"
                                         VerticalAlignment="Center"
                                         Foreground="Black"
@@ -242,11 +242,13 @@
                                     </StackPanel>
                                 </materialDesign:Card>
                             </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
-            <m:Map x:Name="myMap" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" CredentialsProvider="" Center="44.316093, 20.851270" ZoomLevel="7.1"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <m:Map x:Name="myMap" Grid.Column="1" Grid.RowSpan="2"
+                   CredentialsProvider=""
+                   Center="44.316093, 20.851270" ZoomLevel="7.1"/>
         </Grid>
     </ScrollViewer>
 </Window>

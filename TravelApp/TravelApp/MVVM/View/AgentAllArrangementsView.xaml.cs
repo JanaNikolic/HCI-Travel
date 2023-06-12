@@ -23,7 +23,6 @@ namespace TravelApp.MVVM.View
     /// </summary>
     public partial class AgentAllArrangementsView : Window
     {
-
         
         public AgentAllArrangementsView()
         {
@@ -57,6 +56,53 @@ namespace TravelApp.MVVM.View
             //}
 
             InitializeComponent();
+            CommandManager.RegisterClassCommandBinding(typeof(PojedinacnaAtrakcija), new CommandBinding(CustomCommands.Logout, CloseExecuted, CanCloseExecute));
         }
+
+        private void CloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            LoginView view = new LoginView();
+            view.Show();
+            this.Close();
         }
+
+        private void CanCloseExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = Keyboard.FocusedElement;
+            Trace.WriteLine(focusedControl.GetType().ToString());
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                if (str == "Restoran")
+                {
+                    str = "Agent";
+                }
+                HelpProvider.ShowHelp(str, this);
+            }
+        }
+        private void OnlineHelpExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            HelpProvider.ShowHelp("Travel", this);
+        }
+
+        private void CanOnlineHelpExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+        private void ReportExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            IzvestajMesecniView view = new IzvestajMesecniView();
+            view.Show();
+        }
+
+        private void CanReportExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+    }
 }

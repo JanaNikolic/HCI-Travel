@@ -12,9 +12,11 @@
         Background="#F0F0F0"
         Title="Kreiraj aranžman"
         WindowState="Maximized"
-        Icon="../../Images/logo.png">
+        Icon="../../Images/logo.png"
+        local:HelpProvider.HelpKey="Aranzman">
     <Window.CommandBindings>
-            <CommandBinding Command="{x:Static local:CustomCommands.Save}"
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+        <CommandBinding Command="{x:Static local:CustomCommands.Save}"
                             Executed="SaveExecuted"
                             CanExecute="CanSaveExecute" />
             <CommandBinding Command="{x:Static local:CustomCommands.Close}"
@@ -30,7 +32,7 @@
         <KeyBinding Gesture="CTRL+X" Command="{x:Static local:CustomCommands.Close}" />
         <KeyBinding Gesture="CTRL+O" Command="{x:Static local:CustomCommands.Browse}" />
     </Window.InputBindings>
-    <Grid>
+    <Grid local:HelpProvider.HelpKey="Aranzman">
         <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7*"/>
                 <ColumnDefinition Width="5*"/>
@@ -47,7 +49,7 @@
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
             <StackPanel Margin="50,0,50,0" Grid.RowSpan="2" Grid.Column="0" Grid.Row="1">
-                <Image x:Name="SelectedImage" Stretch="UniformToFill" Height="200" Margin="10" Source="..\..\Images\placeholder-image.png"/>
+                <Image x:Name="SelectedImage" Stretch="UniformToFill" Height="200" Margin="10" Source="../../Images/placeholder-image.png"/>
                 <Button Content="DODAJ SLIKU" 
                         Template="{DynamicResource AddButton}"
                     FontSize="18"
@@ -134,6 +136,7 @@
                     <Label Content="CENA" 
                         Foreground="#1F1F1F"
                         FontSize="20"
+                        ToolTip="Cena u RSD"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                             
                         Margin="0,10,0,0"/>
@@ -150,6 +153,7 @@
                         BorderBrush="Black"
                         VerticalContentAlignment="Center"
                         Margin="2,2,2,2"
+                        ToolTip="Cena u RSD"
                         Padding="5,2,2,2"
                          AcceptsReturn="True" TextWrapping="Wrap" >
                     <Validation.ErrorTemplate>
@@ -202,7 +206,7 @@
                         BorderBrush="DarkSlateGray"
                         Background="White"
                         Margin="2,2,12,2">
-                        <DatePicker x:Name="datumPolaska" materialDesign:HintAssist.Hint="D_tum"
+                        <DatePicker x:Name="datumPolaska" 
                         FontSize="18"
                         SelectedDate="{Binding DatumPolaska, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         FontWeight="Medium"
@@ -210,21 +214,8 @@
                         VerticalContentAlignment="Center"                         
                         Foreground="#1F1F1F"
                         Padding="4,4,4,4"
+                        local:HelpProvider.HelpKey="Datum"
                         Height="40">
-                            <Validation.ErrorTemplate>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-
-                                        <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Validation.ErrorTemplate>
                         </DatePicker>
                     </Border>
 
@@ -252,8 +243,9 @@
                         FontFamily="../../Fonts/#Poppins"   
                         VerticalContentAlignment="Center"                         
                         Foreground="#1F1F1F"
+                        local:HelpProvider.HelpKey="Datum"
                         Padding="4,4,4,4"
-                        Height="40"/>
+                        Height="40" HorizontalAlignment="Left" Width="205"/>
                     </Border>
 
                     <Label Content="MESTO POLASKA" 
@@ -345,11 +337,11 @@
                            Grid.Row="4"
                            Grid.Column="0"
                            />
-                    <ListView Grid.Column="0" Grid.Row="5" ItemsSource="{Binding IzabraneAtrakcije}" AllowDrop="True" DragEnter="ListView_DragEnter" Drop="DodajAtrakciju" PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="Atrakcija_MouseMove"
+                    <ListView  Grid.Column="0" Grid.Row="5" ItemsSource="{Binding IzabraneAtrakcije}" AllowDrop="True" DragEnter="ListView_DragEnter" Drop="DodajAtrakciju" PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="Atrakcija_MouseMove"
                               Template="{DynamicResource ListInput}"
                         Margin="2,2,12,2"
                         Padding="4,4,4,4">
-                        <ListView.ItemTemplate>
+                        <ListView.ItemTemplate >
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" 
                               FontSize="18"
@@ -380,7 +372,7 @@
                         Padding="4,4,4,4">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}" 
+                                <TextBlock Text="{Binding Name}"
                               FontSize="18"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins" />
@@ -403,7 +395,7 @@
                         Padding="4,4,4,4">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}" 
+                                <TextBlock Text="{Binding Name}"
                               FontSize="18"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins" />
@@ -451,7 +443,7 @@
                               Template="{DynamicResource ListInput}"
                         Margin="2,2,12,2"
                         Padding="4,4,4,4">
-                        <ListView.ItemTemplate>
+                        <ListView.ItemTemplate >
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" 
                               FontSize="18"
@@ -478,7 +470,7 @@
                               Template="{DynamicResource ListInput}"
                         Margin="12,2,2,2"
                         Padding="4,4,4,4">
-                        <ListView.ItemTemplate>
+                        <ListView.ItemTemplate >
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" 
                               FontSize="18"
@@ -492,15 +484,15 @@
             </StackPanel>
 
         </ScrollViewer>
-        <Grid Grid.Column="1" Grid.Row="1">
+        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
             <m:Map Grid.Row="0"
                        x:Name="myMap"
-                       CredentialsProvider=""
                        Center="44.316093, 20.851270" 
+                       CredentialsProvider=""
                        ZoomLevel="7"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
                     <Button Content="ODUSTANI" Width="120" Height="40" Margin="15"

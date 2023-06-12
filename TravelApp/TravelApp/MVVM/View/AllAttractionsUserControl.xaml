@@ -9,10 +9,10 @@
     <Grid VerticalAlignment="Top" HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="680"/>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Margin="0 10">
-            <TextBox x:Name="textBox" FontSize="24" Padding="5 0" HorizontalAlignment="Left" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2"
+            <TextBox x:Name="textBox" local:HelpProvider.HelpKey="Pretraga" FontSize="24" Padding="5 0" HorizontalAlignment="Left" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2"
                      Text="{Binding PretragaTB, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.ToolTip>
                     <ToolTip>

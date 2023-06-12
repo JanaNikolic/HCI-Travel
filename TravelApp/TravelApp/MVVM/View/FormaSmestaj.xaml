@@ -7,10 +7,13 @@
         xmlns:local="clr-namespace:TravelApp.MVVM.View"
         mc:Ignorable="d"
         Icon="../../Images/logo.png"
-        Title="Kreiranje smeštaja" Height="520" Width="700"
+        Title="Kreiranje smeštaja" Width="700"
+        MinHeight="500"
         MinWidth="500"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        local:HelpProvider.HelpKey="Smestaj">
     <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
         <CommandBinding Command="{x:Static local:CustomCommands.Save}"
                         Executed="SaveExecuted"
                         CanExecute="CanSaveExecute" />
@@ -23,7 +26,7 @@
         <KeyBinding Key="Enter" Command="{x:Static local:CustomCommands.Save}" />
         <KeyBinding Gesture="CTRL+X" Command="{x:Static local:CustomCommands.Close}" />
     </Window.InputBindings>
-    <ScrollViewer>
+    <ScrollViewer local:HelpProvider.HelpKey="Smestaj">
         <StackPanel Margin="80 20 80 0">
             <StackPanel x:Name="ListForEdit" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Hidden">
                 <TextBlock  Text="{Binding indeks}" FontSize="26" FontWeight="DemiBold" VerticalAlignment="Center" Margin="30 0"></TextBlock>
@@ -93,6 +96,7 @@
                         BorderThickness="2"
                         BorderBrush="Black"
                         VerticalContentAlignment="Center"
+                local:HelpProvider.HelpKey="RestoranAdresa"
                         Margin="2,2,2,2"
                         Padding="5,2,2,2">
                 <Validation.ErrorTemplate>

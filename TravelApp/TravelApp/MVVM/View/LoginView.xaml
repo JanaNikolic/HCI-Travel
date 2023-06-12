@@ -14,6 +14,16 @@
         <CommandBinding Command="{x:Static local:CustomCommands.Register}"
                         Executed="RegisterExecuted"
                         CanExecute="CanRegisterExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.RegisterWindow}"
+                        Executed="RegisterWindowExecuted"
+                        CanExecute="CanRegisterWindowExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.UnregisteredWindow}"
+                        Executed="UnregisteredWindowExecuted"
+                        CanExecute="CanUnregisteredWindowExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.OnlineHelp}"
+                        Executed="OnlineHelpExecuted"
+                        CanExecute="CanOnlineHelpExecute" />
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
     </Window.CommandBindings>
 
     <Window.InputBindings>
@@ -22,15 +32,25 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition MinHeight="200" MaxHeight="500"/>
+                <RowDefinition />
+                <RowDefinition MinHeight="200" MaxHeight="450"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-
-            <Image Grid.Row="0" Source="../../Images/login.jpg" HorizontalAlignment="Center" />
-
+            <Menu Grid.Row="0" FontSize="18" FontWeight="Medium">
+                <MenuItem Header="_Profil" Padding="10 0">
+                    <MenuItem Header="_Registracija" Command="{x:Static local:CustomCommands.RegisterWindow}"></MenuItem>
+                    <MenuItem Header="_Prijava" ></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="_Pregled putovanja" Command="{x:Static local:CustomCommands.UnregisteredWindow}"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Pomoć" Padding="10 0">
+                    <MenuItem Header="_Online pomoc" Command="{x:Static local:CustomCommands.OnlineHelp}"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <Image Grid.Row="1" Source="../../Images/login.jpg" Stretch="UniformToFill" HorizontalAlignment="Center" />
 
             <StackPanel Width="300"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Orientation="Vertical"
                     Margin="0,0,0,25">
 

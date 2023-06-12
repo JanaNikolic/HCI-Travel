@@ -16,7 +16,7 @@ namespace TravelApp.Model
         [Key] public int Id { get; set; }
 
         [AllowNull]
-        public string PictureLocation { get; set; } = "..\\..\\Images\\placeholder-image.png";
+        public string PictureLocation { get; set; } = "../../Images/placeholder-image.png";
         public string Name { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
@@ -26,7 +26,10 @@ namespace TravelApp.Model
             this.Name = Name;
             this.Description = Description;
             this.Address = Address;
-            this.PictureLocation = pictureLocation;
+            if (pictureLocation != null && pictureLocation != "")
+            {
+                this.PictureLocation = pictureLocation;
+            }
             this.Arrangements = new List<Aranzman>();
         }
         public Atrakcija(string Name, string Description, string Address)

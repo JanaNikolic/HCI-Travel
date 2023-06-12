@@ -131,6 +131,8 @@ namespace TravelApp.MVVM.View
 
         public void BrisanjeAranzmana(object sender, RoutedEventArgs e)
         {
+            if (OdabraniAranzmani.Count() > 0)
+            {
             string messageBoxText = "Da li želite da izbrišete izabrane aramžmane?";
             string caption = "Brisanje aranžmana";
 
@@ -155,6 +157,8 @@ namespace TravelApp.MVVM.View
                     OdabraniAranzmani = new List<Aranzman>();
                     BrOdabranih = 0;
                 }
+                }
+
             }
         }
 

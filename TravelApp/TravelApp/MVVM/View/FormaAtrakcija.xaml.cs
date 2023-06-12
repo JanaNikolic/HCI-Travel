@@ -30,7 +30,6 @@ namespace TravelApp.MVVM.View
         Dictionary<string, Pushpin> pinMap = new Dictionary<string, Pushpin>();
 
         private string KEY = "";
-
         private string _adresa { get; set; }
         public string Adresa
         {
@@ -523,6 +522,27 @@ namespace TravelApp.MVVM.View
         private void CanBrowseExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true; // Enable the command by default
+        }
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = Keyboard.FocusedElement;
+            Trace.WriteLine(focusedControl.GetType().ToString());
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                if (str == "Restoran")
+                {
+                    str = "Atrakcija";
+                }
+                Trace.WriteLine(str);
+                HelpProvider.ShowHelp(str, this);
+            }
+            else
+            {
+                string windowKey = HelpProvider.GetHelpKey(this);
+                Trace.WriteLine("ne radi");
+                HelpProvider.ShowHelp(windowKey, this);
+            }
         }
     }
 }

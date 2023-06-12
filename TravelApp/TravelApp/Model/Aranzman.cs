@@ -19,7 +19,7 @@ namespace TravelApp.Model
         public string StartLocation { get; set; }
         public string EndLocation { get; set; }
         public double Price { get; set; }
-        public string PictureLocation { get; set; } = "..\\..\\Images\\placeholder-image.png";
+        public string PictureLocation { get; set; } = "../../Images/placeholder-image.png";
         public ICollection<Restoran> Restorani { get; set; }
         public ICollection<Atrakcija> Atrakcije { get; set; }
         public ICollection<Smestaj> Smestaji { get; set; }
@@ -39,7 +39,10 @@ namespace TravelApp.Model
             StartLocation = startLocation;
             EndLocation = endLocation;
             Price = price;
-            PictureLocation = pictureLocation;
+            if (pictureLocation != null && pictureLocation != "")
+            {
+                this.PictureLocation = pictureLocation;
+            }
             Restorani = restorani;
             Smestaji = smestaji;
             Atrakcije = atrakcije;
@@ -56,7 +59,10 @@ namespace TravelApp.Model
             StartLocation = startLocation;
             EndLocation = endLocation;
             Price = price;
-            PictureLocation = pictureLocation;
+            if (pictureLocation != null && pictureLocation != "")
+            {
+                this.PictureLocation = pictureLocation;
+            }
             Restorani = new List<Restoran>();
             Atrakcije = new List<Atrakcija>();
             Smestaji = new List<Smestaj>();
@@ -71,7 +77,10 @@ namespace TravelApp.Model
             StartLocation = startLocation;
             EndLocation = endLocation;
             Price = price;
-            PictureLocation = pictureLocation;
+            if (pictureLocation != null && pictureLocation != "")
+            {
+                this.PictureLocation = pictureLocation;
+            }
             Restorani = new List<Restoran>();
             Atrakcije = new List<Atrakcija>();
             Smestaji = new List<Smestaj>();

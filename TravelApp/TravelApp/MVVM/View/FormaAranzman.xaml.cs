@@ -239,7 +239,7 @@ namespace TravelApp.MVVM.View
                     HasNoErrors = false;
                     return "Datum povratka ne sme biti u proslosti.";
                 }
-                if (columnName == "DatumPobratka" && DatumPovratka < DatumPolaska)
+                if (columnName == "DatumPovratka" && DatumPovratka < DatumPolaska)
                 {
                     HasNoErrors = false;
                     return "Datum polaska ne sme biti posle datuma povratka.";
@@ -735,48 +735,6 @@ namespace TravelApp.MVVM.View
             }
         }
 
-        //private void MapWithPushpins_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        //{
-        //    // Disables the default mouse double-click action.
-        //    e.Handled = true;
-
-        //    // Determin the location to place the pushpin at on the map.
-
-        //    //Get the mouse click coordinates
-        //    Point mousePosition = e.GetPosition(myMap);
-        //    //Convert the mouse coordinates to a locatoin on the map
-        //    Location pinLocation = myMap.ViewportPointToLocation(mousePosition);
-
-        //    // The pushpin to add to the map.
-        //    Pushpin pin = new Pushpin();
-        //    pin.Location = pinLocation;
-
-        //    // Adds the pushpin to the map.
-        //    myMap.Children.Add(pin);
-        //}
-
-        //private void MapWithPushpins_TouchDown(object sender, TouchEventArgs e)
-        //{
-
-        //    // Get the touch position relative to the MapWithPushpins control
-        //    TouchPoint touchPosition = e.GetTouchPoint(myMap);
-
-        //    // Convert the touch position to a location on the map
-        //    Location pinLocation = myMap.ViewportPointToLocation(touchPosition.Position);
-
-        //    // Create and add the pushpin to the map
-        //    Pushpin pin = new Pushpin();
-        //    pin.Location = pinLocation;
-
-        //    var pushpinsToRemove = myMap.Children.OfType<Pushpin>().ToList();
-        //    foreach (var pushpin in pushpinsToRemove)
-        //    {
-        //        myMap.Children.Remove(pushpin);
-        //    }
-
-        //    myMap.Children.Add(pin);
-        //}
-
         private XmlDocument GetXmlResponse(string requestUrl)
         {
             System.Diagnostics.Trace.WriteLine("Request URL (XML): " + requestUrl);
@@ -851,8 +809,9 @@ namespace TravelApp.MVVM.View
         public void AddStartLocation(object sender, RoutedEventArgs e)
         {
             RemovePin("startLocation");
-            AddPin("startLocation", MestoPolaska, Colors.Red);
-            if (!string.IsNullOrEmpty(Destinacija)) {
+            if (!string.IsNullOrEmpty(Destinacija))
+            {
+                AddPin("startLocation", MestoPolaska, Colors.Red);
                 DrawRoute(MestoPolaska, Destinacija);
             }
         }
@@ -860,9 +819,9 @@ namespace TravelApp.MVVM.View
         public void AddDestination(object sender, RoutedEventArgs e)
         {
             RemovePin("destination");
-            AddPin("destination", Destinacija, Colors.Red);
             if (!string.IsNullOrEmpty(MestoPolaska))
             {
+                AddPin("destination", Destinacija, Colors.Red);
                 DrawRoute(MestoPolaska, Destinacija);
             }
         }
@@ -917,6 +876,28 @@ namespace TravelApp.MVVM.View
                 };
                 currentRoute = routeLine;
                 myMap.Children.Add(routeLine);
+            }
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = Keyboard.FocusedElement;
+            Trace.WriteLine(focusedControl.GetType().ToString());
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                if (str == "Restoran")
+                {
+                    str = "Aranzman";
+                }
+                Trace.WriteLine(str);
+                HelpProvider.ShowHelp(str, this);
+            }
+            else
+            {
+                string windowKey = HelpProvider.GetHelpKey(this);
+                Trace.WriteLine("ne radi");
+                HelpProvider.ShowHelp(windowKey, this);
             }
         }
 

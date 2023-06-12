@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -25,6 +26,15 @@ namespace TravelApp.MVVM.View
     {
         public List<Aranzman> SviAranzmani { get; set; }
 
+        private bool _loggedIn {  get; set; }
+        public bool loggedIn {
+            get { return _loggedIn; }
+            set
+            {
+                _loggedIn = value;
+                OnPropertyChanged(nameof(loggedIn));
+            }
+        }
         public User user { get; set; }
 
         public static readonly DependencyProperty IsClickedProperty =
@@ -68,6 +78,75 @@ namespace TravelApp.MVVM.View
                     ListViewAranzmans.ItemsSource = SviAranzmani;
             }
 
+        }
+        private void RegisterWindowExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            RegisterView view = new RegisterView();
+            view.Show();
+            this.Close();
+        }
+
+        private void CanRegisterWindowExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void LoginWindowExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            LoginView view = new LoginView();
+            view.Show();
+            this.Close();
+        }
+
+        private void CanLoginWindowExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void OnlineHelpExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            HelpProvider.ShowHelp("Travel", this);
+        }
+
+        private void CanOnlineHelpExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void CloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            LoginView view = new LoginView();
+            view.Show();
+            this.Close();
+        }
+
+        private void CanCloseExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void ReportExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            PregledKupovinaView view = new PregledKupovinaView(user);
+            view.Show();
+        }
+
+        private void CanReportExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = Keyboard.FocusedElement;
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                if (str == "Restoran")
+                {
+                    str = "Toolbar";
+                }
+                HelpProvider.ShowHelp(str, this);
+            }
         }
 
         private void Item_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

@@ -4,13 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelApp"
-        xmlns:local2="clr-namespace:TravelApp.MVVM.View"
+        xmlns:l="clr-namespace:TravelApp.MVVM.View"
         mc:Ignorable="d"
+        xmlns:local2="clr-namespace:TravelApp.MVVM.View"
         Icon="../../Images/logo.png"
         Title="Kreiraj Restoran" Height="550" Width="680"
         WindowStartupLocation="CenterOwner">
     <Window.CommandBindings>
-        <CommandBinding Command="{x:Static local2:CustomCommands.Close}"
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+            <CommandBinding Command="{x:Static local2:CustomCommands.Close}"
                         Executed="CloseExecuted"
                         CanExecute="CanCloseExecute" />
         <CommandBinding Command="{x:Static local2:CustomCommands.Save}"
@@ -22,7 +24,8 @@
         <KeyBinding Key="Enter" Command="{x:Static local2:CustomCommands.Save}" />
         <KeyBinding Gesture="CTRL+X" Command="{x:Static local2:CustomCommands.Close}" />
     </Window.InputBindings>
-    <ScrollViewer>
+
+    <ScrollViewer l:HelpProvider.HelpKey="Restoran">
         <StackPanel Margin="80 20 80 40">
             <StackPanel x:Name="ListForEdit" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Hidden">
                 <TextBlock  Text="{Binding indeks}" FontSize="26" FontWeight="DemiBold" VerticalAlignment="Center" Margin="30 0"></TextBlock>
@@ -101,8 +104,10 @@
                         BorderThickness="2"
                         BorderBrush="Black"
                         VerticalContentAlignment="Center"
+                        l:HelpProvider.HelpKey="RestoranAdresa"
                         Margin="2,2,2,2"
                         Padding="5,2,2,2">
+
                 <Validation.ErrorTemplate>
                     <ControlTemplate>
                         <Grid>
