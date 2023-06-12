@@ -82,9 +82,10 @@ namespace TravelApp.MVVM.View
             Password = "";
             //inhabitDatabase();
             CommandManager.RegisterClassCommandBinding(typeof(RegisterView), new CommandBinding(CustomCommands.Register, RegisterExecuted, CanRegisterExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(RegisterView), new CommandBinding(CustomCommands.RegisterWindow, RegisterWindowExecuted, CanRegisterWindowExecute));
         }
 
-   
+
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -103,6 +104,7 @@ namespace TravelApp.MVVM.View
                         } else
                         {
                             UnregisteredMainView view = new UnregisteredMainView();
+                            view.loggedIn = true;
                             view.Show();
                             Close();
                         }
@@ -128,6 +130,18 @@ namespace TravelApp.MVVM.View
         }
 
         private void CanRegisterExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void RegisterWindowExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            RegisterView view = new RegisterView();
+            view.Show();
+            this.Close();
+        }
+
+        private void CanRegisterWindowExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true; // Enable the command by default
         }

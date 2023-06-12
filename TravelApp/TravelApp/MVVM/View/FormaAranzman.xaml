@@ -30,7 +30,7 @@
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
             <StackPanel Margin="50,0,50,0" Grid.RowSpan="2" Grid.Column="0" Grid.Row="1">
-                <Image x:Name="SelectedImage" Stretch="UniformToFill" Height="200" Margin="10" Source="..\..\Images\placeholder-image.png"/>
+                <Image x:Name="SelectedImage" Stretch="UniformToFill" Height="200" Margin="10" Source="C:\fax\hci\HCI-Travel\TravelApp\TravelApp\Images\placeholder-image.jpg"/>
                 <Button Content="DODAJ SLIKU" 
                         Template="{DynamicResource AddButton}"
                     FontSize="18"
@@ -194,20 +194,6 @@
                         Foreground="#1F1F1F"
                         Padding="4,4,4,4"
                         Height="40">
-                            <Validation.ErrorTemplate>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-
-                                        <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Validation.ErrorTemplate>
                         </DatePicker>
                     </Border>
 
@@ -475,14 +461,13 @@
             </StackPanel>
 
         </ScrollViewer>
-        <Grid Grid.Column="1" Grid.Row="1">
+        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
             <m:Map Grid.Row="0"
                        x:Name="myMap"
-                       CredentialsProvider="VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3" 
                        Center="44.316093, 20.851270" 
                        ZoomLevel="7"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">

@@ -10,5 +10,8 @@ namespace TravelApp.MVVM.View
     public class CustomCommands
     {
         public static readonly RoutedCommand Register = new RoutedCommand();
+        public static readonly RoutedCommand Logout = new RoutedCommand();
+        public static readonly RoutedCommand LoginWindow = new RoutedCommand();
+        public static readonly RoutedCommand RegisterWindow = new RoutedCommand();
     }
 }

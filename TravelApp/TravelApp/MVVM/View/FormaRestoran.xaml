@@ -4,11 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelApp"
+        xmlns:l="clr-namespace:TravelApp.MVVM.View"
         mc:Ignorable="d"
         Icon="../../Images/logo.png"
         Title="Kreiraj Restoran" Height="550" Width="680"
-        WindowStartupLocation="CenterOwner">
-    <ScrollViewer>
+        WindowStartupLocation="CenterOwner" >
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    </Window.CommandBindings>
+    <ScrollViewer l:HelpProvider.HelpKey="Restoran">
         <StackPanel Margin="80 20 80 40">
             <StackPanel x:Name="ListForEdit" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Hidden">
                 <TextBlock  Text="{Binding indeks}" FontSize="26" FontWeight="DemiBold" VerticalAlignment="Center" Margin="30 0"></TextBlock>
@@ -88,7 +92,8 @@
                         BorderBrush="Black"
                         VerticalContentAlignment="Center"
                         Margin="2,2,2,2"
-                        Padding="5,2,2,2">
+                        Padding="5,2,2,2"
+                        l:HelpProvider.HelpKey="RestoranAdresa">
                 <Validation.ErrorTemplate>
                     <ControlTemplate>
                         <Grid>

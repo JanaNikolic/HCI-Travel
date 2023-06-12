@@ -23,11 +23,23 @@ namespace TravelApp.MVVM.View
     /// </summary>
     public partial class AgentAllArrangementsView : Window
     {
-
         
         public AgentAllArrangementsView()
         {
             InitializeComponent();
+            CommandManager.RegisterClassCommandBinding(typeof(PojedinacnaAtrakcija), new CommandBinding(CustomCommands.Logout, CloseExecuted, CanCloseExecute));
+        }
+
+        private void CloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            LoginView view = new LoginView();
+            view.Show();
+            this.Close();
+        }
+
+        private void CanCloseExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
         }
     }
 }

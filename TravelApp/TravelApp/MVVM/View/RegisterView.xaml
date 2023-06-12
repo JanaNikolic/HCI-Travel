@@ -12,6 +12,9 @@
         <CommandBinding Command="{x:Static local:CustomCommands.Register}"
                         Executed="RegisterExecuted"
                         CanExecute="CanRegisterExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.LoginWindow}"
+                        Executed="LoginWindowExecuted"
+                        CanExecute="CanLoginWindowExecute" />
     </Window.CommandBindings>
 
     <Window.InputBindings>
@@ -20,15 +23,26 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="4*"/>
                 <RowDefinition Height="6*"/>
             </Grid.RowDefinitions>
-
-            <Image Grid.Row="0" MinHeight="200" MaxHeight="450" Source="../../Images/vidikovac.jpg" Stretch="UniformToFill" StretchDirection="Both" HorizontalAlignment="Center" />
+            <Menu Grid.Row="0" FontSize="18" FontWeight="Medium">
+                <MenuItem Header="_Profil" Padding="10 0">
+                    <MenuItem Header="_Registracija" ></MenuItem>
+                    <MenuItem Header="_Prijava" Command="{x:Static local:CustomCommands.LoginWindow}"></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="_Pregled putovanja"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Pomoć" Padding="10 0">
+                    <MenuItem Header="_Online pomoc" ></MenuItem>
+                </MenuItem>
+            </Menu>
+            <Image Grid.Row="1" MinHeight="200" MaxHeight="450" Source="../../Images/vidikovac.jpg" Stretch="UniformToFill" StretchDirection="Both" HorizontalAlignment="Center" />
 
 
             <StackPanel Width="300"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Orientation="Vertical">
 
                 <TextBlock Text="Korisničko ime"

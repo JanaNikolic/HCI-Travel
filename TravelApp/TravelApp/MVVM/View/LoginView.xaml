@@ -14,6 +14,9 @@
         <CommandBinding Command="{x:Static local:CustomCommands.Register}"
                         Executed="RegisterExecuted"
                         CanExecute="CanRegisterExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.RegisterWindow}"
+                        Executed="RegisterWindowExecuted"
+                        CanExecute="CanRegisterWindowExecute" />
     </Window.CommandBindings>
 
     <Window.InputBindings>
@@ -21,16 +24,27 @@
     </Window.InputBindings>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition MinHeight="200" MaxHeight="500"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-            <Image Grid.Row="0" Source="../../Images/login.png" Stretch="UniformToFill" HorizontalAlignment="Center" />
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition MinHeight="200" MaxHeight="500"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Menu Grid.Row="0" FontSize="18" FontWeight="Medium">
+                <MenuItem Header="_Profil" Padding="10 0">
+                    <MenuItem Header="_Registracija" Command="{x:Static local:CustomCommands.RegisterWindow}"></MenuItem>
+                    <MenuItem Header="_Prijava" ></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="_Pregled putovanja"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Pomoć" Padding="10 0">
+                    <MenuItem Header="_Online pomoc" ></MenuItem>
+                </MenuItem>
+            </Menu>
+            <Image Grid.Row="1" Source="../../Images/login.jpg" Stretch="UniformToFill" HorizontalAlignment="Center" />
 
         
             <StackPanel Width="300"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Orientation="Vertical"
                     Margin="0,0,0,25">
 

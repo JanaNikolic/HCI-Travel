@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <None Remove="Images\placeholder-image.png" />
-    <None Remove="Images\vidikovac.jpg" />
     <Compile Remove="Utils\**" />
     <EmbeddedResource Remove="Utils\**" />
     <None Remove="Utils\**" />
@@ -39,7 +38,6 @@
 	    <Resource Include="Images\placeholder-image.png" />
 	    <Resource Include="Images\user-icon.png" />
 	    <Resource Include="Images\logo.png" />
-	    <Resource Include="Images\vidikovac.jpg" />
     </ItemGroup>
 
 </Project>

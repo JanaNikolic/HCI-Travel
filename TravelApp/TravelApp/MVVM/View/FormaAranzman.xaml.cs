@@ -36,7 +36,6 @@ namespace TravelApp.MVVM.View
     /// </summary>
     public partial class FormaAranzman : Window, INotifyPropertyChanged, IDataErrorInfo
     {
-
         MapPolyline currentRoute = null;
         Point startPoint = new Point();
         Dictionary<string, Pushpin> pinMap = new Dictionary<string, Pushpin>();
@@ -238,7 +237,7 @@ namespace TravelApp.MVVM.View
                     HasNoErrors = false;
                     return "Datum povratka ne sme biti u proslosti.";
                 }
-                if (columnName == "DatumPolaska" && DatumPovratka < DatumPolaska)
+                if (columnName == "DatumPovratka" && DatumPovratka < DatumPolaska)
                 {
                     HasNoErrors = false;
                     return "Datum polaska ne sme biti posle datuma povratka.";
@@ -731,7 +730,7 @@ namespace TravelApp.MVVM.View
 
         private void AddPin(string key, string address, Color color)
         {
-            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address) + "?o=xml&key=" + "VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3";
+            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address) + "?o=xml&key=" + KEY;
 
             //Make the request and get the response
             XmlDocument geocodeResponse = GetXmlResponse(geocodeRequest);
@@ -825,7 +824,7 @@ namespace TravelApp.MVVM.View
                         Address = endLocation
                     }
                 },
-                BingMapsKey = "VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3"
+                BingMapsKey = KEY
             };
             var response = await ServiceManager.GetResponseAsync(request);
 

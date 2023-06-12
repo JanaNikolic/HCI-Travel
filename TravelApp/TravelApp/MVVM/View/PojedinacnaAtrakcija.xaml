@@ -41,6 +41,7 @@
                        FontWeight="Medium"
                        FontFamily="../../Fonts/#Poppins"/>
         </StackPanel>
-        <m:Map x:Name="myMap" Grid.Column="1" CredentialsProvider="VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3" ZoomLevel="10"/>
+        <m:Map x:Name="myMap" Grid.Column="1" 
+                ZoomLevel="10"/>
     </Grid>
 </Window>

@@ -13,6 +13,7 @@ namespace TravelApp.MVVM.View
     {
         public List<Aranzman> SviAranzmani { get; set; }
 
+        public bool loggedIn { get; set; }
         public UnregisteredMainView()
         {
             InitializeComponent();

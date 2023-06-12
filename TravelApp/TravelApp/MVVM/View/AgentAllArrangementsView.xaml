@@ -14,47 +14,72 @@
         MinHeight="300"
         MinWidth="600" 
         >
-    <TabControl>
-        <TabControl.Resources>
-            <Style TargetType="TabItem">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="TabItem">
-                            <Grid Name="Panel">
-                                <ContentPresenter x:Name="ContentSite"
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:CustomCommands.Logout}"
+                        Executed="CloseExecuted"
+                        CanExecute="CanCloseExecute" />
+    </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Gesture="ALT+F4" Command="{x:Static local:CustomCommands.Logout}" />
+    </Window.InputBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" FontSize="18" FontWeight="Medium">
+            <MenuItem Header="_Profil" Padding="10 0">
+                <MenuItem Header="_Registracija" IsEnabled="False"></MenuItem>
+                <MenuItem Header="_Prijava" IsEnabled="False"></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="_Odjava" Command="{x:Static local:CustomCommands.Logout}"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Pomoć" Padding="10 0">
+                <MenuItem Header="_Online pomoc" ></MenuItem>
+            </MenuItem>
+        </Menu>
+        <TabControl Grid.Row="1">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Grid Name="Panel">
+                                    <ContentPresenter x:Name="ContentSite"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"
                                         ContentSource="Header"
                                         Margin="10,10"/>
-                            </Grid>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter TargetName="Panel" Property="Background" Value="LightGray" />
-                                </Trigger>
-                                <Trigger Property="IsSelected" Value="False">
-                                    <Setter TargetName="Panel" Property="Background" Value="White" />
-                                </Trigger>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="Panel" Property="Cursor" Value="Hand" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </TabControl.Resources>
-        <TabItem Header="Aranžmani" FontSize="20">
-            <tabData:AllArrangementsUserControl/>
-        </TabItem>
-        <TabItem Header="Atrakcije" FontSize="20">
-            <tabData:AllAttractionsUserControl/>
-        </TabItem>
-        <TabItem Header="Smeštaj" FontSize="20">
-            <tabData:AllAccommodationsUserControl/>
-        </TabItem>
-        <TabItem Header="Restorani" FontSize="20">
-            <tabData:AllRestaurantsUserControl/>
-        </TabItem>
-    </TabControl>
-
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Panel" Property="Background" Value="LightGray" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Panel" Property="Background" Value="White" />
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Panel" Property="Cursor" Value="Hand" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="Aranžmani" FontSize="20" FontWeight="Medium">
+                <tabData:AllArrangementsUserControl/>
+            </TabItem>
+            <TabItem Header="Atrakcije" FontSize="20" FontWeight="Medium">
+                <tabData:AllAttractionsUserControl/>
+            </TabItem>
+            <TabItem Header="Smeštaj" FontSize="20" FontWeight="Medium">
+                <tabData:AllAccommodationsUserControl/>
+            </TabItem>
+            <TabItem Header="Restorani" FontSize="20" FontWeight="Medium">
+                <tabData:AllRestaurantsUserControl/>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </Window>

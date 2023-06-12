@@ -128,6 +128,7 @@ namespace TravelApp.MVVM.View
             HasNoErrors = false;
             Password = "";
             CommandManager.RegisterClassCommandBinding(typeof(RegisterView), new CommandBinding(CustomCommands.Register, RegisterExecuted, CanRegisterExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(RegisterView), new CommandBinding(CustomCommands.LoginWindow, LoginWindowExecuted, CanLoginWindowExecute));
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
@@ -198,6 +199,18 @@ namespace TravelApp.MVVM.View
         }
 
         private void CanRegisterExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void LoginWindowExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            LoginView view = new LoginView();
+            view.Show();
+            this.Close();
+        }
+
+        private void CanLoginWindowExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true; // Enable the command by default
         }
