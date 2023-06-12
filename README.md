@@ -13,3 +13,11 @@ Potrebno je dodati i Bing Maps API Kljuc na mestima:
   - PojedinacanAranzman.xaml.cs
   - PojedinacanAranzman.xaml
 Kljuc dodati unutar navodnika, CredentialsProvider="" u xaml fajlovima (nalaze sa pri kraju fajla) i private string KEY = ""; u xaml.cs fajlovima (na pocetku klase).
+
+Login kredencijali za klijenta:
+  - korisnicko ime: client
+  - lozinka: client12345
+
+Login kredencijali za agenta:
+  - korisnicko ime: agent
+  - lozinka: agent12345
