@@ -17,6 +17,9 @@ namespace TravelApp.Model
         public string Password { get; set; }
         public Role Role { get; set; }
 
+        public ICollection<Kupovina> Kupovine { get; set; } = new HashSet<Kupovina>();
+        public ICollection<Rezervacija> Rezervacije { get; set; } = new HashSet<Rezervacija>();
+
         public User(string userName, string password, Role role)
         {
             UserName = userName;

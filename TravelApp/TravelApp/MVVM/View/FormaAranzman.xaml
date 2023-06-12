@@ -10,10 +10,10 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="#F0F0F0"
-        Title="Kreiraj aranzman"
+        Title="Kreiraj aranžman"
         WindowState="Maximized"
-        >
-        <Window.CommandBindings>
+        Icon="../../Images/logo.png">
+    <Window.CommandBindings>
             <CommandBinding Command="{x:Static local:CustomCommands.Save}"
                             Executed="SaveExecuted"
                             CanExecute="CanSaveExecute" />
@@ -25,18 +25,19 @@
                                 CanExecute="CanBrowseExecute" />
     </Window.CommandBindings>
 
-        <Window.InputBindings>
-            <KeyBinding Key="Enter" Command="{x:Static local:CustomCommands.Save}" />
-            <KeyBinding Gesture="CTRL+X" Command="{x:Static local:CustomCommands.Close}" />
-            <KeyBinding Gesture="CTRL+O" Command="{x:Static local:CustomCommands.Browse}" />
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{x:Static local:CustomCommands.Save}" />
+        <KeyBinding Gesture="CTRL+X" Command="{x:Static local:CustomCommands.Close}" />
+        <KeyBinding Gesture="CTRL+O" Command="{x:Static local:CustomCommands.Browse}" />
     </Window.InputBindings>
-        <Grid>
-            <Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7*"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel x:Name="ListForEdit" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Visibility="Hidden">
                 <TextBlock  Text="{Binding indeks}" FontSize="26" FontWeight="DemiBold" VerticalAlignment="Center" Margin="30 0"></TextBlock>
@@ -44,9 +45,9 @@
                 <TextBlock  Text="{Binding brOdabranih}" FontSize="26" VerticalAlignment="Center" FontWeight="DemiBold" Margin="30 0"></TextBlock>
             </StackPanel>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel Grid.Column="0" Grid.Row="0" Margin="50,0,50,0" Grid.RowSpan="2">
-                <Image x:Name="SelectedImage" Stretch="UniformToFill" Height="200" Margin="10" Source="C:\fax\hci\HCI-Travel\TravelApp\TravelApp\Images\placeholder-image.png"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
+            <StackPanel Margin="50,0,50,0" Grid.RowSpan="2" Grid.Column="0" Grid.Row="1">
+                <Image x:Name="SelectedImage" Stretch="UniformToFill" Height="200" Margin="10" Source="..\..\Images\placeholder-image.png"/>
                 <Button Content="DODAJ SLIKU" 
                         Template="{DynamicResource AddButton}"
                     FontSize="18"
@@ -491,14 +492,14 @@
             </StackPanel>
 
         </ScrollViewer>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
             <m:Map Grid.Row="0"
                        x:Name="myMap"
-                       CredentialsProvider="VrRZpoEa1NJvEWngQ6X9~RS5jubyoPK0xVkEYYWlhnw~AoGKBi7M6-w1SlG9_0FgIEVJra2Ox4Ex7acFyFoV-cXcnXCcpAKZFJPkGR_W0Sg3" 
+                       CredentialsProvider=""
                        Center="44.316093, 20.851270" 
                        ZoomLevel="7"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">

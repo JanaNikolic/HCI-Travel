@@ -14,12 +14,15 @@ namespace TravelApp.Model
         public string Address { get; set; }
         public FoodType FoodType { get; set; }
 
+        public virtual ICollection<Aranzman> Arrangements { get; set; }
+
         public Restoran() { }
         public Restoran(string name, string address, FoodType foodType)
         {
             Name = name;
             Address = address;
             FoodType = foodType;
+            this.Arrangements = new List<Aranzman>();
         }
     }
 }

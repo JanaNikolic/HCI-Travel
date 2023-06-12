@@ -19,10 +19,10 @@ namespace TravelApp.Model
         public string StartLocation { get; set; }
         public string EndLocation { get; set; }
         public double Price { get; set; }
-        public string PictureLocation { get; set; } = "C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png";
-        public List<Restoran> Restorani { get; set; }
-        public List<Atrakcija> Atrakcije { get; set; }
-        public List<Smestaj> Smestaji { get; set; }
+        public string PictureLocation { get; set; } = "..\\..\\Images\\placeholder-image.png";
+        public ICollection<Restoran> Restorani { get; set; }
+        public ICollection<Atrakcija> Atrakcije { get; set; }
+        public ICollection<Smestaj> Smestaji { get; set; }
         
         public Aranzman() {
             Restorani = new List<Restoran>();

@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelApp.MVVM.View"
         mc:Ignorable="d"
-        Title="RegisterView" Height="820" Width="1200">
+        Title="Registracija"
+        Icon="../../Images/logo.png"
+        Height="820" Width="1200">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:CustomCommands.Register}"
                         Executed="RegisterExecuted"

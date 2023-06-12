@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -36,6 +37,7 @@ namespace TravelApp.MVVM.View
     /// </summary>
     public partial class FormaAranzman : Window, INotifyPropertyChanged, IDataErrorInfo
     {
+        private string KEY = "";
         MapPolyline currentRoute = null;
         Point startPoint = new Point();
         Dictionary<string, Pushpin> pinMap = new Dictionary<string, Pushpin>();
@@ -280,16 +282,17 @@ namespace TravelApp.MVVM.View
         public FormaAranzman(Aranzman aranzman, int brOdabranih, int indeks)
         {
 
-            //TODO dodati broj odabranih i trenutni
             edit = true;
             editAranzman = aranzman;
             this.indeks = indeks;
             this.brOdabranih = brOdabranih;
-            
+
             InitializeComponent();
             CommandManager.RegisterClassCommandBinding(typeof(FormaAranzman), new CommandBinding(CustomCommands.Save, SaveExecuted, CanSaveExecute));
             CommandManager.RegisterClassCommandBinding(typeof(FormaAranzman), new CommandBinding(CustomCommands.Close, CloseExecuted, CanCloseExecute));
             CommandManager.RegisterClassCommandBinding(typeof(FormaAranzman), new CommandBinding(CustomCommands.Browse, BrowseExecuted, CanBrowseExecute));
+
+            this.Title = "Izmeni aranžman";
 
             var elem = this.FindName("ListForEdit") as StackPanel;
             elem.Visibility = Visibility.Visible;
@@ -302,7 +305,9 @@ namespace TravelApp.MVVM.View
             IzabraniSmestaji = new ObservableCollection<Smestaj>();
             IzabraniRestorani = new ObservableCollection<Restoran>();
             HasNoErrors = false;
-            loadLists();
+            SveAtrakcije.Clear();
+            SviRestorani.Clear();
+            SviSmestaji.Clear();
 
             this.Naziv = aranzman.Name;
             this.Opis = aranzman.Description;
@@ -310,13 +315,64 @@ namespace TravelApp.MVVM.View
             this.Destinacija = aranzman.EndLocation;
             this.Cena = aranzman.Price;
             this.Slika = aranzman.PictureLocation;
-            //SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png"));
-            //IzabraniRestorani.Clear();
-            //IzabraneAtrakcije.Clear();
-            //IzabraniSmestaji.Clear();
+            if (aranzman.PictureLocation == null || aranzman.PictureLocation == "")
+            {
+                SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png", UriKind.RelativeOrAbsolute));
+            }
+            else 
+            {
+                SelectedImage.Source = new BitmapImage(new Uri(aranzman.PictureLocation, UriKind.RelativeOrAbsolute));
+            }
+            using (var dbContext = new MyDbContext())
+            {
+                var listaAtrakcija = dbContext.Attractions.ToList();
+                foreach (var atrakcija in listaAtrakcija)
+                {
+                    SveAtrakcije.Add(atrakcija);
+                }
+
+                var listaSmestaja = dbContext.Hotels.ToList();
+                foreach (var smestaj in listaSmestaja)
+                {
+                    SviSmestaji.Add(smestaj);
+                }
+
+                var listaRestorana = dbContext.Restaurants.ToList();
+                foreach (var restoran in listaRestorana)
+                {
+                    SviRestorani.Add(restoran);
+                }
+                var Aranzman = dbContext.Arrangements.SingleOrDefault(a => a.Id == aranzman.Id);
+
+                var rs = dbContext.Arrangements.Include(s => s.Atrakcije).ToList();
+                var at = dbContext.Arrangements.Include(s => s.Atrakcije).ToList();
+                var ss = dbContext.Arrangements.Include(s => s.Smestaji).ToList();
+                Trace.WriteLine($"Br Aranz Atrakcija>> {Aranzman.Atrakcije.Count}");
+
+                foreach (var atr in Aranzman.Atrakcije)
+                {
+                    SveAtrakcije.Remove(atr);
+                    IzabraneAtrakcije.Add(atr);
+                    AddPin(atr.Name, atr.Address, Colors.Blue);
+                }
+
+                foreach (var atr in Aranzman.Restorani)
+                {
+                    SviRestorani.Remove(atr);
+                    IzabraniRestorani.Add(atr);
+                    AddPin(atr.Name, atr.Address, Colors.Green);
+                }
+
+                foreach (var atr in Aranzman.Smestaji)
+                {
+                    SviSmestaji.Remove(atr);
+                    IzabraniSmestaji.Add(atr);
+                    AddPin(atr.Name, atr.Address, Colors.Purple);
+                }
+            }
+            
             this.DatumPolaska = aranzman.StartDate;
             this.DatumPovratka = aranzman.EndDate;  
-
         }
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
@@ -587,7 +643,7 @@ namespace TravelApp.MVVM.View
                         this.Destinacija = "";
                         this.Cena = 0;
                         Slika = "";
-                        SelectedImage.Source = new BitmapImage(new Uri("C:\\fax\\hci\\HCI-Travel\\TravelApp\\TravelApp\\Images\\placeholder-image.png"));
+                        SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png"));
                         IzabraniRestorani.Clear();
                         IzabraneAtrakcije.Clear();
                         IzabraniSmestaji.Clear();
@@ -598,6 +654,7 @@ namespace TravelApp.MVVM.View
                     }
                 }
             } catch (Exception ex) {
+                Trace.WriteLine($"Greska>> {ex}");
                 string messageBoxText = "Došlo je do greške prilikom sačuvanja aranžmana. Pokušajte ponovo.";
                 string caption = "Čuvanje";
                 MessageBoxButton button = MessageBoxButton.OK;
@@ -666,7 +723,7 @@ namespace TravelApp.MVVM.View
         {
 
             string messageBoxText = "Jeste li sigurni da želite odustati? Svi podaci koji nisu sačuvani će se izgubiti.";
-            string caption = "Odustajanje od novog aranžmana";
+            string caption = "Odustajanje od čuanja aranžmana";
             MessageBoxButton button = MessageBoxButton.YesNo;
             MessageBoxImage icon = MessageBoxImage.Warning;
             MessageBoxResult result;

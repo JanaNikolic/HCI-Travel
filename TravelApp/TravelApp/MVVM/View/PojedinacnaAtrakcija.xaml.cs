@@ -26,6 +26,7 @@ namespace TravelApp.MVVM.View
     /// </summary>
     public partial class PojedinacnaAtrakcija : Window, INotifyPropertyChanged
     {
+        private string KEY = "";
         private Model.Atrakcija _atrakcija { get; set; }
 
         public Model.Atrakcija Atrakcija
@@ -51,6 +52,16 @@ namespace TravelApp.MVVM.View
             this.Atrakcija = atrakcija;
 
             CommandManager.RegisterClassCommandBinding(typeof(PojedinacnaAtrakcija), new CommandBinding(CustomCommands.Close, CloseExecuted, CanCloseExecute));
+            //using (var dbContext = new MyDbContext())
+            //{
+            //    this.Atrakcija = dbContext.Attractions.SingleOrDefault(a => a.Id == atrakcija.Id);
+            //    if (this.Atrakcija != null)
+            //    {
+            //        var rs = dbContext.Arrangements.Include(s => s.Restorani).ToList();
+            //        var at = dbContext.Arrangements.Include(s => s.Atrakcije).ToList();
+            //        var ss = dbContext.Arrangements.Include(s => s.Smestaji).ToList();
+            //    }
+            //}
 
             string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(atrakcija.Address) + "?o=xml&key=" + KEY;
 

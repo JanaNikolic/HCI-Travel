@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:TravelApp"
         xmlns:local2="clr-namespace:TravelApp.MVVM.View"
         mc:Ignorable="d"
-        Title="FormaRestoran" Height="550" Width="680">
+        Icon="../../Images/logo.png"
+        Title="Kreiraj Restoran" Height="550" Width="680"
+        WindowStartupLocation="CenterOwner">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local2:CustomCommands.Close}"
                         Executed="CloseExecuted"
@@ -22,6 +24,11 @@
     </Window.InputBindings>
     <ScrollViewer>
         <StackPanel Margin="80 20 80 40">
+            <StackPanel x:Name="ListForEdit" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Hidden">
+                <TextBlock  Text="{Binding indeks}" FontSize="26" FontWeight="DemiBold" VerticalAlignment="Center" Margin="30 0"></TextBlock>
+                <TextBlock  Text="od" FontSize="24" VerticalAlignment="Center" ></TextBlock>
+                <TextBlock  Text="{Binding brOdabranih}" FontSize="26" VerticalAlignment="Center" FontWeight="DemiBold" Margin="30 0"></TextBlock>
+            </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="NAZIV RESTORANA"
                            Foreground="#1F1F1F"
@@ -66,7 +73,8 @@
                         Margin="0,10,0,0"/>
         <Border x:Name="border"  BorderBrush="DarkSlateGray" BorderThickness="2"  CornerRadius="5" Margin="2 2 2 2">
                 <ComboBox ItemsSource="{Binding Source={local:EnumBindingSource {x:Type local:FoodType}}}" 
-                          SelectedValue="{Binding SelectedItem}"
+                          SelectedValue="{Binding VrstaHrane}"
+                          x:Name="vrstaHraneCB"
                           Height="38"
                           FontSize="20"
                             FontWeight="Medium"

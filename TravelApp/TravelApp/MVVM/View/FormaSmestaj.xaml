@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         xmlns:local="clr-namespace:TravelApp.MVVM.View"
         mc:Ignorable="d"
-        Title="FormaSmestaj" Height="520" Width="700"
-        MinHeight="500"
-        MinWidth="500">
+        Icon="../../Images/logo.png"
+        Title="Kreiranje smeštaja" Height="520" Width="700"
+        MinWidth="500"
+        WindowStartupLocation="CenterOwner">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:CustomCommands.Save}"
                         Executed="SaveExecuted"
@@ -22,17 +23,23 @@
         <KeyBinding Key="Enter" Command="{x:Static local:CustomCommands.Save}" />
         <KeyBinding Gesture="CTRL+X" Command="{x:Static local:CustomCommands.Close}" />
     </Window.InputBindings>
-    <StackPanel Margin="80 20 80 0">
-        <StackPanel Orientation="Horizontal">
-            <Label Content="NAZIV SMESTAJA"
+    <ScrollViewer>
+        <StackPanel Margin="80 20 80 0">
+            <StackPanel x:Name="ListForEdit" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Hidden">
+                <TextBlock  Text="{Binding indeks}" FontSize="26" FontWeight="DemiBold" VerticalAlignment="Center" Margin="30 0"></TextBlock>
+                <TextBlock  Text="od" FontSize="24" VerticalAlignment="Center" ></TextBlock>
+                <TextBlock  Text="{Binding brOdabranih}" FontSize="26" VerticalAlignment="Center" FontWeight="DemiBold" Margin="30 0"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="NAZIV SMESTAJA"
                        Foreground="#1F1F1F"
                         FontSize="20"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                             
                         Margin="0,10,0,0"/>
-            <TextBlock Text="{Binding NazivError}" Foreground="red" FontSize="18" Margin="0,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        </StackPanel>
-        <TextBox Template="{DynamicResource TextBoxInput}" 
+                <TextBlock Text="{Binding NazivError}" Foreground="red" FontSize="18" Margin="0,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </StackPanel>
+            <TextBox Template="{DynamicResource TextBoxInput}" 
                         Text="{Binding NazivSmestaja, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         FontSize="20"
                         FontWeight="Medium"
@@ -45,37 +52,37 @@
                         VerticalContentAlignment="Center"
                         Margin="2,2,2,2"
                         Padding="5,2,2,2">
-            <Validation.ErrorTemplate>
-                <ControlTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
 
-                        <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
-                    </Grid>
-                </ControlTemplate>
-            </Validation.ErrorTemplate>
-        </TextBox>
-        <Label Content="BROJ ZVEZDICA" Foreground="#1F1F1F"
+                            <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
+            <Label Content="BROJ ZVEZDICA" Foreground="#1F1F1F"
                         FontSize="20"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                             
                         Margin="0,10,0,0"/>
-        <materialDesign:RatingBar Value="{Binding Rating, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ValueChanged="RatingBar_ValueChanged"></materialDesign:RatingBar>
-        <StackPanel Orientation="Horizontal">
-            <Label Content="ADRESA"
+            <materialDesign:RatingBar Value="{Binding Rating, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ValueChanged="RatingBar_ValueChanged"></materialDesign:RatingBar>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="ADRESA"
                        Foreground="#1F1F1F"
                         FontSize="20"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                             
                         Margin="0,10,0,0"/>
-            <TextBlock Text="{Binding AdresaError}" Foreground="red" FontSize="18" Margin="0,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        </StackPanel>
-        <TextBox Template="{DynamicResource TextBoxInput}"
+                <TextBlock Text="{Binding AdresaError}" Foreground="red" FontSize="18" Margin="0,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </StackPanel>
+            <TextBox Template="{DynamicResource TextBoxInput}"
                         Text="{Binding AdresaSmestaja, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         FontSize="20"
                         FontWeight="Medium"
@@ -88,31 +95,31 @@
                         VerticalContentAlignment="Center"
                         Margin="2,2,2,2"
                         Padding="5,2,2,2">
-            <Validation.ErrorTemplate>
-                <ControlTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
 
-                        <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
-                    </Grid>
-                </ControlTemplate>
-            </Validation.ErrorTemplate>
-        </TextBox>
-        <StackPanel Orientation="Horizontal">
-            <Label Content="LINK"
+                            <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="LINK"
                        Foreground="#1F1F1F"
                         FontSize="20"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                             
                         Margin="0,10,0,0"/>
-            <TextBlock Text="{Binding LinkError}" Foreground="red" FontSize="18" Margin="0,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        </StackPanel>
-        <TextBox Template="{DynamicResource TextBoxInput}"
+                <TextBlock Text="{Binding LinkError}" Foreground="red" FontSize="18" Margin="0,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </StackPanel>
+            <TextBox Template="{DynamicResource TextBoxInput}"
                         Text="{Binding Link, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         FontSize="20"
                         FontWeight="Medium"
@@ -125,60 +132,61 @@
                         VerticalContentAlignment="Center"
                         Margin="2,2,2,2"
                         Padding="5,2,2,2">
-            <Validation.ErrorTemplate>
-                <ControlTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
 
-                        <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
-                    </Grid>
-                </ControlTemplate>
-            </Validation.ErrorTemplate>
-        </TextBox>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 30 0 0">
-            <Button Content="ODUSTANI" Width="120" Height="40" Margin="15"
+                            <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"></AdornedElementPlaceholder>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 30 0 0">
+                <Button Content="ODUSTANI" Width="120" Height="40" Margin="15"
                             Template="{DynamicResource AddButton}"
                             
                     FontSize="18"
                     FontFamily="../../Fonts/#Poppins"
                     FontWeight="Medium"
                     Cursor="Hand" Click="Button_Click_1"  />
-            <Button Content="SACUVAJ" Width="120"
+                <Button Content="SACUVAJ" Width="120"
                         FontSize="18"
                         FontFamily="../../Fonts/#Poppins"
                         FontWeight="Medium"
                         Cursor="Hand"
                         IsEnabled="{Binding HasNoErrors}"
                         Click="Button_Click_Submit">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Height="40"
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Height="40"
                                 CornerRadius="5"
                                 BorderBrush="#1F1F1F"
                                 Background="{TemplateBinding Background}">
-                            <ContentPresenter VerticalAlignment="Center"
+                                <ContentPresenter VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Background" Value="LightGray" />
-                                <Setter Property="Foreground" Value="Gray" />
-                                <Setter Property="BorderBrush" Value="Gray" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="True">
-                                <Setter Property="Background" Value="Black" />
-                                <Setter Property="Foreground" Value="White" />
-                                <Setter Property="BorderBrush" Value="Black" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Background" Value="LightGray" />
+                                    <Setter Property="Foreground" Value="Gray" />
+                                    <Setter Property="BorderBrush" Value="Gray" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="True">
+                                    <Setter Property="Background" Value="Black" />
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter Property="BorderBrush" Value="Black" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
+    </ScrollViewer>
 </Window>
