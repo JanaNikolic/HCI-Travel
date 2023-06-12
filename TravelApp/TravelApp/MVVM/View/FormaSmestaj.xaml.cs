@@ -196,6 +196,8 @@ namespace TravelApp.MVVM.View
             InitializeComponent();
             DataContext = this;
             HasNoErrors = false;
+            CommandManager.RegisterClassCommandBinding(typeof(FormaSmestaj), new CommandBinding(CustomCommands.Save, SaveExecuted, CanSaveExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(FormaSmestaj), new CommandBinding(CustomCommands.Close, CloseExecuted, CanCloseExecute));
         }
 
         public FormaSmestaj(Smestaj smestaj, int brOdabranih, int indeks)
@@ -314,6 +316,29 @@ namespace TravelApp.MVVM.View
         private void RatingBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<int> e)
         {
             Rating = e.NewValue;
+        }
+
+        private void SaveExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if(HasNoErrors==true)
+            {
+                Button_Click_Submit(null, null);
+            }
+        }
+
+        private void CanSaveExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void CloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Button_Click_1(null, null);
+        }
+
+        private void CanCloseExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
         }
     }
 }

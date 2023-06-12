@@ -13,8 +13,25 @@
         Title="Kreiraj aranžman"
         WindowState="Maximized"
         Icon="../../Images/logo.png">
+    <Window.CommandBindings>
+            <CommandBinding Command="{x:Static local:CustomCommands.Save}"
+                            Executed="SaveExecuted"
+                            CanExecute="CanSaveExecute" />
+            <CommandBinding Command="{x:Static local:CustomCommands.Close}"
+                            Executed="CloseExecuted"
+                            CanExecute="CanCloseExecute" />
+            <CommandBinding Command="{x:Static local:CustomCommands.Browse}"
+                                Executed="BrowseExecuted"
+                                CanExecute="CanBrowseExecute" />
+    </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{x:Static local:CustomCommands.Save}" />
+        <KeyBinding Gesture="CTRL+X" Command="{x:Static local:CustomCommands.Close}" />
+        <KeyBinding Gesture="CTRL+O" Command="{x:Static local:CustomCommands.Browse}" />
+    </Window.InputBindings>
     <Grid>
-            <Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7*"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
@@ -39,7 +56,7 @@
                     Cursor="Hand"   
                     Click="BrowseButton_Click"/>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="NAZIV ARANZMANA"
+                    <Label Content="NAZIV ARANŽMANA"
                        Foreground="#1F1F1F"
                         FontSize="20"
                         FontWeight="Medium"
@@ -76,7 +93,7 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="OPIS ARANZMANA" Foreground="#1F1F1F"
+                    <Label Content="OPIS ARANŽMANA" Foreground="#1F1F1F"
                         FontSize="20"
                         FontWeight="Medium"
                         FontFamily="../../Fonts/#Poppins"                             
@@ -421,7 +438,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
 
-                    <Label Content="SMESTAJ" 
+                    <Label Content="SMEŠTAJ" 
                         Foreground="#1F1F1F"
                         FontSize="20"
                         FontWeight="Medium"
@@ -453,7 +470,7 @@
                         Height="25"
                         Width="135">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Grid.Column="1" Text="NOV SMESTAJ" FontWeight="Medium" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="1" Text="NOV SMEŠTAJ" FontWeight="Medium" VerticalAlignment="Center" />
                             <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Margin="8 0 0 0"/>
                         </StackPanel>
                     </Button>

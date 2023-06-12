@@ -51,6 +51,7 @@ namespace TravelApp.MVVM.View
             DataContext = this;
             this.Atrakcija = atrakcija;
 
+            CommandManager.RegisterClassCommandBinding(typeof(PojedinacnaAtrakcija), new CommandBinding(CustomCommands.Close, CloseExecuted, CanCloseExecute));
             //using (var dbContext = new MyDbContext())
             //{
             //    this.Atrakcija = dbContext.Attractions.SingleOrDefault(a => a.Id == atrakcija.Id);
@@ -117,6 +118,17 @@ namespace TravelApp.MVVM.View
                 xmlDoc.Load(response.GetResponseStream());
                 return xmlDoc;
             }
+        }
+
+
+        private void CloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void CanCloseExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
         }
     }
 }

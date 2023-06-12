@@ -192,8 +192,8 @@ namespace TravelApp.MVVM.View
                 if (columnName == "Naziv" && string.IsNullOrEmpty(Naziv))
                 {
                     HasNoErrors = false;
-                    NazivError = "Mora da postoji naziv.";
-                    return "Mora da postoji naziv.";
+                    NazivError = "Polje za naziv ne sme biti prazno";
+                    return "Polje za naziv ne sme biti prazno";
                 }
                 if (columnName == "Naziv" && !string.IsNullOrEmpty(Naziv))
                 {
@@ -202,8 +202,8 @@ namespace TravelApp.MVVM.View
                 if (columnName == "Opis" && string.IsNullOrEmpty(Opis))
                 {
                     HasNoErrors = false;
-                    OpisError = "Mora da postoji opis.";
-                    return "Mora da postoji opis";
+                    OpisError = "Polje za opis ne sme biti prazno";
+                    return "Polje za opis ne sme biti prazno";
                 }
                 if (columnName == "Opis" && !string.IsNullOrEmpty(Opis))
                 {
@@ -212,12 +212,12 @@ namespace TravelApp.MVVM.View
                 if (columnName == "MestoPolaska" && string.IsNullOrEmpty(MestoPolaska))
                 {
                     HasNoErrors = false;
-                    return "Mora da postoji Mesto Polaska.";
+                    return "Obavezno polje";
                 }
                 if (columnName == "Destinacija" && string.IsNullOrEmpty(Destinacija))
                 {
                     HasNoErrors = false;
-                    return "Mora da postoji destinacija.";
+                    return "Obavezno polje";
                 } 
                 if (columnName == "Cena" && double.IsNegative(Cena))
                 {
@@ -239,7 +239,7 @@ namespace TravelApp.MVVM.View
                     HasNoErrors = false;
                     return "Datum povratka ne sme biti u proslosti.";
                 }
-                if (columnName == "DatumPolaska" && DatumPovratka < DatumPolaska)
+                if (columnName == "DatumPobratka" && DatumPovratka < DatumPolaska)
                 {
                     HasNoErrors = false;
                     return "Datum polaska ne sme biti posle datuma povratka.";
@@ -272,6 +272,11 @@ namespace TravelApp.MVVM.View
             IzabraniRestorani = new ObservableCollection<Restoran>();
             HasNoErrors = false;
             loadLists();
+
+            CommandManager.RegisterClassCommandBinding(typeof(FormaAranzman), new CommandBinding(CustomCommands.Save, SaveExecuted, CanSaveExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(FormaAranzman), new CommandBinding(CustomCommands.Close, CloseExecuted, CanCloseExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(FormaAranzman), new CommandBinding(CustomCommands.Browse, BrowseExecuted, CanBrowseExecute));
+
         }
 
         public FormaAranzman(Aranzman aranzman, int brOdabranih, int indeks)
@@ -283,6 +288,10 @@ namespace TravelApp.MVVM.View
             this.brOdabranih = brOdabranih;
 
             InitializeComponent();
+            CommandManager.RegisterClassCommandBinding(typeof(FormaAranzman), new CommandBinding(CustomCommands.Save, SaveExecuted, CanSaveExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(FormaAranzman), new CommandBinding(CustomCommands.Close, CloseExecuted, CanCloseExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(FormaAranzman), new CommandBinding(CustomCommands.Browse, BrowseExecuted, CanBrowseExecute));
+
             this.Title = "Izmeni aranžman";
 
             var elem = this.FindName("ListForEdit") as StackPanel;
@@ -911,5 +920,37 @@ namespace TravelApp.MVVM.View
             }
         }
 
+        private void SaveExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (HasNoErrors)
+            {
+                Button_Click(null, null);
+            }
         }
+
+        private void CanSaveExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void CloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Button_Click_1(null, null);
+        }
+
+        private void CanCloseExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+
+        private void BrowseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            BrowseButton_Click(null, null);
+        }
+
+        private void CanBrowseExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+    }
 }

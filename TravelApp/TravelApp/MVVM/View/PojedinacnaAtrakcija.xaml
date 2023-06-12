@@ -9,6 +9,16 @@
         Icon="../../Images/logo.png"
         WindowStartupLocation="CenterScreen"
         Title="Pregled atrakcije" Height="500" Width="800">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:CustomCommands.Close}"
+                        Executed="CloseExecuted"
+                        CanExecute="CanCloseExecute" />
+    </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Gesture="CTRL+X" Command="{x:Static local:CustomCommands.Close}" />
+    </Window.InputBindings>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

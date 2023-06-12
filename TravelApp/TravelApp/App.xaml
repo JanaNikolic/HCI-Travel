@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TravelApp"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             StartupUri="/MVVM/View/LoginView.xaml">
+             StartupUri="/MVVM/View/IzvestajMesecniView.xaml">
     <Application.Resources>
         <ScaleTransform x:Key="FontStretchExpanded" ScaleX="1.2" />
         <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#3ea8c2"/>
@@ -161,5 +161,15 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
+        <ResourceDictionary x:Key="tt">
+            <Style TargetType="{x:Type ToolTip}" x:Key="toolTip">
+                <Setter Property = "HorizontalOffset" Value="10"/>
+                <Setter Property = "VerticalOffset" Value="10"/>
+                <Setter Property = "Foreground" Value="Black"/>
+                <Setter Property = "FontSize" Value="20"/>
+                <Setter Property = "FontWeight" Value="DemiBold"/>
+            </Style>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
