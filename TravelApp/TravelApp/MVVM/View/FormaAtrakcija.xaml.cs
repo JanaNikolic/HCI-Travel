@@ -29,7 +29,7 @@ namespace TravelApp.MVVM.View
     {
         Dictionary<string, Pushpin> pinMap = new Dictionary<string, Pushpin>();
 
-        private string KEY = "";
+        private string KEY = "w2oYtH2bFoJmYtW1K2np~WIZaEsb_5hwgMOLwNzRceQ~Ahnl2EmvF51Q1Fb17RTCZkk4ykAGiDEnZGVNtj155rLiO6yOUQpZVfx3dEnGExVX";
         private string _adresa { get; set; }
         public string Adresa
         {
@@ -348,7 +348,7 @@ namespace TravelApp.MVVM.View
 
         private void AddPin(string key, string address, Color color)
         {
-            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address) + "?o=xml&key=" + KEY;
+            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address + ",Srbija") + "?o=xml&key=" + KEY;
 
             //Make the request and get the response
             XmlDocument geocodeResponse = GetXmlResponse(geocodeRequest);

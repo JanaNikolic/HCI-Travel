@@ -247,7 +247,7 @@
                 </ItemsControl>
             </StackPanel>
             <m:Map x:Name="myMap" Grid.Column="1" Grid.RowSpan="2"
-                   CredentialsProvider=""
+                   CredentialsProvider="w2oYtH2bFoJmYtW1K2np~WIZaEsb_5hwgMOLwNzRceQ~Ahnl2EmvF51Q1Fb17RTCZkk4ykAGiDEnZGVNtj155rLiO6yOUQpZVfx3dEnGExVX"
                    Center="44.316093, 20.851270" ZoomLevel="7.1"/>
         </Grid>
     </ScrollViewer>

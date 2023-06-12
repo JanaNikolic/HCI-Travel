@@ -34,7 +34,7 @@ namespace TravelApp.MVVM.View
     {
         private Aranzman _aranzman { get; set; }
         private User user { get; set; }
-        private string KEY = "";
+        private string KEY = "w2oYtH2bFoJmYtW1K2np~WIZaEsb_5hwgMOLwNzRceQ~Ahnl2EmvF51Q1Fb17RTCZkk4ykAGiDEnZGVNtj155rLiO6yOUQpZVfx3dEnGExVX";
         public Aranzman Aranzman
         {
             get { return _aranzman; }
@@ -144,7 +144,7 @@ namespace TravelApp.MVVM.View
 
         private void AddPin(string address, Color color)
         {
-            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address) + "?o=xml&key=" + KEY;
+            string geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + Uri.EscapeDataString(address + ",Srbija") + "?o=xml&key=" + KEY;
 
             //Make the request and get the response
             XmlDocument geocodeResponse = GetXmlResponse(geocodeRequest);

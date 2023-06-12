@@ -492,7 +492,7 @@
             <m:Map Grid.Row="0"
                        x:Name="myMap"
                        Center="44.316093, 20.851270" 
-                       CredentialsProvider=""
+                       CredentialsProvider="w2oYtH2bFoJmYtW1K2np~WIZaEsb_5hwgMOLwNzRceQ~Ahnl2EmvF51Q1Fb17RTCZkk4ykAGiDEnZGVNtj155rLiO6yOUQpZVfx3dEnGExVX"
                        ZoomLevel="7"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
                     <Button Content="ODUSTANI" Width="120" Height="40" Margin="15"
