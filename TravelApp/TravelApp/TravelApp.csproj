@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Utils\**" />
+    <EmbeddedResource Remove="Utils\**" />
+    <None Remove="Utils\**" />
+    <Page Remove="Utils\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="MVVM\Model\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BingMapsRESTToolkit" Version="1.1.4" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="MaterialDesignThemes.Wpf" Version="1.0.1" />
+    <PackageReference Include="Microsoft.Maps.MapControl.WPF" Version="1.0.0.3" />
+    <PackageReference Include="Syncfusion.Shared.WPF" Version="21.2.6" />
+  </ItemGroup>
+    <ItemGroup>
+	    <Resource Include="Fonts\Poppins-Bold.ttf" />
+	    <Resource Include="Fonts\Poppins-ExtraBold.ttf" />
+	    <Resource Include="Fonts\Poppins-Medium.ttf" />
+	    <Resource Include="Fonts\Poppins-Regular.ttf" />
+	    <Resource Include="Fonts\Poppins-SemiBold.ttf" />
+	    <Resource Include="Images\key-icon.png" />
+	    <Resource Include="Images\placeholder-image.png" />
+	    <Resource Include="Images\user-icon.png" />
+	    <Resource Include="Images\logo.png" />
+	    <Resource Include="Images\vidikovac.jpg" />
+		<Resource Include="Images\login.jpg" />
+    </ItemGroup>
+
+</Project>

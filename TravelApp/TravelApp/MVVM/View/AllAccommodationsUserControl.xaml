@@ -1,0 +1,150 @@
+﻿<UserControl x:Class="TravelApp.MVVM.View.AllAccommodationsUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:local="clr-namespace:TravelApp.MVVM.View"
+             mc:Ignorable="d">
+    <Grid VerticalAlignment="Top" HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="680"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" Margin="0 10">
+            <TextBox x:Name="textBox" local:HelpProvider.HelpKey="Pretraga" FontSize="24" Padding="5 0" HorizontalAlignment="Left" Width="400" Height="40" Template="{DynamicResource TextBoxInput}" BorderThickness="2" 
+                     Text="{Binding PretragaTB, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Unesite tekst za pretragu</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </TextBox.ToolTip>
+            </TextBox>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="PretragaSmestaja">Pretraga
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za pretragu</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="KreirajSmestaj">Dodaj
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za kreiranje novog smeštaja</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="IzmenaSmestaja">Izmeni
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za izmenu odabranih smeštaja</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="BrisanjeSmestaja">Obriši
+                <Button.ToolTip>
+                    <ToolTip>
+                        <DockPanel Height="30">
+                            <TextBlock FontSize="20" Foreground="Black">Kliknite za brisanje odabranih smeštaja</TextBlock>
+                        </DockPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <TextBlock Text="{Binding BrOdabranih, StringFormat=Odabrano: {0}, UpdateSourceTrigger=PropertyChanged}" FontSize="20" HorizontalAlignment="Right" FontWeight="DemiBold" VerticalAlignment="Center" />
+        </DockPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Row="1">
+
+
+            <ItemsControl x:Name="ListViewSmestajs" ItemsSource="{Binding Smestaj}">
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border x:Name="NazivBordera" Margin="10" Width="600" Height="150" BorderThickness="1" BorderBrush="Black" CornerRadius="5" >
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.ToolTip>
+                                    <ToolTip>
+                                        <DockPanel Height="30">
+                                            <TextBlock FontSize="20" Foreground="Black">Kliknite za detalje smeštaja</TextBlock>
+                                        </DockPanel>
+                                    </ToolTip>
+                                </StackPanel.ToolTip>
+                                <StackPanel Width="450">
+                                    <DockPanel>
+                                        <TextBlock  Margin="20,10,0,10" HorizontalAlignment="Left" Text="{Binding Name}" FontSize="24" VerticalAlignment="Center" FontWeight="Bold" FontStretch="SemiExpanded"/>
+                                        <materialDesign:RatingBar Value="{Binding Stars}" IsReadOnly="True" Margin="50,15,10,10"/>
+                                    </DockPanel>
+
+                                    <DockPanel >
+                                        <TextBlock  Margin="20,5" Text="Adresa:" FontSize="22"  FontWeight="Bold" />
+                                        <TextBlock  Margin="5 0" Text="{Binding Address}" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                    </DockPanel>
+
+                                    <TextBlock 
+                                     Margin="20,10,0,10" HorizontalAlignment="Left" FontSize="20" VerticalAlignment="Center" >
+                                        <TextBlock.ToolTip>
+                                            <ToolTip>
+                                                <DockPanel Height="30">
+                                                    <TextBlock FontSize="20" Foreground="Black">Kliknite za prikaz sajta</TextBlock>
+                                                </DockPanel>
+                                            </ToolTip>
+                                        </TextBlock.ToolTip>
+                                        <Hyperlink NavigateUri="{Binding Path=Link}" RequestNavigate="Hyperlink_RequestNavigate">
+                                            <TextBlock Text="{Binding Path=Link}"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Setter Property="Opacity" Value="1"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="true">
+                                                    <!--<Setter Property="StackPanel.Opacity" Value="0.5" />-->
+                                                    <Setter Property="Cursor" Value="Hand" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+                                </StackPanel>
+                                <CheckBox x:Name="CheckBoxUnitPerStrip"
+                                    Template="{DynamicResource odaberi}"
+                                    Tag="{Binding}"
+                                    Checked="DodajSmestaj"
+                                    Unchecked="UkloniSmestaj">
+                                    <CheckBox.ToolTip>
+                                        <ToolTip>
+                                            <DockPanel Height="30">
+                                                <TextBlock FontSize="20" Foreground="Black">Kliknite za odabir smeštaja</TextBlock>
+                                            </DockPanel>
+                                        </ToolTip>
+                                    </CheckBox.ToolTip>
+                                </CheckBox>
+                            </StackPanel>
+                        </Border>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding ElementName = CheckBoxUnitPerStrip, Path = IsChecked}"  Value="True">
+                                <Setter TargetName="NazivBordera" Property="BorderBrush" Value="Green"></Setter>
+                                <Setter TargetName="NazivBordera" Property="BorderThickness" Value="3"></Setter>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+
+                </ItemsControl.ItemTemplate>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
