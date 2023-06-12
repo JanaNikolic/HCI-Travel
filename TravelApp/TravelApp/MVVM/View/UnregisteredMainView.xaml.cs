@@ -26,7 +26,15 @@ namespace TravelApp.MVVM.View
     {
         public List<Aranzman> SviAranzmani { get; set; }
 
-        public bool loggedIn { get; set; }
+        private bool _loggedIn {  get; set; }
+        public bool loggedIn {
+            get { return _loggedIn; }
+            set
+            {
+                _loggedIn = value;
+                OnPropertyChanged(nameof(loggedIn));
+            }
+        }
         public User user { get; set; }
 
         public static readonly DependencyProperty IsClickedProperty =
@@ -117,6 +125,16 @@ namespace TravelApp.MVVM.View
             e.CanExecute = true; // Enable the command by default
         }
 
+        private void ReportExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            PregledKupovinaView view = new PregledKupovinaView(user);
+            view.Show();
+        }
+
+        private void CanReportExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             IInputElement focusedControl = Keyboard.FocusedElement;

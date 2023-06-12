@@ -49,7 +49,7 @@
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
             <StackPanel Margin="50,0,50,0" Grid.RowSpan="2" Grid.Column="0" Grid.Row="1">
-                <Image x:Name="SelectedImage" Stretch="UniformToFill" Height="200" Margin="10" Source="C:\fax\hci\HCI-Travel\TravelApp\TravelApp\Images\placeholder-image.jpg"/>
+                <Image x:Name="SelectedImage" Stretch="UniformToFill" Height="200" Margin="10" Source="../../Images/placeholder-image.png"/>
                 <Button Content="DODAJ SLIKU" 
                         Template="{DynamicResource AddButton}"
                     FontSize="18"
@@ -245,7 +245,7 @@
                         Foreground="#1F1F1F"
                         local:HelpProvider.HelpKey="Datum"
                         Padding="4,4,4,4"
-                        Height="40"/>
+                        Height="40" HorizontalAlignment="Left" Width="205"/>
                     </Border>
 
                     <Label Content="MESTO POLASKA" 

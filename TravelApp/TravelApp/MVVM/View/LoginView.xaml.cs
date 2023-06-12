@@ -77,22 +77,32 @@ namespace TravelApp.MVVM.View
         }
         public LoginView()
         {
-            //using (var db = new MyDbContext())
-            //{
-            //    User user = new User("j", "jana", Role.Agent);
-            //    db.Users.Add(user);
-            //    db.SaveChanges();
-            //}
+
 
             //using (var dbContext = new MyDbContext())
             //{
-            //    User user = new User("jana", "jana", Role.Client);
+            //    User user = new User("client", "client12345", Role.Client);
+            //    dbContext.Users.Add(user);
+
+            //    user = new User("agent", "agent12345", Role.Agent);
             //    dbContext.Users.Add(user);
 
             //    Restoran a = new Restoran("Loft", "Novosadskog Sajma 105 Novi Sad", FoodType.Italijanska);
             //    dbContext.Restaurants.Add(a);
+            //    a = new Restoran("Loft2", "Fruškogorska 105 Novi Sad", FoodType.Italijanska);
+            //    dbContext.Restaurants.Add(a);
+            //    a = new Restoran("Burito", "Fruškogorska 10 Novi Sad", FoodType.Meksicka);
+            //    dbContext.Restaurants.Add(a);
+            //    a = new Restoran("Loft4", "Bulevar Oslobođenja 22 Novi Sad", FoodType.Meksicka);
+            //    dbContext.Restaurants.Add(a);
 
-            //    Smestaj s = new Smestaj("Smestaj", "Jevrejska 15", 3.2, "http://www.google.com");
+            //    Smestaj s = new Smestaj("Smestaj Hotel", "Jevrejska 15, Novi Sad", 3.2, "http://www.google.com");
+            //    dbContext.Hotels.Add(s);
+            //    s = new Smestaj("Hotel Hill", "Novosadskog sajma 15, Novi Sad", 3.2, "http://www.google.com");
+            //    dbContext.Hotels.Add(s);
+            //    s = new Smestaj("Hotel Motel", "Braće Ribnikar 15, Novi Sad", 3.2, "http://www.google.com");
+            //    dbContext.Hotels.Add(s);
+            //    s = new Smestaj("Motel Hotel", "Jevrejska 15, Novi Sad", 3.2, "http://www.google.com");
             //    dbContext.Hotels.Add(s);
 
             //    Atrakcija at1 = new Atrakcija("Manastiri Fruske Gore", "Opis putovanja...", "Fruska Gora");
@@ -100,6 +110,15 @@ namespace TravelApp.MVVM.View
 
             //    Atrakcija at = new Atrakcija("Vrnjačka  Banja", "Opis putovanja...", "Vrnjačka  Banja");
             //    dbContext.Attractions.Add(at);
+
+            //    Atrakcija at4 = new Atrakcija("Soko  Banja", "Opis putovanja...", "Soko  Banja");
+            //    dbContext.Attractions.Add(at4);
+
+            //    Atrakcija at2 = new Atrakcija("Manastiri Srbije", "Opis putovanja...", "Beograd");
+            //    dbContext.Attractions.Add(at2);
+
+            //    Atrakcija at3 = new Atrakcija("Kalemegdan", "Opis putovanja...", "Beograd");
+            //    dbContext.Attractions.Add(at3);
 
             //    Aranzman ar = new Aranzman("Manastiri Fruske Gore", "Opis putovanja...", DateTime.Now.AddDays(1), DateTime.Now.AddDays(5), "Beograd", "Novi Sad", 2000.00, "..\\..\\Images\\login.jpg");
             //    ar.Restorani.Add(a);
@@ -112,6 +131,25 @@ namespace TravelApp.MVVM.View
             //    ar.Atrakcije.Add(at);
             //    ar.Smestaji.Add(s);
             //    dbContext.Arrangements.Add(ar);
+
+            //    ar = new Aranzman("Soko  Banja", "Opis putovanja...", DateTime.Now.AddDays(10), DateTime.Now.AddDays(15), "Beograd", "Soko Banja", 12000.00, "..\\..\\Images\\login.jpg");
+            //    ar.Restorani.Add(a);
+            //    ar.Atrakcije.Add(at4);
+            //    ar.Smestaji.Add(s);
+            //    dbContext.Arrangements.Add(ar);
+
+            //    ar = new Aranzman("Krstarenje Beogradom", "Opis putovanja...", DateTime.Now.AddDays(10), DateTime.Now.AddDays(15), "Beograd", "Vrnjačka Banja", 12000.00, "..\\..\\Images\\login.jpg");
+            //    ar.Restorani.Add(a);
+            //    ar.Atrakcije.Add(at3);
+            //    ar.Smestaji.Add(s);
+            //    dbContext.Arrangements.Add(ar);
+
+            //    ar = new Aranzman("Manastiri Srbije", "Opis putovanja...", DateTime.Now.AddDays(10), DateTime.Now.AddDays(15), "Beograd", "Vrnjačka Banja", 12000.00, "..\\..\\Images\\login.jpg");
+            //    ar.Restorani.Add(a);
+            //    ar.Atrakcije.Add(at3);
+            //    ar.Smestaji.Add(s);
+            //    dbContext.Arrangements.Add(ar);
+
 
             //    dbContext.SaveChanges();
             //}

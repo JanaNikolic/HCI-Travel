@@ -20,6 +20,9 @@
         <CommandBinding Command="{x:Static local:CustomCommands.OnlineHelp}"
                         Executed="OnlineHelpExecuted"
                         CanExecute="CanOnlineHelpExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.Report}"
+                        Executed="ReportExecuted"
+                        CanExecute="CanReportExecute" />
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
     </Window.CommandBindings>
 
@@ -36,10 +39,12 @@
                 <MenuItem Header="_Registracija" IsEnabled="False" local:HelpProvider.HelpKey="Toolbar"></MenuItem>
                 <MenuItem Header="_Prijava" IsEnabled="False" local:HelpProvider.HelpKey="Toolbar"></MenuItem>
                 <Separator></Separator>
+                <MenuItem Header="_Izveštaji" Padding="10 0" local:HelpProvider.HelpKey="Toolbar" Command="{x:Static local:CustomCommands.Report}"></MenuItem>
+                <Separator></Separator>
                 <MenuItem Header="_Odjava" Command="{x:Static local:CustomCommands.Logout}"></MenuItem>
             </MenuItem>
             <MenuItem Header="_Pomoć" Padding="10 0" local:HelpProvider.HelpKey="Toolbar">
-                <MenuItem Header="_Online pomoc" local:HelpProvider.HelpKey="Toolbar" Command="{x:Static local:CustomCommands.OnlineHelp}"></MenuItem>
+                <MenuItem Header="_Online pomoć" local:HelpProvider.HelpKey="Toolbar" Command="{x:Static local:CustomCommands.OnlineHelp}"></MenuItem>
             </MenuItem>
         </Menu>
         <TabControl Grid.Row="1">

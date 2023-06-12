@@ -94,5 +94,15 @@ namespace TravelApp.MVVM.View
         {
             e.CanExecute = true; // Enable the command by default
         }
+        private void ReportExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            IzvestajMesecniView view = new IzvestajMesecniView();
+            view.Show();
         }
+
+        private void CanReportExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; // Enable the command by default
+        }
+    }
 }

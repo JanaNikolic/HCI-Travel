@@ -16,6 +16,9 @@
         <CommandBinding Command="{x:Static local:CustomCommands.Logout}"
                         Executed="CloseExecuted"
                         CanExecute="CanCloseExecute" />
+        <CommandBinding Command="{x:Static local:CustomCommands.Report}"
+                        Executed="ReportExecuted"
+                        CanExecute="CanReportExecute" />
         <CommandBinding Command="{x:Static local:CustomCommands.OnlineHelp}"
                         Executed="OnlineHelpExecuted"
                         CanExecute="CanOnlineHelpExecute" />
@@ -31,7 +34,7 @@
     <Window.InputBindings>
         <KeyBinding Gesture="ALT+F4" Command="{x:Static local:CustomCommands.Logout}" />
     </Window.InputBindings>
-    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+    <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Top">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -44,6 +47,9 @@
                     <MenuItem Header="_Prijava" Command="{x:Static local:CustomCommands.LoginWindow}"></MenuItem>
                     <Separator></Separator>
                     <MenuItem Header="_Pregled putovanja"></MenuItem>
+                    <MenuItem Header="_Pregled kupljenih putovanja" IsEnabled="{Binding loggedIn}" Command="{x:Static local:CustomCommands.Report}"></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="_Odjava" Command="{x:Static local:CustomCommands.Logout}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Pomoć" Padding="10 0">
                     <MenuItem Header="_Online pomoc" Command="{x:Static local:CustomCommands.OnlineHelp}" ></MenuItem>

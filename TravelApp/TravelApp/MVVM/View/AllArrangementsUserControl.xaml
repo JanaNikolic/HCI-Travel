@@ -10,7 +10,7 @@
     <Grid VerticalAlignment="Top" HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="680"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="0 10">
             <Grid.ColumnDefinitions>
@@ -70,11 +70,8 @@
             </Button>
             <TextBlock Grid.Column="5" Text="{Binding BrOdabranih, StringFormat=Odabrano: {0}, UpdateSourceTrigger=PropertyChanged}" FontSize="20" HorizontalAlignment="Right" FontWeight="DemiBold" VerticalAlignment="Center" />
         </Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Row="1">
-
-
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
             <ItemsControl x:Name="ListViewAranzmans" ItemsSource="{Binding Aranzman}">
-
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border x:Name="NazivBordera" Margin="10" Width="600" Height="200" BorderThickness="1" BorderBrush="Black" CornerRadius="5">
