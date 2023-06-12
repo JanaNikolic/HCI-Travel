@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -280,7 +281,7 @@ namespace TravelApp.MVVM.View
             editAranzman = aranzman;
             this.indeks = indeks;
             this.brOdabranih = brOdabranih;
-            
+
             InitializeComponent();
             this.Title = "Izmeni aranžman";
 
@@ -295,7 +296,9 @@ namespace TravelApp.MVVM.View
             IzabraniSmestaji = new ObservableCollection<Smestaj>();
             IzabraniRestorani = new ObservableCollection<Restoran>();
             HasNoErrors = false;
-            loadLists();
+            SveAtrakcije.Clear();
+            SviRestorani.Clear();
+            SviSmestaji.Clear();
 
             this.Naziv = aranzman.Name;
             this.Opis = aranzman.Description;
@@ -303,13 +306,64 @@ namespace TravelApp.MVVM.View
             this.Destinacija = aranzman.EndLocation;
             this.Cena = aranzman.Price;
             this.Slika = aranzman.PictureLocation;
-            SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\vidikovac.jpg", UriKind.Relative));
-            //IzabraniRestorani.Clear();
-            //IzabraneAtrakcije.Clear();
-            //IzabraniSmestaji.Clear();
+            if (aranzman.PictureLocation == null || aranzman.PictureLocation == "")
+            {
+                SelectedImage.Source = new BitmapImage(new Uri("..\\..\\Images\\placeholder-image.png", UriKind.RelativeOrAbsolute));
+            }
+            else 
+            {
+                SelectedImage.Source = new BitmapImage(new Uri(aranzman.PictureLocation, UriKind.RelativeOrAbsolute));
+            }
+            using (var dbContext = new MyDbContext())
+            {
+                var listaAtrakcija = dbContext.Attractions.ToList();
+                foreach (var atrakcija in listaAtrakcija)
+                {
+                    SveAtrakcije.Add(atrakcija);
+                }
+
+                var listaSmestaja = dbContext.Hotels.ToList();
+                foreach (var smestaj in listaSmestaja)
+                {
+                    SviSmestaji.Add(smestaj);
+                }
+
+                var listaRestorana = dbContext.Restaurants.ToList();
+                foreach (var restoran in listaRestorana)
+                {
+                    SviRestorani.Add(restoran);
+                }
+                var Aranzman = dbContext.Arrangements.SingleOrDefault(a => a.Id == aranzman.Id);
+
+                var rs = dbContext.Arrangements.Include(s => s.Atrakcije).ToList();
+                var at = dbContext.Arrangements.Include(s => s.Atrakcije).ToList();
+                var ss = dbContext.Arrangements.Include(s => s.Smestaji).ToList();
+                Trace.WriteLine($"Br Aranz Atrakcija>> {Aranzman.Atrakcije.Count}");
+
+                foreach (var atr in Aranzman.Atrakcije)
+                {
+                    SveAtrakcije.Remove(atr);
+                    IzabraneAtrakcije.Add(atr);
+                    AddPin(atr.Name, atr.Address, Colors.Blue);
+                }
+
+                foreach (var atr in Aranzman.Restorani)
+                {
+                    SviRestorani.Remove(atr);
+                    IzabraniRestorani.Add(atr);
+                    AddPin(atr.Name, atr.Address, Colors.Green);
+                }
+
+                foreach (var atr in Aranzman.Smestaji)
+                {
+                    SviSmestaji.Remove(atr);
+                    IzabraniSmestaji.Add(atr);
+                    AddPin(atr.Name, atr.Address, Colors.Purple);
+                }
+            }
+            
             this.DatumPolaska = aranzman.StartDate;
             this.DatumPovratka = aranzman.EndDate;  
-
         }
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
@@ -591,6 +645,7 @@ namespace TravelApp.MVVM.View
                     }
                 }
             } catch (Exception ex) {
+                Trace.WriteLine($"Greska>> {ex}");
                 string messageBoxText = "Došlo je do greške prilikom sačuvanja aranžmana. Pokušajte ponovo.";
                 string caption = "Čuvanje";
                 MessageBoxButton button = MessageBoxButton.OK;

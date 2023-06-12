@@ -26,9 +26,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-            <Image Grid.Row="0" Source="../../Images/login.png" Stretch="UniformToFill" HorizontalAlignment="Center" />
+            <Image Grid.Row="0" Source="../../Images/login.jpg" HorizontalAlignment="Center" />
 
-        
+
             <StackPanel Width="300"
                     Grid.Row="1"
                     Orientation="Vertical"

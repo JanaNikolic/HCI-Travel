@@ -163,6 +163,7 @@ namespace TravelApp.MVVM.View
             FormaRestoran forma = new FormaRestoran();
             forma.Show();
             //this.Close();
+            LoadRestorani();
         }
     }
 }

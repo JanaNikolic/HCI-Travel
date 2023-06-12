@@ -18,10 +18,15 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Column="0" Grid.Row="0" Margin="40 0 40 0">
-            <Image x:Name="SelectedImage" Height="200" Margin="0 10 0 10" Stretch="UniformToFill" Source="..\..\Images\placeholder-image.png"/>
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" x:Name="bookingPanel" Visibility="Hidden">
+                <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="Kupovina">Kupi</Button>
+                <Button Height="40" Margin="10 0" FontSize="20" Template="{DynamicResource SearchButton}" Click="Rezervacija">Rezerviši</Button>
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="1" Margin="40 0 40 0">
+                <Image x:Name="SelectedImage" Height="200" Margin="0 10 0 10" Stretch="Uniform" Source="..\..\Images\placeholder-image.png"/>
             <TextBlock Text="{Binding Aranzman.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                        HorizontalAlignment="Center"
                        Height="40"
@@ -29,12 +34,10 @@
                        FontWeight="Bold"
                        FontFamily="../../Fonts/#Arial" />
             <TextBlock Text="{Binding Aranzman.Description, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                       TextAlignment="Justify"
                        HorizontalAlignment="Stretch"
                        TextWrapping="Wrap" 
                        Margin="0 0 0 10"
                        FontSize="18"
-                       FontWeight="Medium"
                        FontFamily="../../Fonts/#Arial" />
             <StackPanel Orientation="Horizontal"
                            Height="40">
@@ -48,18 +51,15 @@
                            Margin="15 0 5 0"
                         VerticalAlignment="Center"
                        FontSize="18"
-                       FontWeight="Medium"
                        FontFamily="../../Fonts/#Arial"/>
                 <TextBlock Text="-"
                         VerticalAlignment="Center"
                        FontSize="18"
-                       FontWeight="Medium"
                        FontFamily="../../Fonts/#Arial"/>
                     <TextBlock Text="{Binding Aranzman.EndDate, StringFormat={}{0:dd.MM.yyyy.}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                        FontSize="18"
                         VerticalAlignment="Center"
                            Margin="5 0 0 0"
-                       FontWeight="Medium"
                        FontFamily="../../Fonts/#Arial"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal"
@@ -74,7 +74,6 @@
                        FontSize="18"
                        VerticalAlignment="Center"
                        Margin="15 0 0 0"
-                       FontWeight="Medium"
                        FontFamily="../../Fonts/#Arial"/>
             </StackPanel>
                 <StackPanel Orientation="Horizontal"
@@ -89,7 +88,6 @@
                        FontSize="18"
                        VerticalAlignment="Center"
                        Margin="15 0 0 0"
-                       FontWeight="Medium"
                        FontFamily="../../Fonts/#Arial"/>
                 </StackPanel>
                 <TextBlock Text="Atrakcije"
@@ -109,21 +107,21 @@
                                         Margin="5"
                                         materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                         UniformCornerRadius="6">
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" Margin="0 5">
                                         <Image Source="{Binding PictureLocation, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                Width="150"/>
-                                        <StackPanel Margin="15" VerticalAlignment="Center">
+                                        <StackPanel Margin="15" VerticalAlignment="Center" >
                                             <TextBlock Text="{Binding Name}"
                                                 FontSize="18"
                                                FontWeight="Bold"
+                                               Margin="0 5"
                                                FontFamily="../../Fonts/#Arial"/>
                                             <TextBlock Text="{Binding Description}"
                                                 FontSize="18"
-                                               FontWeight="Medium"
+                                                Margin="0 5"
                                                FontFamily="../../Fonts/#Arial"/>
                                             <TextBlock Text="{Binding Address}"
                                                 FontSize="18"
-                                               FontWeight="Medium"
                                                FontFamily="../../Fonts/#Arial"/>
                                         </StackPanel>
                                     </StackPanel>
@@ -154,8 +152,9 @@
                                         <TextBlock Text="{Binding Name}"
                                                 FontSize="20"
                                                FontWeight="Bold"
+                                                   Margin="0 5"
                                                FontFamily="../../Fonts/#Arial"/>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Horizontal" Margin="0 5">
                                             <TextBlock Text="Adresa: "
                                                 FontStretch="UltraExpanded"
                                                 FontSize="18"
@@ -164,7 +163,6 @@
                                                 FontFamily="../../Fonts/#Arial"/>
                                             <TextBlock Text="{Binding Address}"
                                                 FontSize="18"
-                                                FontWeight="Medium"
                                                 FontFamily="../../Fonts/#Arial"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
@@ -176,7 +174,6 @@
                                                 FontFamily="../../Fonts/#Arial"/>
                                             <TextBlock Text="{Binding FoodType}"
                                                 FontSize="18"
-                                                FontWeight="Medium"
                                                 FontFamily="../../Fonts/#Arial"/>
                                         </StackPanel>
                                     </StackPanel>
@@ -204,14 +201,14 @@
                                         materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                         UniformCornerRadius="6">
                                     <StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Horizontal" Margin="0 5">
                                             <TextBlock Text="{Binding Name}"
                                                 FontSize="20"
                                                FontWeight="Bold"
                                                FontFamily="../../Fonts/#Arial"/>
-                                            <materialDesign:RatingBar Value="{Binding Stars}" IsReadOnly="True"/>
+                                            <materialDesign:RatingBar Value="{Binding Stars}" IsReadOnly="True" Margin="30 0"/>
                                         </StackPanel>
-                                        <TextBlock>
+                                        <TextBlock Margin="0 5">
                                             <Hyperlink NavigateUri="{Binding Link}">
                                                 <TextBlock Text="{Binding Link}" 
                                                 FontStretch="UltraExpanded"
@@ -231,7 +228,6 @@
                                                 FontFamily="../../Fonts/#Arial"/>
                                             <TextBlock Text="{Binding Address}"
                                                 FontSize="18"
-                                                FontWeight="Medium"
                                                 FontFamily="../../Fonts/#Arial"/>
                                         </StackPanel>
                                     </StackPanel>
@@ -241,7 +237,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </StackPanel>
-            <m:Map x:Name="myMap" Grid.Column="1" CredentialsProvider="" Center="44.316093, 20.851270" ZoomLevel="7.1"/>
+            <m:Map x:Name="myMap" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" CredentialsProvider="" Center="44.316093, 20.851270" ZoomLevel="7.1"/>
         </Grid>
     </ScrollViewer>
 </Window>

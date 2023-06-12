@@ -168,7 +168,7 @@ namespace TravelApp.MVVM.View
         {
             FormaSmestaj forma = new FormaSmestaj();
             forma.Show();
-            //this.Close();
+            LoadSmestaje();
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)

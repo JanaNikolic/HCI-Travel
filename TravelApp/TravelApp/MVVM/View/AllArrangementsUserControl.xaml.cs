@@ -164,6 +164,7 @@ namespace TravelApp.MVVM.View
             FormaAranzman forma = new FormaAranzman();
             forma.Show();
             //this.Close();
+            LoadAranzmani();
         }
 
         

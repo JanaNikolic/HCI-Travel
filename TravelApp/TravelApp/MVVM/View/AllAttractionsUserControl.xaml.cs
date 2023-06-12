@@ -173,6 +173,7 @@ namespace TravelApp.MVVM.View
             FormaAtrakcija forma = new FormaAtrakcija();
             forma.Show();
             //this.Close();
+            LoadAtrakcije();
         }
 
         private void Item_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

@@ -187,7 +187,7 @@
             </StackPanel>
         <m:Map Grid.Column="1" Grid.Row="1"
                        x:Name="myMap"
-                       CredentialsProvider="" 
+                       CredentialsProvider=""
                        Center="44.316093, 20.851270" 
                        ZoomLevel="7"
                        MouseDoubleClick="MapWithPushpins_MouseDoubleClick"
